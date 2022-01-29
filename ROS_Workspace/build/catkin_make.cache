@@ -1,0 +1,2 @@
+contactile_gripper:dynamixel_sdk
+-DCATKIN_DEVEL_PREFIX=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel -DCMAKE_INSTALL_PREFIX=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/install -G Unix Makefiles
