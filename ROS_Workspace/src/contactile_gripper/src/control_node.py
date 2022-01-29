@@ -4,38 +4,60 @@ This is an example of the structure of a node that has multiple publishers publi
 subscriber. This examples does not function.
 """
 
+import time
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
-import gripper
+from std_msgs.msg import Int32
 
-class ComplexNode(object):
+class ControlNode(object):
     def __init__(self):
-        self.publisher1 = rospy.Publisher('control',String, queue_size=10)
-        # self.publisher2 = rospy.Publisher('topic2'.format(multiplier), Int64, queue_size=10)
-        # self.subscriber = rospy.Subscriber('topic3', Float32, self.callback, queue_size=1, buff_size=100)
+        self.goal_pos_publisher = rospy.Publisher('Goal_Position',Int32, queue_size=1)
+        self.goal_cur_publisher = rospy.Publisher('Goal_Current', Int32, queue_size=1)
+        self.motor_pos_subscriber = rospy.Subscriber('Motor_Position', Int32, self.motor_pos_callback, queue_size=1, buff_size=100)
+        self.motor_pos_subscriber = rospy.Subscriber('UI_Mode', String, self.UI_mode_callback, queue_size=100, buff_size=10000)
         rospy.on_shutdown(self.shutdown_function)
-        self.main_loop_rate = 1  # Hz
-        self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
+        self.motor_command_loop_rate = 30  # Hz
+        self.motor_command_loop_rate_obj = rospy.Rate(self.motor_command_loop_rate)
         self.pub2_freq = 0.2  # Hz
         rospy.Timer(rospy.Duration(1/self.pub2_freq), self.pub2_function)
 
-        self.data = None
+        self.UI_mode_options = set({'passive','direct_control','sinusoidal_motion_routine'})
+        self.UI_mode = 'passive'
+        self.UI_mode = 'direct_control'
+        self.motor_pub_mode = 'current'
+        self.motor_pos = None
+        self.motor_pos_set = False
+        # Wait for motor_pos_subscriber to set motor_pos so goal_pos doesn't break the gripper trying to go to bad pos.
+        while not self.motor_pos_set: rospy.logdebug('Waiting for motor position to be initialized...')
+        self.goal_pos = self.motor_pos
+        self.goal_cur = 0
 
-        self.main_loop()
+        self.motor_command_loop()
 
-    def callback(self,msg):
-        rospy.loginfo('Callback executed.')
-        # To make this data available to all of the methods in the class (for computing and publishing) set the message
-        # to
-        # self.data = msg
+    def motor_pos_callback(self,msg):
+        self.motor_pos = msg.data
+        if not self.motor_pos_set: self.motor_pos_set = True  # Flag for node startup.
 
-    def main_loop(self):
-        """This is the main loop for the node which executes at self.main_loop_rate."""
+    def UI_mode_callback(self,msg):
+        try:
+            assert msg.data in self.UI_mode_options
+            self.UI_mode = msg.data
+        except: rospy.logwarn('Cannot change UI mode. {} not in UI mode options: {}'.format(msg.data,self.UI_mode_options))
+
+    def motor_command_loop(self):
+        """Publishes motor commands to the motor depending on the current operating mode parameters."""
         while not rospy.is_shutdown():
-            self.publisher1.publish('Current: 10')
-            # self.publisher.publish(self.data)
-            self.main_loop_rate_obj.sleep()
+            if self.UI_mode == 'passive':
+                pass # Don't publish anything.
+            elif self.UI_mode == 'direct_control' and self.motor_pub_mode == 'position':
+                self.goal_pos_publisher.publish(self.goal_pos)
+            elif self.UI_mode == 'direct_control' and self.motor_pub_mode == 'current':
+                self.goal_cur_publisher.publish(self.goal_cur)
+            elif self.UI_mode == 'sinusoidal_motion_routine':
+                pass
+
+            self.motor_command_loop_rate_obj.sleep()
 
     def pub2_function(self,event=None):
         """This is a function that does something (publishes) at a different than the main loop. Rate controlled by
@@ -50,8 +72,7 @@ class ComplexNode(object):
 
 def main():
     rospy.init_node('complex_node_example',anonymous=False,log_level=rospy.DEBUG)
-    complex_node = ComplexNode()
-    # rospy.spin() is not needed because there is an infinite main loop to keep everything alive.
+    _ = ControlNode()
 
 if __name__ == '__main__':
     main()

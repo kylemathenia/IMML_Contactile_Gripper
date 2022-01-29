@@ -30,6 +30,7 @@ class Gripper(object):
         self._calibrate_close()
         self.motor.switch_modes('ext_pos_control')
         self.motor.write_goal_pos(self.motor.MIN_POS_FULLY_OPEN)
+        time.sleep(1)  # Give time to fully open.
         rospy.loginfo('[CALIBRATE GRIPPER COMPLETE]')
 
     def _calibrate_open(self):
@@ -83,18 +84,14 @@ class Gripper(object):
 
     def _calibrate_close(self):
         """Finds self.motor.MAX_POS_FULLY_CLOSED. Executes the portion of the calibration for closing the gripper."""
-        closing_current = 7
-        max_velocity = 20
+        closing_current = 10
+        max_velocity = 25
         if self.motor.torque != 'on': self.motor.write_torque_mode('on')
         if self.motor.mode != 'cur_control': self.motor.switch_modes('cur_control')
 
         # Get the motor moving in the closed direction.
-        while True:
-            self.motor.write_goal_cur(closing_current)
-            moving,error = self.motor.read_moving()
-            if moving:
-                time.sleep(0.1)
-                break
+        self.motor.write_goal_cur(closing_current)
+        time.sleep(0.25)
 
         # Find self.motor.MAX_POS_FULLY_CLOSED
         while True:
@@ -110,7 +107,7 @@ class Gripper(object):
                     break
             # Make sure it isn't gaining too much speed.
             vel,error = self.motor.read_vel()
-            if vel > max_velocity: self.motor.write_goal_cur(1)
+            if vel > max_velocity: self.motor.write_goal_cur(closing_current//3)
             else: self.motor.write_goal_cur(closing_current)
         rospy.loginfo('[MAX_POS_FULLY_CLOSED] {}'.format(self.motor.MAX_POS_FULLY_CLOSED))
 

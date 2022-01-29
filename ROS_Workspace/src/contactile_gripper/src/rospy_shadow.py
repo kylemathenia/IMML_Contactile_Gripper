@@ -4,7 +4,8 @@ This is a shadow version of the rospy module to be used for debugging or executi
 """
 
 def logdebug(msg, *args, **kwargs):
-    print(msg)
+    pass
+    # print(msg)
 
 def loginfo(msg, *args, **kwargs):
     print(msg)

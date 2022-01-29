@@ -15,6 +15,7 @@ except:
     sys.path.append(dynamixel_sdk_path) # Path to dynamixel sdk package.
     from dynamixel_sdk import *
 import os
+import time
 import atexit
 import serial
 import serial.tools.list_ports
@@ -222,13 +223,31 @@ class XM430_W210(Dynamixel):
 
 def test():
     try:
-        m = XM430_W210(1, 'FT5NSNJ0', 2.0, 57600)
+        m = XM430_W210(1, 'FT5NSNJ0', 2.0, 4000000)
         rospy.logdebug('Mode: {}'.format(m.mode))
         rospy.logdebug('Torque: {}'.format(m.torque))
         rospy.logdebug('Status: {}'.format(m.status))
         m.write_goal_cur(0)
         m.write_torque_mode('on')
+        m.switch_modes('cur_control')
+
+        duration = 1
+        start = time.time()
+        counter = 0
+        while time.time() - start < duration:
+            m.read_pos()
+            counter += 1
+        rospy.loginfo('Reading position at a rate of: {}'.format(counter/duration))
+
+        start = time.time()
+        counter = 0
+        while time.time() - start < duration:
+            m.write_goal_cur(0)
+            counter += 1
+        rospy.loginfo('Writing current at a rate of: {}'.format(counter/duration))
+
         rospy.loginfo('Test passed.')
+
     except: rospy.loginfo('Test failed.')
 
 def main():
