@@ -15,8 +15,6 @@ class Gripper(object):
         # self.motor = dynamixel_motors.XM430_W210(1, 'FT5NSNJ0', 2.0, 57600)
         # self.motor = dynamixel_motors.XM430_W210(1, 'FT5NSNJ0', 2.0, 115200)
         self.motor = dynamixel_motors.XM430_W210(1, 'FT5NSNJ0', 2.0, 4000000)
-        self.motor.MIN_POS_FULLY_OPEN = None  # lower value
-        self.motor.MAX_POS_FULLY_CLOSED = None # higher value
         self.calibrate()
 
     def calibrate(self):

@@ -21,7 +21,7 @@ class MotorNode(object):
         self.change_mode_srv = rospy.Service('change_mode_srv', ChangeMode, self.handle_change_mode)
 
         rospy.on_shutdown(self.shutdown_function)
-        self.pub_loop_rate = 30 # Hz
+        self.pub_loop_rate = 5 # Hz
         self.pub_loop_rate_obj = rospy.Rate(self.pub_loop_rate)
 
         self.gripper = gripper.Gripper()
@@ -40,13 +40,13 @@ class MotorNode(object):
         return ChangeModeResponse('Mode changed')
 
     def goal_pos_callback(self,msg):
-        pass
+        self.gripper.motor.write_goal_pos(msg.data)
 
     def pub_loop(self):
         """This is the main loop for the node which executes at self.pub_loop_rate."""
         while not rospy.is_shutdown():
             pos,err = self.gripper.motor.read_pos()
-            self.motor_publisher.publish(pos)
+            if not err: self.motor_publisher.publish(pos)
             self.pub_loop_rate_obj.sleep()
 
     def shutdown_function(self):

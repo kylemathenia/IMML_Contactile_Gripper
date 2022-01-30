@@ -25,9 +25,7 @@ class Dynamixel(object):
     """Base class for Dynamixel motors."""
 
     def __init__(self):
-        self.MAX_CURRENT_ABS = 50
-        self.MIN_POS_FULLY_OPEN = None  # lower value
-        self.MAX_POS_FULLY_CLOSED = None # higher value
+        pass
 
     def write_goal_pos(self,value):
         if value < self.MIN_POS_FULLY_OPEN: value = self.MIN_POS_FULLY_OPEN
@@ -222,6 +220,9 @@ class XM430_W210(Dynamixel):
         self.operating_modes = {'cur_control': 0, 'vel_control': 1, 'pos_control': 3, 'ext_pos_control': 4,
                                 'cur_based_pos_control': 5, 'PWM_control': 16}
         self.torque_modes = {'on': 1, 'off': 0}
+        self.MAX_CURRENT_ABS = 50
+        self.MIN_POS_FULLY_OPEN = -10000000  # lower value
+        self.MAX_POS_FULLY_CLOSED = 10000000 # higher value
         atexit.register(self.shutdown)
         self.initialize()
 

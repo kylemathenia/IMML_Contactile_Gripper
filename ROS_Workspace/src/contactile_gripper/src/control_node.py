@@ -37,6 +37,7 @@ class ControlNode(object):
 
     def motor_pos_callback(self,msg):
         """Read the encoder position of the motor."""
+        rospy.logdebug('Motor position callback: {}'.format(msg.data))
         self.motor_pos = msg.data
         if not self.motor_pos_set: self.motor_pos_set = True  # Flag for node startup.
 
@@ -45,7 +46,6 @@ class ControlNode(object):
         try:
             assert msg.data in self.UI_mode_options
             if msg.data == 'passive': pass # service call was made directly in the ui_node to make passive.
-                # TODO: Will other published messages in the queue after the blocked call cause a problem? Think not.
             elif msg.data == 'position_control':
                 self.goal_pos = self.motor_pos
                 _ = self.change_mode_srv_client('position_control')
@@ -53,7 +53,7 @@ class ControlNode(object):
         except: rospy.logwarn('Cannot change UI mode. {} not in UI mode options: {}'.format(msg.data,self.UI_mode_options))
 
     def UI_input_callback(self,msg):
-        """Callback for when the user inputs a command o the ui."""
+        """Callback for when the user inputs a command in the ui node."""
         if self.UI_mode == 'position_control':
             self.goal_pos = self.goal_pos + int(msg.data)
 
