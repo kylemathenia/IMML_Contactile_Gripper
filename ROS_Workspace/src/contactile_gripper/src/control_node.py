@@ -16,13 +16,14 @@ class ControlNode(object):
         self.goal_cur_publisher = rospy.Publisher('Goal_Current', Int32, queue_size=1)
         self.motor_pos_subscriber = rospy.Subscriber('Motor_Position', Int32, self.motor_pos_callback, queue_size=1, buff_size=100)
         self.motor_pos_subscriber = rospy.Subscriber('UI_Mode', String, self.UI_mode_callback, queue_size=100, buff_size=10000)
+        self.motor_pos_subscriber = rospy.Subscriber('UI_Input', String, self.UI_input_callback, queue_size=100, buff_size=10000)
         rospy.on_shutdown(self.shutdown_function)
         self.motor_command_loop_rate = 30  # Hz
         self.motor_command_loop_rate_obj = rospy.Rate(self.motor_command_loop_rate)
         self.pub2_freq = 0.2  # Hz
         rospy.Timer(rospy.Duration(1/self.pub2_freq), self.pub2_function)
 
-        self.UI_mode_options = set({'passive','direct_control','sinusoidal_motion_routine'})
+        self.UI_mode_options = set({'passive','position_control','sinusoidal_motion_routine'})
         self.UI_mode = 'passive'
         self.UI_mode = 'direct_control'
         self.motor_pub_mode = 'current'
@@ -45,15 +46,17 @@ class ControlNode(object):
             self.UI_mode = msg.data
         except: rospy.logwarn('Cannot change UI mode. {} not in UI mode options: {}'.format(msg.data,self.UI_mode_options))
 
+    def UI_input_callback(self,msg):
+        if UI_mode = 'direct_control' and msg.data = 'e':
+            self.goal_pos = self.goal_pos + 5
+
     def motor_command_loop(self):
         """Publishes motor commands to the motor depending on the current operating mode parameters."""
         while not rospy.is_shutdown():
             if self.UI_mode == 'passive':
                 pass # Don't publish anything.
-            elif self.UI_mode == 'direct_control' and self.motor_pub_mode == 'position':
+            elif self.UI_mode == 'position_control' and self.motor_pub_mode == 'position':
                 self.goal_pos_publisher.publish(self.goal_pos)
-            elif self.UI_mode == 'direct_control' and self.motor_pub_mode == 'current':
-                self.goal_cur_publisher.publish(self.goal_cur)
             elif self.UI_mode == 'sinusoidal_motion_routine':
                 pass
 
