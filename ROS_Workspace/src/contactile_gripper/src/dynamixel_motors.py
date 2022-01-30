@@ -23,7 +23,6 @@ import serial.tools.list_ports
 
 class Dynamixel(object):
     """Base class for Dynamixel motors."""
-
     def __init__(self):
         pass
 
@@ -91,7 +90,7 @@ class Dynamixel(object):
         rospy.logdebug('[write_current_limit] {}'.format(value))
         try: assert self.torque == 'off'
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req torque: off ''({})'.format(self.torque))
-        dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.self.addr_current_limit, value)
+        dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.addr_current_limit, value)
         self.log_com_if_error(dxl_comm_result, dxl_error)
 
     def switch_modes(self,mode):
@@ -171,7 +170,7 @@ class Dynamixel(object):
         # Find and set the current operating mode, and set current.
         self.read_mode()
         self.write_torque_mode('off')
-        self.write_current_limit(self.max_current)
+        self.write_current_limit(self.MAX_CURRENT_ABS)
         self.status = 'initialized'
         rospy.loginfo('[motor status] {}'.format(self.status))
 
@@ -203,7 +202,7 @@ class XM430_W210(Dynamixel):
     """Class for the XM430_W210 motor.
     Find the serial number with 'comports = serial.tools.list_ports.comports()' & 'comport.serial_number"""
 
-    def __init__(self, id, serial_number, protocol_version, baud_rate):
+    def __init__(self, id, serial_number, protocol_version, baud_rate, current_limit = 50):
         super(Dynamixel,self).__init__()
         self.id = id
         self.baud_rate = baud_rate
@@ -237,10 +236,9 @@ class XM430_W210(Dynamixel):
         self.operating_modes = {'cur_control': 0, 'vel_control': 1, 'pos_control': 3, 'ext_pos_control': 4,
                                 'cur_based_pos_control': 5, 'PWM_control': 16}
         self.torque_modes = {'on': 1, 'off': 0}
-        self.MAX_CURRENT_ABS = 50
+        self.MAX_CURRENT_ABS = current_limit
         self.MIN_POS_FULLY_OPEN = -10000000  # lower value
         self.MAX_POS_FULLY_CLOSED = 10000000 # higher value
-        self.max_current = 50
         atexit.register(self.shutdown)
         self.initialize()
 
