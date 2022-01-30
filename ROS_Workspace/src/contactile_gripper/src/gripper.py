@@ -25,43 +25,26 @@ class Gripper(object):
         if self.motor.status != 'initialized': self.motor.initialize()
         # Make sure the motor pos is far away from the zero position to keep limit number positive.
         self.motor.write_torque_mode('off')
-        self.motor.write_homing_offset(10000)
+        self.motor.write_homing_offset(100000)
         self._calibrate_open()
+        self.fully_open()
         self._calibrate_close()
-        self.motor.switch_modes('ext_pos_control')
+        self.motor.switch_modes('cur_based_pos_control')
         self.motor.write_goal_pos(self.motor.MIN_POS_FULLY_OPEN)
         time.sleep(1)  # Give time to fully open.
         rospy.loginfo('[CALIBRATE GRIPPER COMPLETE]')
 
     def _calibrate_open(self):
         """Finds self.motor.MIN_POS_FULLY_OPEN. Executes the portion of the calibration for opening the gripper."""
-        not_done = True
         opening_current = -7
-        start_time = time.time()
         if self.motor.torque != 'on': self.motor.write_torque_mode('on')
         if self.motor.mode != 'cur_control': self.motor.switch_modes('cur_control')
 
-        # Start by getting the motor moving. The moving flag controls the program flow.
-        while True:
-            time_elapsed = time.time() - start_time
-            self.motor.write_goal_cur(opening_current)
-            moving,error = self.motor.read_moving()
-            # If the routine starts with the gripper already fully open the gripper will never start moving.
-            # After 2 seconds, assume this is the case. Save MIN_POS_FULLY_OPEN.
-            if not moving and time_elapsed > 2:
-                while True:  # Make sure that we record a good value. Gripper will break if this is wrong.
-                    pos, error = self.motor.read_pos()
-                    if not error: break
-                self.motor.MIN_POS_FULLY_OPEN = pos + self.motor.pos_buffer
-                self.motor.write_goal_cur(0)
-                not_done = False
-                break
-            if moving:
-                time.sleep(0.05)  # Give it some time to make sure it is above the moving threshold.
-                break
-
+        # Get the motor moving in the open direction.
+        self.motor.write_goal_cur(opening_current)
+        time.sleep(0.5)
         # Find self.motor.MIN_POS_FULLY_OPEN
-        while not_done:
+        while True:
             moving, error = self.motor.read_moving()
             if not moving:  # Gripper is fully open.
                 time.sleep(1) # Check that it wasn't just momentarily stuck.
@@ -73,12 +56,15 @@ class Gripper(object):
                     self.motor.MIN_POS_FULLY_OPEN = pos + self.motor.pos_buffer
                     self.motor.write_goal_cur(0)
                     break
-            self.motor.write_goal_cur(opening_current)
 
-        # Move to MIN_POS_FULLY_OPEN (which includes the buffer offset) and stop.
-        self.motor.switch_modes('ext_pos_control')
+    def fully_open(self):
+        """Move to MIN_POS_FULLY_OPEN (which includes the buffer offset)."""
+        self.motor.switch_modes('cur_based_pos_control')
         self.motor.write_goal_pos(self.motor.MIN_POS_FULLY_OPEN)
-        time.sleep(0.5)
+        pos, error = self.motor.read_pos()
+        while pos > 1.05*self.motor.MIN_POS_FULLY_OPEN:
+            pos, error = self.motor.read_pos()
+            time.sleep(0.2)
         rospy.loginfo('[MIN_POS_FULLY_OPEN] {}'.format(self.motor.MIN_POS_FULLY_OPEN))
         time.sleep(0.5)
 
@@ -115,9 +101,8 @@ class Gripper(object):
         pass
 
 def test():
-    try:
-        g = Gripper()
-    except: rospy.loginfo('Test failed.')
+    g = Gripper()
+    rospy.loginfo('Test passed.')
 
 def main():
     test()

@@ -31,7 +31,7 @@ class Dynamixel(object):
         if value < self.MIN_POS_FULLY_OPEN: value = self.MIN_POS_FULLY_OPEN
         elif value > self.MAX_POS_FULLY_CLOSED: value = self.MAX_POS_FULLY_CLOSED
         rospy.logdebug('[write_goal_pos] {}'.format(value))
-        try: assert self.mode == 'pos_control' or self.mode == 'ext_pos_control' and self.torque == 'on'
+        try: assert self.mode == 'pos_control' or self.mode == 'ext_pos_control' or self.mode == 'cur_based_pos_control' and self.torque == 'on'
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req mode: pos_control ({}), '
                                              'req torque: on ''({})'.format(self.mode, self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, self.id,self.addr_goal_pos, value)
@@ -124,6 +124,13 @@ class Dynamixel(object):
         rospy.loginfo('[motor operating mode] {}'.format(self.mode))
         return mode, error
 
+    def read_homing_offset(self):
+        result, dxl_comm_result, dxl_error = self.packetHandler.read4ByteTxRx(self.portHandler, self.id, self.addr_homing_offset)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
+        rospy.logdebug('[read_vel] {}'.format(result))
+        return result, error
+
+
     def log_com_if_error(self,dxl_comm_result,dxl_error):
         """Logs and returns True/False if there was a com error."""
         error = False
@@ -150,6 +157,7 @@ class Dynamixel(object):
         result, dxl_comm_result, dxl_error = self.packetHandler.read1ByteTxRx(self.portHandler, self.id, self.addr_operating_mode)
         error = self.log_com_if_error(dxl_comm_result, dxl_error)
         if error:
+            rospy.logfatal('Result: {}'.format(result))
             rospy.logfatal('Test communication failed. Check baud rate, connection, and power.')
             raise Exception
         else: rospy.loginfo('Established motor coms.')

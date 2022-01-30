@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/dynamixel_motors.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/dynamixel_motors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +36,7 @@
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.gripper">
     <configuration name="exp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="IMML_Contactile_Gripper" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -60,8 +58,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="gripper" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="IMML_Contactile_Gripper" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.gripper" />
         <item itemvalue="Python.exp" />
       </list>
     </recent_temporary>
