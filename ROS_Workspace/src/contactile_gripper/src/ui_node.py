@@ -25,7 +25,7 @@ class UiNode(object):
         self.UI_input_pub = rospy.Publisher('UI_Input',String, queue_size=1)
         self.UI_mode_pub = rospy.Publisher('UI_Mode',String, queue_size=100)
 
-        self.mode_options = set({'passive', 'position_control', 'sinusoidal_motion_routine'})
+        self.mode_options = set({'passive', 'cur_based_pos_control', 'sinusoidal_motion_routine'})
         self.mode = 'passive'
         self.position_increment = 5
         rospy.loginfo(self.get_prompt())
@@ -36,7 +36,7 @@ class UiNode(object):
             key = getKey()
             if key == '': pass # No entry. This is happening often very fast when nothing is pressed.
             elif self.mode == 'passive': self.passive_func(key)
-            elif self.mode == 'position_control': self.position_control_func(key)
+            elif self.mode == 'cur_based_pos_control': self.cur_based_pos_control_func(key)
             elif self.mode == 'sinusoidal_motion_routine': self.sinusoidal_func(key)
 
     def change_mode_srv_client(self,mode):
@@ -50,15 +50,15 @@ class UiNode(object):
 
     def passive_func(self,key):
         if key == '1':
-            for _ in range(3): self.UI_mode_pub.publish('position_control')
-            self.mode = 'position_control'
+            for _ in range(3): self.UI_mode_pub.publish('cur_based_pos_control')
+            self.mode = 'cur_based_pos_control'
             rospy.loginfo(self.get_prompt())
         elif key == '2':
             self.mode = 'sinusoidal_motion_routine'
             for _ in range(3): self.UI_mode_pub.publish('sinusoidal_motion_routine')
             rospy.loginfo(self.get_prompt())
 
-    def position_control_func(self,key):
+    def cur_based_pos_control_func(self,key):
         """f/d : open/close, r/e : increase/decrease increment, backspace: back, space/enter:
         EMERGENCY OFF/PASSIVE MODE"""
         if key == ' ' or key == '\r' or key == '\x1b' or key == '\x7f': # EMERGENCY OFF/PASSIVE or backspace.
@@ -96,7 +96,7 @@ class UiNode(object):
         """Returns the prompt for the current UI screen as a string."""
         if self.mode == 'passive':
             return '\n\nPASSIVE MODE\n1: position control\n2: sinusoidal routine'
-        elif self.mode == 'position_control':
+        elif self.mode == 'cur_based_pos_control':
             return """
             \n\nPOSITION CONTROL MODE\n
             d/f : open/close

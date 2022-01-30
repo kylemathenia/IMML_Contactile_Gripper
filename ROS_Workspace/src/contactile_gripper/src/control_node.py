@@ -23,9 +23,9 @@ class ControlNode(object):
         self.motor_command_loop_rate = 30  # Hz
         self.motor_command_loop_rate_obj = rospy.Rate(self.motor_command_loop_rate)
 
-        self.UI_mode_options = set({'passive','position_control','sinusoidal_motion_routine'})
+        self.UI_mode_options = set({'passive','cur_based_pos_control','sinusoidal_motion_routine'})
         self.UI_mode = 'passive'
-        self.UI_mode = 'position_control'
+        self.UI_mode = 'cur_based_pos_control'
         self.motor_pos = None
         self.motor_pos_set = False
         # Wait for motor_pos_subscriber to set motor_pos so goal_pos doesn't break the gripper trying to go to bad pos.
@@ -46,15 +46,15 @@ class ControlNode(object):
         try:
             assert msg.data in self.UI_mode_options
             if msg.data == 'passive': pass # service call was made directly in the ui_node to make passive.
-            elif msg.data == 'position_control':
+            elif msg.data == 'cur_based_pos_control':
                 self.goal_pos = self.motor_pos
-                _ = self.change_mode_srv_client('position_control')
+                _ = self.change_mode_srv_client('cur_based_pos_control')
             self.UI_mode = msg.data
         except: rospy.logwarn('Cannot change UI mode. {} not in UI mode options: {}'.format(msg.data,self.UI_mode_options))
 
     def UI_input_callback(self,msg):
         """Callback for when the user inputs a command in the ui node."""
-        if self.UI_mode == 'position_control':
+        if self.UI_mode == 'cur_based_pos_control':
             self.goal_pos = self.goal_pos + int(msg.data)
 
     def motor_command_loop(self):
@@ -62,7 +62,7 @@ class ControlNode(object):
         while not rospy.is_shutdown():
             if self.UI_mode == 'passive':
                 pass # Don't publish anything.
-            elif self.UI_mode == 'position_control':
+            elif self.UI_mode == 'cur_based_pos_control':
                 self.goal_pos_publisher.publish(self.goal_pos)
             elif self.UI_mode == 'sinusoidal_motion_routine':
                 # todo need to figure out how routines will be run from here.

@@ -19,24 +19,23 @@ class MotorNode(object):
         self.goal_pos_subscriber = rospy.Subscriber('Goal_Position', Int32, self.goal_pos_callback, queue_size=1, buff_size = 100)
         self.motor_publisher = rospy.Publisher('Motor_Position',Int32, queue_size=1)
         self.change_mode_srv = rospy.Service('change_mode_srv', ChangeMode, self.handle_change_mode)
-
         rospy.on_shutdown(self.shutdown_function)
         self.pub_loop_rate = 5 # Hz
         self.pub_loop_rate_obj = rospy.Rate(self.pub_loop_rate)
 
         self.gripper = gripper.Gripper()
-        self.data = None
-        self.gripper.motor.switch_modes('cur_control')
+        self.gripper.motor.switch_modes('cur_based_pos_control')
 
         self.pub_loop()
 
     def handle_change_mode(self,req):
-        if req.mode == 'passive':
+        if req.mode == 'passive':  # Use while loop to make sure it turns torque off.
             com_error = True
-            while com_error:  # While loop to make sure it turns torque off.
+            while com_error:
                 com_error = self.gripper.motor.write_torque_mode('off')
-        elif req.mode == 'position_control':
-            self.gripper.motor.switch_modes('ext_pos_control')
+        elif req.mode == 'cur_based_pos_control':
+            self.gripper.motor.switch_modes('cur_based_pos_control')
+        else: rospy.logerr('Change mode service failed. "{}" is not a valid mode.'.format(req.mode))
         return ChangeModeResponse('Mode changed')
 
     def goal_pos_callback(self,msg):
