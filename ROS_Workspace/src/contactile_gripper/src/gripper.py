@@ -14,6 +14,7 @@ class Gripper(object):
     def __init__(self):
         self.motor = dynamixel_motors.XM430_W210(1, 'FT5NSNJ0', 2.0, 4000000)
         self.grip_range = 4000  # Found from experimentation. Used for fast start method.
+
         # self.fast_start()
         self.calibrate()
 

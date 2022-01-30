@@ -87,6 +87,13 @@ class Dynamixel(object):
         self.log_com_if_error(dxl_comm_result, dxl_error)
         self.mode = mode
 
+    def write_current_limit(self,value):
+        rospy.logdebug('[write_current_limit] {}'.format(value))
+        try: assert self.torque == 'off'
+        except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req torque: off ''({})'.format(self.torque))
+        dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.self.addr_current_limit, value)
+        self.log_com_if_error(dxl_comm_result, dxl_error)
+
     def switch_modes(self,mode):
         """Arguments: 'cur_control', 'vel_control', 'pos_control', 'ext_pos_control', 'cur_based_pos_control', 'PWM_control'
         Leaves the motor torque on."""
@@ -161,9 +168,10 @@ class Dynamixel(object):
             rospy.logfatal('Test communication failed. Check baud rate, connection, and power.')
             raise Exception
         else: rospy.loginfo('Established motor coms.')
-        # Find and set the current operating mode.
+        # Find and set the current operating mode, and set current.
         self.read_mode()
         self.write_torque_mode('off')
+        self.write_current_limit(self.max_current)
         self.status = 'initialized'
         rospy.loginfo('[motor status] {}'.format(self.status))
 
@@ -213,6 +221,7 @@ class XM430_W210(Dynamixel):
         self.addr_protocol_type = 13
         self.addr_homing_offset = 20
         self.addr_moving_threshold = 24
+        self.addr_current_limit = 38
         self.addr_shutdown = 63
         self.addr_torque_mode = 64
         self.addr_goal_PWM = 100
@@ -231,6 +240,7 @@ class XM430_W210(Dynamixel):
         self.MAX_CURRENT_ABS = 50
         self.MIN_POS_FULLY_OPEN = -10000000  # lower value
         self.MAX_POS_FULLY_CLOSED = 10000000 # higher value
+        self.max_current = 50
         atexit.register(self.shutdown)
         self.initialize()
 
