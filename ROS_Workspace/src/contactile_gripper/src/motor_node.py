@@ -27,7 +27,7 @@ class MotorNode(object):
         self.pub_loop()
 
     def goal_pos_callback(self,msg):
-        self.gripper.motor.write_goal_cur(0)
+        pass
 
     def pub_loop(self):
         """This is the main loop for the node which executes at self.pub_loop_rate."""

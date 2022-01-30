@@ -4,33 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c27bb78a-37f8-47fb-aa0a-8bb522cb7780" name="Changes" comment="">
+    <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/exp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_test_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/IMML_Contactile_Gripper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IMML_Contactile_Gripper.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/dynamixel_motors.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/dynamixel_motors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/rospy_shadow.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/rospy_shadow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="239zDgQsKgitRHwTe6v4soEK63V" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="24OXCbhPnKgVfINR2Sw9TTpkMgi" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -38,10 +28,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.dynamixel_motors (1)">
-    <configuration name="dynamixel_motors (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="exp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="IMML_Contactile_Gripper" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -53,49 +42,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/dynamixel_motors.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="dynamixel_motors" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Contactile_IMML" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/support_pkg/src/support_pkg" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/support_pkg/src/support_pkg/dynamixel_motors.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test_support" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Contactile_IMML" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/contactile_gripper/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/contactile_gripper/src/test_support.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/exp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -106,40 +53,27 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.dynamixel_motors (1)" />
-        <item itemvalue="Python.test_support" />
-        <item itemvalue="Python.dynamixel_motors" />
+        <item itemvalue="Python.exp" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c27bb78a-37f8-47fb-aa0a-8bb522cb7780" name="Changes" comment="" />
-      <created>1641160972899</created>
+      <changelist id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="" />
+      <created>1643502479415</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1641160972899</updated>
+      <updated>1643502479415</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py</url>
-          <line>5</line>
+          <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/exp.py</url>
+          <line>19</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
