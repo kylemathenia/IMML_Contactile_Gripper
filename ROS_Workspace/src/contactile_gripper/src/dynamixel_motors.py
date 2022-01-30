@@ -22,12 +22,16 @@ import serial.tools.list_ports
 
 
 class Dynamixel(object):
-    """Class for Dynamixel motors."""
+    """Base class for Dynamixel motors."""
 
     def __init__(self):
-        pass
+        self.MAX_CURRENT_ABS = 50
+        self.MIN_POS_FULLY_OPEN = None  # lower value
+        self.MAX_POS_FULLY_CLOSED = None # higher value
 
     def write_goal_pos(self,value):
+        if value < self.MIN_POS_FULLY_OPEN: value = self.MIN_POS_FULLY_OPEN
+        elif value > self.MAX_POS_FULLY_CLOSED: value = self.MAX_POS_FULLY_CLOSED
         rospy.logdebug('[write_goal_pos] {}'.format(value))
         try: assert self.mode == 'pos_control' or self.mode == 'ext_pos_control' and self.torque == 'on'
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req mode: pos_control ({}), '
@@ -43,6 +47,9 @@ class Dynamixel(object):
         self.log_com_if_error(dxl_comm_result, dxl_error)
 
     def write_goal_cur(self,value):
+        """Positive/negative = closing/opening"""
+        if value > self.MAX_CURRENT_ABS: value = self.MAX_CURRENT_ABS
+        elif value < -self.MAX_CURRENT_ABS: value = -self.MAX_CURRENT_ABS
         rospy.logdebug('[write_goal_cur] {}'.format(value))
         try: assert self.mode == 'cur_control' and self.torque == 'on'
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req mode: cur_control ({}), '
@@ -179,7 +186,7 @@ class Dynamixel(object):
 
 
 class XM430_W210(Dynamixel):
-    """Class for the XM430_W210 motor. Inherits from the Dynamixel class.
+    """Class for the XM430_W210 motor.
     Find the serial number with 'comports = serial.tools.list_ports.comports()' & 'comport.serial_number"""
 
     def __init__(self, id, serial_number, protocol_version, baud_rate):
