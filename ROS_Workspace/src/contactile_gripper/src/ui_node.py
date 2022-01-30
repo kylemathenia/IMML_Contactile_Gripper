@@ -7,8 +7,10 @@ subscriber. This examples does not function.
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Int32
+from contactile_gripper.srv import *
 import sys, select, termios, tty
 settings = termios.tcgetattr(sys.stdin)
+
 def getKey():
     tty.setraw(sys.stdin.fileno())
     rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
@@ -36,6 +38,15 @@ class UiNode(object):
             elif self.mode == 'passive': self.passive_func(key)
             elif self.mode == 'position_control': self.position_control_func(key)
             elif self.mode == 'sinusoidal_motion_routine': self.sinusoidal_func(key)
+
+    def change_mode_srv_client(self,mode):
+        rospy.wait_for_service('change_mode_srv')
+        try:
+            change_mode_srv = rospy.ServiceProxy('change_mode_srv',ChangeMode)
+            msg = change_mode_srv(mode)
+            return msg.response
+        except:
+            rospy.logerr('Change mode service failed.')
 
     def passive_func(self,key):
         if key == '1':
@@ -76,7 +87,8 @@ class UiNode(object):
             self.UI_input_pub.publish('start')
 
     def change_to_passive(self):
-        for _ in range(10): self.UI_mode_pub.publish('passive')
+        _ = self.change_mode_srv_client('passive')
+        self.UI_mode_pub.publish('passive')
         self.mode = 'passive'
         rospy.loginfo(self.get_prompt())
 

@@ -3,6 +3,6 @@ prefix=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel
 Name: contactile_gripper
 Description: Description of contactile_gripper
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include
 Libs: -L${prefix}/lib 
 Requires: 

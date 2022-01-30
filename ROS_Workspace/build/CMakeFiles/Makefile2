@@ -264,7 +264,7 @@ gtest/googlemock/preinstall: gtest/googlemock/gtest/preinstall
 gtest/googlemock/CMakeFiles/gmock_main.dir/all:
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=14,15,16,17 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=21,22,23,24 "Built target gmock_main"
 .PHONY : gtest/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -296,7 +296,7 @@ clean: gtest/googlemock/CMakeFiles/gmock_main.dir/clean
 gtest/googlemock/CMakeFiles/gmock.dir/all:
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=11,12,13 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=18,19,20 "Built target gmock"
 .PHONY : gtest/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -347,7 +347,7 @@ gtest/googlemock/gtest/preinstall:
 gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/all: gtest/googlemock/gtest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/build.make gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/build.make gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=20,21 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=27,28 "Built target gtest_main"
 .PHONY : gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -379,7 +379,7 @@ clean: gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/clean
 gtest/googlemock/gtest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/googlemock/gtest/CMakeFiles/gtest.dir/build.make gtest/googlemock/gtest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/googlemock/gtest/CMakeFiles/gtest.dir/build.make gtest/googlemock/gtest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=18,19 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=25,26 "Built target gtest"
 .PHONY : gtest/googlemock/gtest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -408,23 +408,35 @@ clean: gtest/googlemock/gtest/CMakeFiles/gtest.dir/clean
 # Directory level rules for directory contactile_gripper
 
 # Convenience name for "all" pass in the directory.
-contactile_gripper/all:
+contactile_gripper/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all
 
 .PHONY : contactile_gripper/all
 
 # Convenience name for "clean" pass in the directory.
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/roscpp_generate_messages_py.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/roscpp_generate_messages_eus.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/roscpp_generate_messages_lisp.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/roscpp_generate_messages_cpp.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
+contactile_gripper/clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/roscpp_generate_messages_nodejs.dir/clean
 contactile_gripper/clean: contactile_gripper/CMakeFiles/std_msgs_generate_messages_py.dir/clean
@@ -435,6 +447,266 @@ contactile_gripper/clean: contactile_gripper/CMakeFiles/std_msgs_generate_messag
 contactile_gripper/preinstall:
 
 .PHONY : contactile_gripper/preinstall
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/all: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/all: contactile_gripper/CMakeFiles/std_msgs_generate_messages_py.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=6,7 "Built target contactile_gripper_generate_messages_py"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/rule
+
+# Convenience name for target.
+contactile_gripper_generate_messages_py: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/rule
+
+.PHONY : contactile_gripper_generate_messages_py
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/all: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/all: contactile_gripper/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=5 "Built target contactile_gripper_generate_messages_nodejs"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+contactile_gripper_generate_messages_nodejs: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/rule
+
+.PHONY : contactile_gripper_generate_messages_nodejs
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num= "Built target contactile_gripper_gennodejs"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/rule
+
+# Convenience name for target.
+contactile_gripper_gennodejs: contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/rule
+
+.PHONY : contactile_gripper_gennodejs
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/all: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/all: contactile_gripper/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=4 "Built target contactile_gripper_generate_messages_lisp"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+contactile_gripper_generate_messages_lisp: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/rule
+
+.PHONY : contactile_gripper_generate_messages_lisp
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/all: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/all: contactile_gripper/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=2,3 "Built target contactile_gripper_generate_messages_eus"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+contactile_gripper_generate_messages_eus: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/rule
+
+.PHONY : contactile_gripper_generate_messages_eus
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num= "Built target contactile_gripper_gencpp"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/rule
+
+# Convenience name for target.
+contactile_gripper_gencpp: contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/rule
+
+.PHONY : contactile_gripper_gencpp
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/all:
+	$(MAKE) -f contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/build.make contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/build.make contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num= "Built target _contactile_gripper_generate_messages_check_deps_ChangeMode"
+.PHONY : contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/rule
+
+# Convenience name for target.
+_contactile_gripper_generate_messages_check_deps_ChangeMode: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/rule
+
+.PHONY : _contactile_gripper_generate_messages_check_deps_ChangeMode
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/build.make contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num= "Built target contactile_gripper_genpy"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/rule
+
+# Convenience name for target.
+contactile_gripper_genpy: contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/rule
+
+.PHONY : contactile_gripper_genpy
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/clean
+
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target contactile_gripper/CMakeFiles/roscpp_generate_messages_py.dir
@@ -497,6 +769,38 @@ contactile_gripper/CMakeFiles/roscpp_generate_messages_eus.dir/clean:
 
 # clean rule for target.
 clean: contactile_gripper/CMakeFiles/roscpp_generate_messages_eus.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num= "Built target contactile_gripper_geneus"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/rule
+
+# Convenience name for target.
+contactile_gripper_geneus: contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/rule
+
+.PHONY : contactile_gripper_geneus
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/clean
 
 .PHONY : clean
 
@@ -593,6 +897,39 @@ contactile_gripper/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean:
 
 # clean rule for target.
 clean: contactile_gripper/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/all: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/all: contactile_gripper/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=1 "Built target contactile_gripper_generate_messages_cpp"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+contactile_gripper_generate_messages_cpp: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/rule
+
+.PHONY : contactile_gripper_generate_messages_cpp
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/clean
 
 .PHONY : clean
 
@@ -725,6 +1062,38 @@ clean: contactile_gripper/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num= "Built target contactile_gripper_genlisp"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/rule
+
+# Convenience name for target.
+contactile_gripper_genlisp: contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/rule
+
+.PHONY : contactile_gripper_genlisp
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target contactile_gripper/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir
 
 # All Build rule for target.
@@ -817,6 +1186,47 @@ contactile_gripper/CMakeFiles/std_msgs_generate_messages_eus.dir/clean:
 
 # clean rule for target.
 clean: contactile_gripper/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir
+
+# All Build rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/all
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/all
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/depend
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num= "Built target contactile_gripper_generate_messages"
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all
+
+# Include target in all.
+all: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 7
+	$(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles 0
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/rule
+
+# Convenience name for target.
+contactile_gripper_generate_messages: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/rule
+
+.PHONY : contactile_gripper_generate_messages
+
+# clean rule for target.
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/clean:
+	$(MAKE) -f contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/build.make contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/clean
+.PHONY : contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/clean
+
+# clean rule for target.
+clean: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/clean
 
 .PHONY : clean
 
@@ -955,7 +1365,7 @@ dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/all: contactile_gripper/CMakeFiles/ro
 dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/all: contactile_gripper/CMakeFiles/std_msgs_generate_messages_py.dir/all
 	$(MAKE) -f dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/build.make dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/depend
 	$(MAKE) -f dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/build.make dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target dynamixel_sdk"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=8,9,10,11,12,13,14,15,16,17 "Built target dynamixel_sdk"
 .PHONY : dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/all
 
 # Include target in all.

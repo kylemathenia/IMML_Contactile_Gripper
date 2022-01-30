@@ -5,9 +5,133 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_gencpp.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_geneus.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_genlisp.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_gennodejs.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_genpy.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.develspace.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.installspace.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripper-msg-extras.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripper-msg-paths.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/stamps/contactile_gripper/pkg-genmsg.cmake.em.stamp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg-context.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/ChangeMode.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/ChangeModeRequest.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/ChangeModeResponse.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_ChangeMode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/ChangeMode.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_ChangeMode.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/contactile_gripper-srv.asd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/contactile_gripper/cmake/contactile_gripper-msg-extras.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/contactile_gripper/cmake/contactile_gripper-msg-paths.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/_index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/ChangeMode.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/_index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/manifest.l" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/ChangeMode.l" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/CMakeRuleHashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/CMakeRuleHashes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/atomic_configure/_setup_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/atomic_configure/_setup_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/generate_cached_setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/generate_cached_setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/installspace/_setup_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/installspace/_setup_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/order_packages.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/order_packages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/setup_cached.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/setup_cached.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/stamps/Project/_setup_util.py.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/stamps/Project/_setup_util.py.stamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripper.pc" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripper.pc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripperConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripperConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/package.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/package.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/pkg.develspace.context.pc.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/pkg.develspace.context.pc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/pkg.installspace.context.pc.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/pkg.installspace.context.pc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/stamps/contactile_gripper/package.xml.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/stamps/contactile_gripper/package.xml.stamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/dynamixel_sdk/catkin_generated/installspace/dynamixel_sdkConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/dynamixel_sdk/catkin_generated/installspace/dynamixel_sdkConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/_setup_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/_setup_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/lib/pkgconfig/contactile_gripper.pc" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/pkgconfig/contactile_gripper.pc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/contactile_gripper/cmake/contactile_gripperConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/contactile_gripper/cmake/contactile_gripperConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/dynamixel_sdk/cmake/dynamixel_sdkConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/dynamixel_sdk/cmake/dynamixel_sdkConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/package.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/exp.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_test_node.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +150,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
@@ -85,15 +210,7 @@
       </map>
     </option>
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/exp.py</url>
-          <line>19</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
