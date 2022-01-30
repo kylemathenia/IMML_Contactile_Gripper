@@ -12,16 +12,16 @@ except: import rospy_shadow as rospy
 class Gripper(object):
     """Class for the Oregon State IMML Contactile gripper."""
     def __init__(self):
-        # self.motor = dynamixel_motors.XM430_W210(1, 'FT5NSNJ0', 2.0, 57600)
-        # self.motor = dynamixel_motors.XM430_W210(1, 'FT5NSNJ0', 2.0, 115200)
         self.motor = dynamixel_motors.XM430_W210(1, 'FT5NSNJ0', 2.0, 4000000)
+        self.grip_range = 4000  # Found from experimentation. Used for fast start method.
+        # self.fast_start()
         self.calibrate()
 
     def calibrate(self):
         """Finds the motor positions for the maximum open and close gripper positions. Records them with slight safety buffer.
         Sets self.motor.MIN_POS_FULLY_OPEN and self.motor.MAX_POS_FULLY_CLOSED"""
         rospy.loginfo('[CALIBRATE GRIPPER START]')
-        self.motor.pos_buffer = 100  # units: 0.0791 degrees
+        self.motor.pos_buffer = 100  # units: 0.0791 degrees. Gives buffer from the actual physical hard stops.
         if self.motor.status != 'initialized': self.motor.initialize()
         # Make sure the motor pos is far away from the zero position to keep limit number positive.
         self.motor.write_torque_mode('off')
@@ -29,13 +29,13 @@ class Gripper(object):
         self._calibrate_open()
         self.fully_open()
         self._calibrate_close()
-        self.motor.switch_modes('cur_based_pos_control')
-        self.motor.write_goal_pos(self.motor.MIN_POS_FULLY_OPEN)
-        time.sleep(1)  # Give time to fully open.
+        self.fully_open()
+        self.grip_range = self.motor.MAX_POS_FULLY_CLOSED - self.motor.MIN_POS_FULLY_OPEN
+        rospy.loginfo('Gripper range: {}'.format(self.grip_range))
         rospy.loginfo('[CALIBRATE GRIPPER COMPLETE]')
 
     def _calibrate_open(self):
-        """Finds self.motor.MIN_POS_FULLY_OPEN. Executes the portion of the calibration for opening the gripper."""
+        """Finds the fully open gripper position, self.motor.MIN_POS_FULLY_OPEN."""
         opening_current = -7
         if self.motor.torque != 'on': self.motor.write_torque_mode('on')
         if self.motor.mode != 'cur_control': self.motor.switch_modes('cur_control')
@@ -56,17 +56,6 @@ class Gripper(object):
                     self.motor.MIN_POS_FULLY_OPEN = pos + self.motor.pos_buffer
                     self.motor.write_goal_cur(0)
                     break
-
-    def fully_open(self):
-        """Move to MIN_POS_FULLY_OPEN (which includes the buffer offset)."""
-        self.motor.switch_modes('cur_based_pos_control')
-        self.motor.write_goal_pos(self.motor.MIN_POS_FULLY_OPEN)
-        pos, error = self.motor.read_pos()
-        while pos > 1.05*self.motor.MIN_POS_FULLY_OPEN:
-            pos, error = self.motor.read_pos()
-            time.sleep(0.2)
-        rospy.loginfo('[MIN_POS_FULLY_OPEN] {}'.format(self.motor.MIN_POS_FULLY_OPEN))
-        time.sleep(0.5)
 
     def _calibrate_close(self):
         """Finds self.motor.MAX_POS_FULLY_CLOSED. Executes the portion of the calibration for closing the gripper."""
@@ -96,6 +85,24 @@ class Gripper(object):
             if vel > max_velocity: self.motor.write_goal_cur(closing_current//3)
             else: self.motor.write_goal_cur(closing_current)
         rospy.loginfo('[MAX_POS_FULLY_CLOSED] {}'.format(self.motor.MAX_POS_FULLY_CLOSED))
+
+    def fast_start(self):
+        """Instead of doing the full calibration routine at startup, just assume the closed gripper position based on
+        the hard coded gripper range."""
+        self._calibrate_open()
+        self.motor.MAX_POS_FULLY_CLOSED = self.MIN_POS_FULLY_OPEN + self.grip_range
+        self.fully_open()
+
+    def fully_open(self):
+        """Move to MIN_POS_FULLY_OPEN (which includes the buffer offset)."""
+        self.motor.switch_modes('cur_based_pos_control')
+        self.motor.write_goal_pos(self.motor.MIN_POS_FULLY_OPEN)
+        pos, error = self.motor.read_pos()
+        while pos > 1.05*self.motor.MIN_POS_FULLY_OPEN:  # Get within 5%.
+            pos, error = self.motor.read_pos()
+            time.sleep(0.2)
+        rospy.loginfo('[MIN_POS_FULLY_OPEN] {}'.format(self.motor.MIN_POS_FULLY_OPEN))
+        time.sleep(0.5)
 
     def __repr__(self):
         pass
