@@ -15,6 +15,7 @@ except:
     sys.path.append(dynamixel_sdk_path) # Path to dynamixel sdk package.
     from dynamixel_sdk import *
 import os
+import inspect
 import time
 import atexit
 import serial
@@ -34,7 +35,7 @@ class Dynamixel(object):
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req mode: pos_control ({}), '
                                              'req torque: on ''({})'.format(self.mode, self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, self.id,self.addr_goal_pos, value)
-        self.log_com_if_error(dxl_comm_result, dxl_error)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
 
     def write_goal_vel(self,value):
         rospy.logdebug('[write_goal_vel] {}'.format(value))
@@ -42,7 +43,7 @@ class Dynamixel(object):
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req mode: vel_control ({}), '
                                              'req torque: on ''({})'.format(self.mode, self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, self.id,self.addr_goal_vel, value)
-        self.log_com_if_error(dxl_comm_result, dxl_error)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
 
     def write_goal_cur(self,value):
         """Positive/negative = closing/opening"""
@@ -53,21 +54,21 @@ class Dynamixel(object):
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req mode: cur_control ({}), '
                                              'req torque: on ''({})'.format(self.mode, self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.addr_goal_cur, value)
-        self.log_com_if_error(dxl_comm_result, dxl_error)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
 
     def write_moving_threshold(self,value):
         rospy.loginfo('[write_moving_threshold] {}'.format(value))
         try: assert self.torque == 'off'
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req torque: off ''({})'.format(self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, self.id, self.addr_moving_threshold, value)
-        self.log_com_if_error(dxl_comm_result, dxl_error)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
 
     def write_homing_offset(self,value):
         rospy.logdebug('[write_homing_offset] {}'.format(value))
         try: assert self.torque == 'off'
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req torque: off ''({})'.format(self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, self.id, self.addr_homing_offset, value)
-        self.log_com_if_error(dxl_comm_result, dxl_error)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
 
     def write_torque_mode(self,mode):
         """Arguments: 'on','off' """
@@ -84,7 +85,7 @@ class Dynamixel(object):
         try: assert self.torque == 'off'
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req torque: off ''({})'.format(self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, self.id,self.addr_operating_mode,self.operating_modes[mode])
-        self.log_com_if_error(dxl_comm_result, dxl_error)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
         self.mode = mode
 
     def write_current_limit(self,value):
@@ -92,7 +93,7 @@ class Dynamixel(object):
         try: assert self.torque == 'off'
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req torque: off ''({})'.format(self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.addr_current_limit, value)
-        self.log_com_if_error(dxl_comm_result, dxl_error)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
 
     def switch_modes(self,mode):
         """Arguments: 'cur_control', 'vel_control', 'pos_control', 'ext_pos_control', 'cur_based_pos_control', 'PWM_control'
@@ -142,7 +143,7 @@ class Dynamixel(object):
         """Logs and returns True/False if there was a com error."""
         error = False
         if dxl_comm_result != COMM_SUCCESS:
-            rospy.logwarn("DYNAMIXEL COM FAILURE")
+            rospy.logwarn("DYNAMIXEL COM FAILURE in function: {}".format(inspect.stack()[1][3]))
             rospy.logwarn("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
             error = True
         if dxl_error != 0:

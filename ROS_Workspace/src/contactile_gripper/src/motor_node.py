@@ -20,7 +20,7 @@ class MotorNode(object):
         self.motor_publisher = rospy.Publisher('Motor_Position',Int32, queue_size=1)
         self.change_mode_srv = rospy.Service('change_mode_srv', ChangeMode, self.handle_change_mode)
         rospy.on_shutdown(self.shutdown_function)
-        self.pub_loop_rate = 5 # Hz
+        self.pub_loop_rate = 10 # Hz
         self.pub_loop_rate_obj = rospy.Rate(self.pub_loop_rate)
 
         self.gripper = gripper.Gripper()
