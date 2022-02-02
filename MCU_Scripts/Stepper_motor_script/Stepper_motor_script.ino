@@ -1,5 +1,70 @@
 #include <AccelStepper.h>
- 
+
+/* Example script for AccelStepper with Arduino
+
+/* o = open (CW) // needs steps and speed values
+ * c = close (CCW) //needs steps and speed values
+ * a = set acceleration // needs acceleration value
+ * n = stop right now! // just the 'n' is needed
+ * Command format: [letter][number of steps to move] [max speed]
+ * Example command: "c500 100" -> close 500 steps with a max speed of 100
+ */
+
+/*
+Wiring info: 
+--stepper--
+Pin 9 to Dir+
+Pin 8 to Pul+
+Pin 7 to Ena+
+Gnd to Pul-, Dir-, and Ena-
+--limit switches--
+Pin 2 to limit switch 1
+Pin 4 to limit switch 2
+Gnd to limit switch 1 and limit switch 2
+*/
+
+
+//const int limSwitch1Pin = 2;         // the number of the pushbutton pin
+//
+//// variables will change:
+//int buttonState = 0;         // variable for reading the pushbutton status
+//
+//void setup() {
+//  // initialize the pushbutton pin as an input with internal pullup resistor.:
+//  pinMode(limSwitch1Pin, INPUT_PULLUP);
+//  Serial.begin(9600);
+//}
+//
+//void loop() {
+//  // read the state of the pushbutton value:
+//  buttonState = digitalRead(limSwitch1Pin);
+//
+//  // check if the pushbutton is pressed. If it is, the buttonState is LOW:
+//  if (buttonState == LOW) {
+//    Serial.println(buttonState);
+//  }
+//  delay(10); //Debounce.
+//}
+
+
+
+
+
+
+
+ // pins
+const int limSwitch1Pin = 2;
+pinMode(limSwitch1Pin, INPUT_PULLUP)
+const int limSwitch2Pin = 4;
+pinMode(limSwitch1Pin, INPUT_PULLUP)
+const int dirPin = 9;
+const int pulPin = 8;
+const int enaPin = 7;
+pinMode(limSwitch1Pin, INPUT_PULLUP)
+
+
+// variables
+//int buttonState = 0;         // variable for reading the pushbutton status
 long receivedMMdistance = 0; //distance in mm from the computer
 long receivedDelay = 0; //delay between two steps, received from the computer
 long receivedAcceleration = 0; //acceleration value from computer
@@ -15,8 +80,10 @@ bool newData, runallowed = false; // booleans for new data from serial, and runa
  
  
  
-// direction Digital 9 (CCW), pulses Digital 8 (CLK)
+// Interface mode 1, direction Digital 9 (CW), pulses Digital 8 (CCW)
 AccelStepper stepper(1, 8, 9);
+// TODO: Need to verify if this is right. Need to set enable pin after construction per constructor documentation. 
+stepper.setEnablePin(7)
  
  
 void setup()
@@ -35,6 +102,23 @@ void setup()
  
 void loop()
 {
+
+//   // read the state of the pushbutton value:
+//  switchState = digitalRead(switchPin);
+// 
+//   // check if the pushbutton is pressed.
+//   // if it is, the buttonState is HIGH:
+//   if (switchState == HIGH) {
+//     // turn Motor off:
+//     Serial.println("Double coil steps");
+//   myMotor->step(0, FORWARD, DOUBLE); 
+//   myMotor->step(0, BACKWARD, DOUBLE);
+//   } else {
+//     // turn Motor: on.
+//      Serial.println("Double coil steps");
+//   myMotor->step(2000, FORWARD, DOUBLE); 
+//   myMotor->step(2000, BACKWARD, DOUBLE);
+//   }
  
   checkSerial(); //check serial port for new commands
  
@@ -72,7 +156,19 @@ void continuousRun2() //method for the motor
  
   }
 }
- 
+
+
+void disableOutputs() 
+{
+  
+}
+
+void enableOutputs() 
+{
+  
+}
+
+
 void checkSerial() //method for receiving the commands
 {  
   //switch-case would also work, and maybe more elegant
