@@ -1,13 +1,19 @@
 #include <AccelStepper.h>
+#include <arduino-timer.h>
 
-/* Example script for AccelStepper with Arduino
+/* Incoming communication protocol:
+ * Format: [mode][value]
+ * p = position mode
+ * s = speed mode
+ * x = off/passive mode
+ * Example: "p500" -> position mode, goal position of 500
+ * Example: "o1" -> off mode, 1 is unused, but 
+ */
 
-/* o = open (CW) // needs steps and speed values
- * c = close (CCW) //needs steps and speed values
- * a = set acceleration // needs acceleration value
- * n = stop right now! // just the 'n' is needed
- * Command format: [letter][number of steps to move] [max speed]
- * Example command: "c500 100" -> close 500 steps with a max speed of 100
+/* Outgoing communication protocol:
+ * Format: [lim switch 1 status]_[lim switch 2 status]_[current position]
+ * lim switch status: 1 if engaged, 0 if not.
+ * Example: "1_0_543" -> lim switch 1 engaged, lim switch 2 not engaged, current position is 543.
  */
 
 /*
@@ -18,251 +24,171 @@ Pin 8 to Pul+
 Pin 7 to Ena+
 Gnd to Pul-, Dir-, and Ena-
 --limit switches--
-Pin 2 to limit switch 1
-Pin 4 to limit switch 2
-Gnd to limit switch 1 and limit switch 2
+Pin 2 to limit switch 1 normally closed terminal
+Pin 4 to limit switch 2 normally closed terminal
+Gnd to limit switch 1 and limit switch 2 common terminal
 */
 
 
-//const int limSwitch1Pin = 2;         // the number of the pushbutton pin
-//
-//// variables will change:
-//int buttonState = 0;         // variable for reading the pushbutton status
-//
-//void setup() {
-//  // initialize the pushbutton pin as an input with internal pullup resistor.:
-//  pinMode(limSwitch1Pin, INPUT_PULLUP);
-//  Serial.begin(9600);
-//}
-//
-//void loop() {
-//  // read the state of the pushbutton value:
-//  buttonState = digitalRead(limSwitch1Pin);
-//
-//  // check if the pushbutton is pressed. If it is, the buttonState is LOW:
-//  if (buttonState == LOW) {
-//    Serial.println(buttonState);
-//  }
-//  delay(10); //Debounce.
-//}
-
-
-
-
-
-
-
- // pins
+// pins
 const int limSwitch1Pin = 2;
-pinMode(limSwitch1Pin, INPUT_PULLUP)
 const int limSwitch2Pin = 4;
-pinMode(limSwitch1Pin, INPUT_PULLUP)
 const int dirPin = 9;
 const int pulPin = 8;
 const int enaPin = 7;
-pinMode(limSwitch1Pin, INPUT_PULLUP)
+
+// lim switch
+int switch1State;
+int switch2State;
+
+// stepper
+char cmd_mode = 'x';
+long goal_vel;
+long cmd_pos;
+long cur_pos;
+int motorStatus; //0 for off, 1 for on.
+// Interface mode, direction Digital 9 (CW), pulses Digital 8 (CCW),enable mode on.
+AccelStepper stepper(AccelStepper::DRIVER, 8, 9, true);
+
+// other
+int rate = 1; //Hz
+auto timer = timer_create_default(); // create a timer with default settings
 
 
-// variables
-//int buttonState = 0;         // variable for reading the pushbutton status
-long receivedMMdistance = 0; //distance in mm from the computer
-long receivedDelay = 0; //delay between two steps, received from the computer
-long receivedAcceleration = 0; //acceleration value from computer
-char receivedCommand; //character for commands
-/* s = Start (CCW) // needs steps and speed values
- * o = open (CCW) // needs steps and speed values
- * c = close (CW) //needs steps and speed values
- * a = set acceleration // needs acceleration value
- * n = stop right now! // just the 'n' is needed
- */
- 
-bool newData, runallowed = false; // booleans for new data from serial, and runallowed flag
- 
- 
- 
-// Interface mode 1, direction Digital 9 (CW), pulses Digital 8 (CCW)
-AccelStepper stepper(1, 8, 9);
-// TODO: Need to verify if this is right. Need to set enable pin after construction per constructor documentation. 
-stepper.setEnablePin(7)
- 
- 
+
+
+
 void setup()
 {
-  Serial.begin(9600); //define baud rate
-  Serial.println("Testing Accelstepper"); //print a message
- 
-  //setting up some default values for maximum speed and maximum acceleration
-  stepper.setMaxSpeed(2000); //SPEED = Steps / second
-  stepper.setAcceleration(1000); //ACCELERATION = Steps /(second)^2
- 
-  stepper.disableOutputs(); //disable outputs, so the motor is not getting warm (no current)
- 
- 
+  limSwitchSetup();
+  stepperSetup();
+  timer.every(1000/rate, sendData); //Only sends data at the rate specified to not overwhelm the serial com with outgoing messages.
+  Serial.begin(9600);
+  Serial.setTimeout(500/rate);
 }
- 
+
 void loop()
 {
-
-//   // read the state of the pushbutton value:
-//  switchState = digitalRead(switchPin);
-// 
-//   // check if the pushbutton is pressed.
-//   // if it is, the buttonState is HIGH:
-//   if (switchState == HIGH) {
-//     // turn Motor off:
-//     Serial.println("Double coil steps");
-//   myMotor->step(0, FORWARD, DOUBLE); 
-//   myMotor->step(0, BACKWARD, DOUBLE);
-//   } else {
-//     // turn Motor: on.
-//      Serial.println("Double coil steps");
-//   myMotor->step(2000, FORWARD, DOUBLE); 
-//   myMotor->step(2000, BACKWARD, DOUBLE);
-//   }
- 
-  checkSerial(); //check serial port for new commands
- 
-  continuousRun2(); //method to handle the motor
- 
+  updateSwitchStatus();
+  cur_pos = stepper.currentPosition();
+  checkSerial();
+  executeCommand();
+  timer.tick(); // tick the timer and call the print function if time. 
 }
- 
- 
-void continuousRun2() //method for the motor
+
+
+
+
+
+/* ########################## Functions ##########################*/
+
+void limSwitchSetup()
 {
-  if (runallowed == true)
-  {
-    if (abs(stepper.currentPosition()) < receivedMMdistance) //abs() is needed because of the '<'
-    {
-      stepper.enableOutputs(); //enable pins
-      stepper.run(); //step the motor (this will step the motor by 1 step at each loop)
-    }
-    else //program enters this part if the required distance is completed
-    {
-     
-      runallowed = false; //disable running -> the program will not try to enter this if-else anymore
-      stepper.disableOutputs(); // disable power
-      Serial.print("POS: ");
-      Serial.println(stepper.currentPosition()); // print pos -> this will show you the latest relative number of steps
-      stepper.setCurrentPosition(0); //reset the position to zero
-      Serial.print("POS: ");
-      Serial.println(stepper.currentPosition()); // print pos -> this will show you the latest relative number of steps; we check here if it is zero for real
-    }
- 
- 
-  }
-  else //program enters this part if the runallowed is FALSE, we do not do anything
-  {
-    return;
- 
-  }
+  // initialize the switch pins as an input with internal pullup resistor
+  pinMode(limSwitch1Pin, INPUT_PULLUP);
+  pinMode(limSwitch2Pin, INPUT_PULLUP);
 }
 
-
-void disableOutputs() 
+void stepperSetup()
 {
-  
+  //Need to set enable pin after construction per constructor documentation. 
+  stepper.setEnablePin(7);
+  //Invert the enable pin so that enable/disable functions aren't backwards. 
+  stepper.setPinsInverted(false,false,true);
+  //setting up some values for maximum speed and maximum acceleration
+  stepper.setMaxSpeed(200000); //SPEED = Steps / second
+  stepper.setAcceleration(40000); //ACCELERATION = Steps /(second)^2
+  stepper.setCurrentPosition(100000);  //Set cur pos to a large positive number so that all positions will stay positive to simplify things. 
+  motorOff(); //disable outputs so the motor is not getting warm (no current)
 }
 
-void enableOutputs() 
+
+void updateSwitchStatus()
 {
-  
+  switch1State = digitalRead(limSwitch1Pin);
+  switch2State = digitalRead(limSwitch2Pin);
 }
 
 
-void checkSerial() //method for receiving the commands
+void checkSerial()
 {  
-  //switch-case would also work, and maybe more elegant
- 
-  if (Serial.available() > 0) //if something comes
+  if (Serial.available() > 0) //If there is a new command in the serial buffer.
   {
-    receivedCommand = Serial.read(); // this will read the command character
-    newData = true; //this creates a flag
+    cmd_mode = Serial.read();  //First byte is the mode
+    if (cmd_mode == 'p'){
+      cmd_pos = Serial.parseInt();
+      stepper.move(cmd_pos);
+    }
+    else if (cmd_mode == 's'){
+      goal_vel = Serial.parseInt();
+      stepper.setSpeed(goal_vel);
+    }
+    Serial.readStringUntil('\n'); //Clear the rest of the buffer
   }
+}
+
  
-  if (newData == true) //if we received something (see above)
-  {
-    //START - MEASURE
-    if (receivedCommand == 's') //this is the measure part
-    {
-      //example s 2000 500 - 2000 steps (5 revolution with 400 step/rev microstepping) and 500 steps/s speed
-      runallowed = true; //allow running
-     
- 
-      receivedMMdistance = Serial.parseFloat(); //value for the steps
-      receivedDelay = Serial.parseFloat(); //value for the speed
- 
-      Serial.print(receivedMMdistance); //print the values for checking
-      Serial.print(receivedDelay);
-      Serial.println("Measure "); //print the action
-      stepper.setMaxSpeed(receivedDelay); //set speed
-      stepper.move(receivedMMdistance); //set distance
- 
-    }
-    //START - OPEN
-    if (receivedCommand == 'o') //OPENING
-    {
-      //example o 2000 500 - 2000 steps (5 revolution with 400 step/rev microstepping) and 500 steps/s speed
-      runallowed = true; //allow running
-     
- 
- 
-      receivedMMdistance = Serial.parseFloat(); //value for the steps
-      receivedDelay = Serial.parseFloat(); //value for the speed
- 
-      Serial.print(receivedMMdistance); //print the values for checking
-      Serial.print(receivedDelay);
-      Serial.println("OPEN "); //print the action
-      stepper.setMaxSpeed(receivedDelay); //set speed
-      stepper.move(receivedMMdistance); //set distance
- 
-    }
- 
-    //START - CLOSE
-    if (receivedCommand == 'c') //CLOSING - Rotates the motor in the opposite direction as opening
-    {
-      //example c 2000 500 - 2000 steps (5 revolution with 400 step/rev microstepping) and 500 steps/s speed; will rotate in the other direction
-      runallowed = true; //allow running
-     
- 
- 
-      receivedMMdistance = Serial.parseFloat(); //value for the steps
-      receivedDelay = Serial.parseFloat(); //value for the speed
- 
-      Serial.print(receivedMMdistance);  //print the values for checking
-      Serial.print(receivedDelay);
-      Serial.println("CLOSE "); //print action
-      stepper.setMaxSpeed(receivedDelay); //set speed
-      stepper.move(-1 * receivedMMdistance); ////set distance - negative value flips the direction
- 
-    }
- 
-    //STOP - STOP
-    if (receivedCommand == 'n') //immediately stops the motor
-    {
-      runallowed = false; //disable running
-       
-      stepper.setCurrentPosition(0); // reset position
-      Serial.println("STOP "); //print action
-      stepper.stop(); //stop motor
-      stepper.disableOutputs(); //disable power
- 
-    }
- 
-    //SET ACCELERATION
-    if (receivedCommand == 'a') //Setting up a new acceleration value
-    {
-      runallowed = false; //we still keep running disabled, since we just update a variable
-     
-      receivedAcceleration = Serial.parseFloat(); //receive the acceleration from serial
- 
-      stepper.setAcceleration(receivedAcceleration); //update the value of the variable
- 
-      Serial.println("ACC Updated "); //confirm update by message
- 
-    }
- 
+void executeCommand()
+{
+  //Turn on the motor if it isn't but should be. 
+  if (cmd_mode != 'x' && motorStatus == 0){
+    motorOn();
   }
-  //after we went through the above tasks, newData becomes false again, so we are ready to receive new commands again.
-  newData = false;
-  
+
+  // If the limit switches are engaged and the goal is the wrong direction, stop.
+  if (switch1State == 1 && cmd_mode == 'p' && cmd_pos < 0){
+    limitStop();
+  }
+  else if (switch1State == 1 && cmd_mode == 's' && goal_vel < 0){
+    limitStop();
+  }
+  else if (switch2State == 1 && cmd_mode == 'p' && cmd_pos > 0){
+    limitStop();
+  }
+  else if (switch2State == 1 && cmd_mode == 's' && goal_vel > 0){
+    limitStop();
+  }
+  else if (cmd_mode == 'p'){
+    stepper.run(); //Move one step.
+  }
+  else if (cmd_mode == 's'){
+    stepper.runSpeed(); //Move one step.
+  }
+  else if (cmd_mode == 'x'){
+    motorOff();
+  }
+}
+
+
+void limitStop(){
+  stepper.stop();
+//  motorOff();
+  goal_vel=0;
+  cmd_pos=0;
+  stepper.move(cmd_pos);
+  stepper.setSpeed(goal_vel);
+}
+
+
+bool sendData(void *)
+{
+  Serial.print(switch1State);
+  Serial.print("_");
+  Serial.print(switch2State);
+  Serial.print("_");
+  Serial.println(cur_pos);
+  return true; //Return true to repeat the function.
+}
+
+
+void motorOff()
+{
+  stepper.disableOutputs();
+  motorStatus = 0;
+}
+
+void motorOn()
+{
+  stepper.enableOutputs();
+  motorStatus = 1;
 }
