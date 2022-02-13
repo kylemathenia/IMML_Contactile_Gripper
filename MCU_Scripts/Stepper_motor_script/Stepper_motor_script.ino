@@ -23,6 +23,7 @@ Pin 9 to Dir+
 Pin 8 to Pul+
 Pin 7 to Ena+
 Gnd to Pul-, Dir-, and Ena-
+***Make sure the power supply voltage matches the spec for the motor.
 --limit switches--
 Pin 2 to limit switch 1 normally closed terminal
 Pin 4 to limit switch 2 normally closed terminal
@@ -51,9 +52,12 @@ int motorStatus; //0 for off, 1 for on.
 AccelStepper stepper(AccelStepper::DRIVER, 8, 9, true);
 
 // other
-int rate = 1; //Hz
-auto timer = timer_create_default(); // create a timer with default settings
-
+int rate = 500; //Hz. Rate to send outgoing data. 
+auto timer = timer_create_default(); // Create a timer to be used with function to send data out. 
+String delimeter = "_";
+String start_char = "<";
+String end_char = ">";
+long baudrate = 2500000;
 
 
 
@@ -63,8 +67,9 @@ void setup()
   limSwitchSetup();
   stepperSetup();
   timer.every(1000/rate, sendData); //Only sends data at the rate specified to not overwhelm the serial com with outgoing messages.
-  Serial.begin(9600);
-  Serial.setTimeout(500/rate);
+  
+  Serial.begin(baudrate);
+//  Serial.setTimeout(20);
 }
 
 void loop()
@@ -73,7 +78,7 @@ void loop()
   cur_pos = stepper.currentPosition();
   checkSerial();
   executeCommand();
-  timer.tick(); // tick the timer and call the print function if time. 
+  timer.tick(); // Run the function to send data if it is time. 
 }
 
 
@@ -98,7 +103,7 @@ void stepperSetup()
   //setting up some values for maximum speed and maximum acceleration
   stepper.setMaxSpeed(200000); //SPEED = Steps / second
   stepper.setAcceleration(40000); //ACCELERATION = Steps /(second)^2
-  stepper.setCurrentPosition(100000);  //Set cur pos to a large positive number so that all positions will stay positive to simplify things. 
+  stepper.setCurrentPosition(1000000);  //Set cur pos to a large positive number so that all positions will stay positive to simplify things. 
   motorOff(); //disable outputs so the motor is not getting warm (no current)
 }
 
@@ -172,11 +177,7 @@ void limitStop(){
 
 bool sendData(void *)
 {
-  Serial.print(switch1State);
-  Serial.print("_");
-  Serial.print(switch2State);
-  Serial.print("_");
-  Serial.println(cur_pos);
+  Serial.println(start_char + switch1State + delimeter + switch2State + delimeter + cur_pos + end_char);
   return true; //Return true to repeat the function.
 }
 
