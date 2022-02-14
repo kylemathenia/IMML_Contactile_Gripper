@@ -16,8 +16,8 @@ class ControlNode(object):
         self.goal_pos_publisher = rospy.Publisher('Goal_Position',Int32, queue_size=1)
         self.goal_cur_publisher = rospy.Publisher('Goal_Current', Int32, queue_size=1)
         self.motor_pos_subscriber = rospy.Subscriber('Motor_Position', Int32, self.motor_pos_callback, queue_size=1, buff_size=100)
-        self.motor_pos_subscriber = rospy.Subscriber('UI_Mode', String, self.UI_mode_callback, queue_size=100, buff_size=10000)
-        self.motor_pos_subscriber = rospy.Subscriber('UI_Input', String, self.UI_input_callback, queue_size=100, buff_size=1000)
+        self.motor_pos_subscriber = rospy.Subscriber('UI_Gripper_Mode', String, self.UI_mode_callback, queue_size=100, buff_size=10000)
+        self.motor_pos_subscriber = rospy.Subscriber('UI_Gripper_Cmd', String, self.UI_input_callback, queue_size=100, buff_size=1000)
 
         rospy.on_shutdown(self.shutdown_function)
         self.motor_command_loop_rate = 30  # Hz

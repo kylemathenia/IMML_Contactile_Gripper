@@ -66,4 +66,5 @@ void loop() {
 
   //Communication protocol is 'xdata_ydata_zdata\n'
   Serial.println(a.acceleration.x + delimeter + a.acceleration.y + delimeter + a.acceleration.z);
+  Serial.flush();
 }
