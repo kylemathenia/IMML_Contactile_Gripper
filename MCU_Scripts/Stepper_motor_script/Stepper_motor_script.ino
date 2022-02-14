@@ -52,7 +52,7 @@ int motorStatus; //0 for off, 1 for on.
 AccelStepper stepper(AccelStepper::DRIVER, 8, 9, true);
 
 // other
-int rate = 25; //Hz. Rate to send outgoing data. 
+int rate = 50; //Hz. Rate to send outgoing data. 
 auto timer = timer_create_default(); // Create a timer to be used with function to send data out. 
 String delimeter = "_";
 String start_char = "<";
