@@ -45,3 +45,13 @@ class IMU(object):
 
     def shutdown(self):
         self.serial.close()
+
+def main():
+    imu = IMU()
+    imu.clean_before_read_start()
+    while True:
+        info = imu.read()
+        print(info)
+
+if __name__ == '__main__':
+    main()
