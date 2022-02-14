@@ -6,14 +6,14 @@
  * p = position mode
  * s = speed mode
  * x = off/passive mode
- * Example: "p500" -> position mode, goal position of 500
+ * Example: "<p_500>" -> position mode, goal position of 500
  * Example: "o1" -> off mode, 1 is unused, but 
  */
 
 /* Outgoing communication protocol:
  * Format: [lim switch 1 status]_[lim switch 2 status]_[current position]
  * lim switch status: 1 if engaged, 0 if not.
- * Example: "1_0_543" -> lim switch 1 engaged, lim switch 2 not engaged, current position is 543.
+ * Example: "<1_0_543>" -> lim switch 1 engaged, lim switch 2 not engaged, current position is 543.
  */
 
 /*
@@ -43,21 +43,32 @@ int switch1State;
 int switch2State;
 
 // stepper
-char cmd_mode = 'x';
+//char cmd_mode = 'x';
 long goal_vel;
-long cmd_pos;
-long cur_pos;
+long cmd_pos = 0;
+long cur_pos = 0;
 int motorStatus; //0 for off, 1 for on.
 // Interface mode, direction Digital 9 (CW), pulses Digital 8 (CCW),enable mode on.
 AccelStepper stepper(AccelStepper::DRIVER, 8, 9, true);
 
 // other
-int rate = 50; //Hz. Rate to send outgoing data. 
+int rate = 40; //Hz. Rate to send outgoing data. 
 auto timer = timer_create_default(); // Create a timer to be used with function to send data out. 
 String delimeter = "_";
 String start_char = "<";
 String end_char = ">";
+//long baudrate = 9600;
 long baudrate = 2500000;
+
+const byte buffSize = 40;
+char inputBuffer[buffSize];
+const char startMarker = '<';
+const char endMarker = '>';
+byte bytesRecvd = 0;
+boolean readInProgress = false;
+boolean newDataFromPC = false;
+
+char cmd_mode[buffSize] = {0};
 
 
 
@@ -115,58 +126,78 @@ void updateSwitchStatus()
 }
 
 
-void checkSerial()
-{  
-  if (Serial.available() > 0) //If there is a new command in the serial buffer.
-  {
-    cmd_mode = Serial.read();  //First byte is the mode
-    if (cmd_mode == 'p'){
-      cmd_pos = Serial.parseInt();
-      stepper.move(cmd_pos);
+void checkSerial() {
+  if(Serial.available() > 0) {
+    char x = Serial.read();
+    if (x == endMarker) {
+      readInProgress = false;
+      newDataFromPC = true;
+      inputBuffer[bytesRecvd] = 0;
+      parseData();
     }
-    else if (cmd_mode == 's'){
-      goal_vel = Serial.parseInt();
-      stepper.setSpeed(goal_vel);
+    
+    if(readInProgress) {
+      inputBuffer[bytesRecvd] = x;
+      bytesRecvd ++;
+      if (bytesRecvd == buffSize) {
+        bytesRecvd = buffSize - 1;
+      }
     }
-    clearInputBuffer();
+    if (x == startMarker) { 
+      bytesRecvd = 0; 
+      readInProgress = true;
+    }
   }
 }
 
-void clearInputBuffer()
-{
-  while (Serial.available() != 0){
-    Serial.read();
+void parseData() {
+  //Splits the new message into parts and sets vars. 
+  
+  char * strtokIndx; // this is used by strtok() as an index
+  
+  strtokIndx = strtok(inputBuffer,"_");      // get the first part - the string
+  strcpy(cmd_mode, strtokIndx);
+  
+  strtokIndx = strtok(NULL, "_"); // this continues where the previous call left off
+
+  if (strcmp(cmd_mode, "p") == 0){
+    cmd_pos = atoi(strtokIndx); 
+    stepper.move(cmd_pos);
+  }
+  else if (strcmp(cmd_mode, "s") == 0){
+    goal_vel = atoi(strtokIndx); 
+    stepper.setSpeed(goal_vel);
   }
 }
 
- 
+
 void executeCommand()
 {
   //Turn on the motor if it isn't but should be. 
-  if (cmd_mode != 'x' && motorStatus == 0){
+  if (strcmp(cmd_mode, "x") != 0 && motorStatus == 0){
     motorOn();
   }
 
   // If the limit switches are engaged and the goal is the wrong direction, stop.
-  if (switch1State == 1 && cmd_mode == 'p' && cmd_pos < 0){
+  if (switch1State == 1 && strcmp(cmd_mode, "p") == 0 && cmd_pos < 0){
     limitStop();
   }
-  else if (switch1State == 1 && cmd_mode == 's' && goal_vel < 0){
+  else if (switch1State == 1 && strcmp(cmd_mode, "s") == 0 && goal_vel < 0){
     limitStop();
   }
-  else if (switch2State == 1 && cmd_mode == 'p' && cmd_pos > 0){
+  else if (switch2State == 1 && strcmp(cmd_mode, "p") == 0 && cmd_pos > 0){
     limitStop();
   }
-  else if (switch2State == 1 && cmd_mode == 's' && goal_vel > 0){
+  else if (switch2State == 1 && strcmp(cmd_mode, "s") == 0 && goal_vel > 0){
     limitStop();
   }
-  else if (cmd_mode == 'p'){
+  else if (strcmp(cmd_mode, "p") == 0){
     stepper.run(); //Move one step.
   }
-  else if (cmd_mode == 's'){
+  else if (strcmp(cmd_mode, "s") == 0){
     stepper.runSpeed(); //Move one step.
   }
-  else if (cmd_mode == 'x'){
+  else if (strcmp(cmd_mode, "x") == 0){
     motorOff();
   }
 }
