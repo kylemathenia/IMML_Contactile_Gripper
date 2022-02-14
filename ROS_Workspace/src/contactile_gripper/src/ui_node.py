@@ -29,10 +29,11 @@ key_map = {'grip_open':'d',
 class UiNode(object):
     def __init__(self):
         rospy.init_node('ui_node', anonymous=False, log_level=rospy.DEBUG)
-        self.gripper_cmd_pub = rospy.Publisher('UI_Gripper_Cmd',String, queue_size=1)
+        self.menu_pub = rospy.Publisher('UI_Menu', String, queue_size=100)
+        self.gripper_cmd_pub = rospy.Publisher('UI_Gripper_Cmd',String, queue_size=5)
         self.gripper_mode_pub = rospy.Publisher('UI_Gripper_Mode',String, queue_size=100)
-        self.stepper_cmd_pub = rospy.Publisher('UI_Stepper_Cmd', String, queue_size=1)
-        self.stepper_mode_pub = rospy.Publisher('UI_Stepper_Mode', String, queue_size=100)
+        self.stepper_cmd_pub = rospy.Publisher('UI_Stepper_Cmd',String, queue_size=5)
+        self.stepper_mode_pub = rospy.Publisher('UI_Stepper_Mode',String, queue_size=100)
         
         self.gripper_mode_options = set({'passive', 'cur_based_pos_control', 'sinusoidal_motion_routine'})
         self.gripper_mode = 'passive'
@@ -48,7 +49,7 @@ class UiNode(object):
         self.main_loop()
 
     def main_loop(self):
-        """Continuously get the key inputs from the user and do something."""
+        """Continuously get the key inputs from the user and pass the key to the current menu method."""
         while not rospy.is_shutdown():
             key = getKey()
             if key == '': pass # No entry.

@@ -21,6 +21,7 @@ import serial
 import serial.tools.list_ports
 import atexit
 import time
+import rospy
 
 
 class Stepper(object):
@@ -28,7 +29,7 @@ class Stepper(object):
         self.serial_number = '7513131383235101'
         self.baudrate = 2500000
         self.com_path = self.find_com_path()
-        self.serial = serial.Serial(self.com_path, baudrate=self.baudrate, timeout=1)
+        self.serial = serial.Serial(self.com_path, baudrate=self.baudrate, timeout=None)
         atexit.register(self.shutdown)
 
     def clean_before_read_start(self):
@@ -47,8 +48,7 @@ class Stepper(object):
             return None, None, None, False
 
     def write(self, cmd):
-        if self.serial.out_waiting == 0:
-            self.serial.write(bytes(cmd.encode()))
+        self.serial.write(bytes(cmd.encode()))
 
     def find_com_path(self):
         """Finds and returns the device port name path as string. Ex: '/dev/ttyUSB0 or '"""
@@ -80,6 +80,7 @@ def test():
             ans = stepper.read()
             print(ans)
             count += 1
+        num = int(input("num: "))
         if stepper.serial.out_waiting == 0:
             cmd = 's' + str(num) + '\n'
             stepper.write(cmd)

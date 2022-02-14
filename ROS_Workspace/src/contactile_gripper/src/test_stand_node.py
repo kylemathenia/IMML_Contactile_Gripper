@@ -8,6 +8,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Float32
 from std_msgs.msg import Int32
 import stepper
+import time
 
 class TestStandNode(object):
     """ROS node for the Dynamixel motor. Max com speed is ~62hz for read or write operation. This is both reading
@@ -17,14 +18,14 @@ class TestStandNode(object):
         self.stepper_cmd_sub = rospy.Subscriber('Stepper_Cmd', String, self.stepper_cmd_callback, queue_size=1, buff_size = 100)
         self.stepper_pos_pub = rospy.Publisher('Stepper_Pos',Int32, queue_size=1)
         self.upper_lim_switch_pub = rospy.Publisher('Upper_Lim_Switch_Status', Int32, queue_size=1)
-        self.motor_publisher = rospy.Publisher('Lower_Lim_Switch_Status', Int32, queue_size=1)
+        self.lower_lim_switch_pub = rospy.Publisher('Lower_Lim_Switch_Status', Int32, queue_size=1)
 
-        rospy.on_shutdown(self.shutdown_function)
         self.pub_loop_rate = 40 # Hz
         self.pub_loop_rate_obj = rospy.Rate(self.pub_loop_rate)
 
         self.stepper = stepper.Stepper()
 
+        rospy.on_shutdown(self.shutdown_function)
         self.pub_loop()
 
     def stepper_cmd_callback(self,msg):
@@ -44,7 +45,7 @@ class TestStandNode(object):
     def shutdown_function(self):
         """This function runs when the ROS node is shutdown for some reason.
         It might be useful to publish messages to other nodes. Perhaps if this node crashes it should trigger and EMO."""
-        pass
+        self.stepper.serial.close()
 
 def main():
     _ = TestStandNode()
