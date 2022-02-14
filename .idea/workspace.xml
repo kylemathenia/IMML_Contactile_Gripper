@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/IMML_Contactile_Gripper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IMML_Contactile_Gripper.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MCU_Scripts/IMU_script/IMU_script.ino" beforeDir="false" afterPath="$PROJECT_DIR$/MCU_Scripts/IMU_script/IMU_script.ino" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MCU_Scripts/Stepper_motor_script/Stepper_motor_script.ino" beforeDir="false" afterPath="$PROJECT_DIR$/MCU_Scripts/Stepper_motor_script/Stepper_motor_script.ino" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MCU_Scripts/stepper_motor_script.py" beforeDir="false" afterPath="$PROJECT_DIR$/MCU_Scripts/stepper_motor_script.py" afterDir="false" />
     </list>

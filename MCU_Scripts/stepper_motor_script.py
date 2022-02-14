@@ -26,10 +26,10 @@ class Stepper(object):
         """Returns x,y,z,com_success. com_success is boolean. Data comes in the form: 'xdata_ydata_zdata\n'"""
         line = self.serial.read_until().decode('ascii')
         data = line.strip('<>\n\r').split('_')
-        # Rarely, the IMU doesn't read all the data. Don't return anything if that happens.
-        if '<' in line and '>' in line: return int(data[0]),int(data[1]),int(data[2]),True
+        self.serial.reset_input_buffer()
+        if '<' in line and '>' in line:
+            return int(data[0]),int(data[1]),int(data[2]),True
         else:
-            print(line)
             return None,None,None,False
 
     def find_com_path(self):
@@ -43,6 +43,7 @@ class Stepper(object):
         raise Exception('"{} not found in comport products: {}'.format(self.dev_board_name,products))
 
     def shutdown(self):
+        self.serial.write(b'x0\n')
         self.serial.close()
 
     def read_write(self,string):
@@ -52,19 +53,24 @@ class Stepper(object):
         time.sleep(.05)
         return data
 
-def main():
+def test():
     stepper = Stepper()
     stepper.clean_before_read_start()
-    time.sleep(1)
     count = 0
+    num = 50
     start = time.time()
     stepper.clean_before_read_start()
-    while time.time() - start < 5:
+    while time.time() - start < 30:
         if stepper.serial.in_waiting > 0:
+            print("Incoming in waiting: {}".format(stepper.serial.in_waiting))
             ans = stepper.read()
             print(ans)
             count += 1
-    print(count)
-
+        if stepper.serial.out_waiting == 0:
+            cmd = 's' + str(num) + '\n'
+            stepper.serial.write(bytes(cmd.encode()))
+            print(cmd)
+            num += 1
+            time.sleep(.01)
 if __name__ == '__main__':
-    main()
+    test()
