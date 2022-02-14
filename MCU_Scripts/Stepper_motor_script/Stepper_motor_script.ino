@@ -6,14 +6,14 @@
  * p = position mode
  * s = speed mode
  * x = off/passive mode
- * Example: "p500" -> position mode, goal position of 500
- * Example: "o1" -> off mode, 1 is unused, but 
+ * Example: "p500" -> position mode, move 500 positive
+ * Example: "x1" -> off mode, 1 is unused, but
  */
 
 /* Outgoing communication protocol:
- * Format: [lim switch 1 status]_[lim switch 2 status]_[current position]
+ * Format: <[lim switch 1 status]_[lim switch 2 status]_[current position]>
  * lim switch status: 1 if engaged, 0 if not.
- * Example: "1_0_543" -> lim switch 1 engaged, lim switch 2 not engaged, current position is 543.
+ * Example: "<1_0_543>" -> lim switch 1 engaged, lim switch 2 not engaged, current position is 543.
  */
 
 /*

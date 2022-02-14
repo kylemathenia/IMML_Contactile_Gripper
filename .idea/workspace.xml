@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="" />
+    <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/IMML_Contactile_Gripper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IMML_Contactile_Gripper.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MCU_Scripts/Stepper_motor_script/Stepper_motor_script.ino" beforeDir="false" afterPath="$PROJECT_DIR$/MCU_Scripts/Stepper_motor_script/Stepper_motor_script.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MCU_Scripts/stepper_motor_script.py" beforeDir="false" afterPath="$PROJECT_DIR$/MCU_Scripts/stepper_motor_script.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/test_stand_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/test_stand_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,7 +59,7 @@
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.stepper_motor_script">
+  <component name="RunManager" selected="Python.stepper">
     <configuration name="exp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="IMML_Contactile_Gripper" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -93,6 +102,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="stepper" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="IMML_Contactile_Gripper" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="stepper_motor_script" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="IMML_Contactile_Gripper" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -116,6 +146,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.stepper" />
         <item itemvalue="Python.stepper_motor_script" />
         <item itemvalue="Python.gripper" />
         <item itemvalue="Python.exp" />
@@ -147,5 +178,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/MCU_Scripts/stepper_motor_script.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

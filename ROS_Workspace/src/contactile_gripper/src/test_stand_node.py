@@ -1,50 +1,44 @@
 #!/usr/bin/env python
 """
-This module contains the gripper node.
+This module contains the node for the test stand stepper motor.
 """
 
-import roslib; roslib.load_manifest('contactile_gripper')
-from contactile_gripper.srv import *
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
 from std_msgs.msg import Int32
-import gripper
+import stepper
 
 class TestStandNode(object):
     """ROS node for the Dynamixel motor. Max com speed is ~62hz for read or write operation. This is both reading
     and writing, so rate is 30hz. """
     def __init__(self):
-        rospy.init_node('test_stand_node', anonymous=False, log_level=rospy.INFO)
-        self.goal_pos_subscriber = rospy.Subscriber('Test_Stand_Goal_Pos', Int32, self.goal_pos_callback, queue_size=1, buff_size = 100)
-        self.motor_publisher = rospy.Publisher('Test_Stand_Pos',Int32, queue_size=1)
+        rospy.init_node('stepper_node', anonymous=False, log_level=rospy.INFO)
+        self.stepper_cmd_sub = rospy.Subscriber('Stepper_Cmd', String, self.stepper_cmd_callback, queue_size=1, buff_size = 100)
+        self.stepper_pos_pub = rospy.Publisher('Stepper_Pos',Int32, queue_size=1)
+        self.upper_lim_switch_pub = rospy.Publisher('Upper_Lim_Switch_Status', Int32, queue_size=1)
+        self.motor_publisher = rospy.Publisher('Lower_Lim_Switch_Status', Int32, queue_size=1)
+
         rospy.on_shutdown(self.shutdown_function)
-        self.pub_loop_rate = 10 # Hz
+        self.pub_loop_rate = 40 # Hz
         self.pub_loop_rate_obj = rospy.Rate(self.pub_loop_rate)
 
-        self.gripper = gripper.Gripper()
-        self.gripper.motor.switch_modes('cur_based_pos_control')
+        self.stepper = stepper.Stepper()
 
         self.pub_loop()
 
-    def handle_change_mode(self,req):
-        if req.mode == 'passive':  # Use while loop to make sure it turns torque off.
-            com_error = True
-            while com_error:
-                com_error = self.gripper.motor.write_torque_mode('off')
-        elif req.mode == 'cur_based_pos_control':
-            self.gripper.motor.switch_modes('cur_based_pos_control')
-        else: rospy.logerr('Change mode service failed. "{}" is not a valid mode.'.format(req.mode))
-        return ChangeModeResponse('Mode changed')
-
-    def goal_pos_callback(self,msg):
-        self.gripper.motor.write_goal_pos(msg.data)
+    def stepper_cmd_callback(self,msg):
+        self.stepper.write(msg.data)
 
     def pub_loop(self):
-        """This is the main loop for the node which executes at self.pub_loop_rate."""
+        self.stepper.clean_before_read_start()
         while not rospy.is_shutdown():
-            pos,err = self.gripper.motor.read_pos()
-            if not err: self.motor_publisher.publish(pos)
+            lower_switch_status,upper_switch_status,cur_pos,com_success = self.stepper.read()
+            rospy.loginfo('{} {} {} {}'.format(lower_switch_status,upper_switch_status,cur_pos,com_success))
+            if com_success:
+                self.stepper_pos_pub.publish(int(cur_pos))
+                self.upper_lim_switch_pub.publish(int(upper_switch_status))
+                self.lower_lim_switch_pub.publish(int(lower_switch_status))
             self.pub_loop_rate_obj.sleep()
 
     def shutdown_function(self):
@@ -53,7 +47,7 @@ class TestStandNode(object):
         pass
 
 def main():
-    gripper_node = MotorNode()
+    _ = TestStandNode()
 
 if __name__ == '__main__':
     main()

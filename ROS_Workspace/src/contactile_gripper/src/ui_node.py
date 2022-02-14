@@ -44,7 +44,7 @@ class UiNode(object):
         self.stepper_lower_lim = None
 
         self.current_menu = self.stepper_cal_main_menu
-        rospy.loginfo(self.get_prompt())
+        rospy.loginfo(self.current_menu.prompt)
         self.main_loop()
 
     def main_loop(self):
