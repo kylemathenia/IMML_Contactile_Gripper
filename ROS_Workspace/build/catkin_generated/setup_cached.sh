@@ -8,3 +8,4 @@
 
 # modified environment variables
 export PWD='/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build'
+export ROS_PACKAGE_PATH='/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src:/opt/ros/melodic/share'

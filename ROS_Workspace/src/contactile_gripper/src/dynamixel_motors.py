@@ -86,7 +86,10 @@ class Dynamixel(object):
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req torque: off ''({})'.format(self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, self.id,self.addr_operating_mode,self.operating_modes[mode])
         error = self.log_com_if_error(dxl_comm_result, dxl_error)
-        self.mode = mode
+        if not error:
+            self.mode = mode
+            rospy.logdebug('[operating_mode] {}'.format(mode))
+        return error
 
     def write_current_limit(self,value):
         rospy.logdebug('[write_current_limit] {}'.format(value))

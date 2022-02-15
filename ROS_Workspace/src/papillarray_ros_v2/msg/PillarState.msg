@@ -1,0 +1,10 @@
+Header header
+int32 id
+float32 dX
+float32 dY
+float32 dZ
+float32 fX
+float32 fY
+float32 fZ
+bool in_contact
+int32 slip_state

@@ -7,3 +7,4 @@
 subdirs("gtest")
 subdirs("contactile_gripper")
 subdirs("dynamixel_sdk")
+subdirs("papillarray_ros_v2")

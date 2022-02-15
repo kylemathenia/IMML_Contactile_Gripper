@@ -9,25 +9,47 @@ import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
 from std_msgs.msg import Int32
+from std_msgs.msg import Int64
 from contactile_gripper.srv import *
+
+#TODO: Add a subscriber for the motor mode.
+#TODO: Add a subscriber for the UI menu
+
 
 class ControlNode(object):
     def __init__(self):
-        self.goal_pos_publisher = rospy.Publisher('Goal_Position',Int32, queue_size=1)
-        self.goal_cur_publisher = rospy.Publisher('Goal_Current', Int32, queue_size=1)
-        self.motor_pos_subscriber = rospy.Subscriber('Motor_Position', Int32, self.motor_pos_callback, queue_size=1, buff_size=100)
-        self.motor_pos_subscriber = rospy.Subscriber('UI_Gripper_Mode', String, self.UI_mode_callback, queue_size=100, buff_size=10000)
-        self.motor_pos_subscriber = rospy.Subscriber('UI_Gripper_Cmd', String, self.UI_input_callback, queue_size=100, buff_size=1000)
+        # Publishers
+        self.gripper_cmd_pub = rospy.Publisher('Gripper_Cmd', String, queue_size=1)
+        self.stepper_cmd_pub = rospy.Publisher('Stepper_Cmd', String, queue_size=1)
+        self.routine_running_pub = rospy.Publisher('Routine_Running', String, queue_size=100)
 
+        # Subscribers and associated variables.
+        self.menu_sub = rospy.Subscriber('UI_Menu', String, self.menu_callback, queue_size=100)
+        self.menu = 'stepper_cal_main_menu'
+
+        self.gripper_pos_sub = rospy.Subscriber('Gripper_Pos', Int64, self.gripper_pos_callback, queue_size=1, buff_size=1)
+        self.gripper_pos = None
+
+        self.stepper_pos_sub = rospy.Subscriber('Stepper_Pos', Int64, self.stepper_pos_callback, queue_size=1, buff_size=1)
+        self.stepper_pos = None
+
+        self.imu_acc_sub = rospy.Subscriber('IMU_Acc', Float32, self.imu_acc_callback, queue_size=1)
+        self.imu_acc_x = None
+        self.imu_acc_y = None
+        self.imu_acc_z = None
+
+        self.ui_gripper_cmd_sub = rospy.Subscriber('UI_Gripper_Cmd', self.ui_gripper_cmd_callback, String, queue_size=2)
+        self.ui_gripper_cmd = None
+
+        self.ui_stepper_cmd_sub = rospy.Subscriber('UI_Stepper_Cmd', self.ui_stepper_cmd_callback, String, queue_size=2)
+        self.ui_stepper_cmd = None
+
+        # Setup
         rospy.on_shutdown(self.shutdown_function)
         self.motor_command_loop_rate = 30  # Hz
         self.motor_command_loop_rate_obj = rospy.Rate(self.motor_command_loop_rate)
 
-        self.UI_mode_options = set({'passive','cur_based_pos_control','sinusoidal_motion_routine'})
-        self.UI_mode = 'passive'
-        self.UI_mode = 'cur_based_pos_control'
-        self.motor_pos = None
-        self.motor_pos_set = False
+        # Make sure
         # Wait for motor_pos_subscriber to set motor_pos so goal_pos doesn't break the gripper trying to go to bad pos.
         while not self.motor_pos_set: rospy.logdebug('Waiting for motor position to be initialized...')
         self.goal_pos = self.motor_pos

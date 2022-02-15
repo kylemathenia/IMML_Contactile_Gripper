@@ -7,13 +7,15 @@ import rospy
 from std_msgs.msg import Float32
 import IMU
 
+#TODO Combine the message to a single message with fields x, y, z...
+
 class IMUNode(object):
     """ROS node for the IMU."""
     def __init__(self):
         self.IMU = IMU.IMU()
-        self.pubx = rospy.Publisher('x', Float32, queue_size=1)
-        self.puby = rospy.Publisher('y', Float32, queue_size=1)
-        self.pubz = rospy.Publisher('z', Float32, queue_size=1)
+        self.pubx = rospy.Publisher('IMU_Acc_x', Float32, queue_size=1)
+        self.puby = rospy.Publisher('IMU_Acc_y', Float32, queue_size=1)
+        self.pubz = rospy.Publisher('IMU_Acc_z', Float32, queue_size=1)
         # Read rate must be faster than Arduino write rate to not have latency build-up in the communication buffer.
         # Arduino writes at roughly 280 hz on average.
         self.main_loop_rate = 300

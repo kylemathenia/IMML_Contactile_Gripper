@@ -6,7 +6,7 @@ This module contains the node for the test stand stepper motor.
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
-from std_msgs.msg import Int32
+from std_msgs.msg import Int64
 import stepper
 import time
 
@@ -16,7 +16,7 @@ class TestStandNode(object):
     def __init__(self):
         rospy.init_node('stepper_node', anonymous=False, log_level=rospy.INFO)
         self.stepper_cmd_sub = rospy.Subscriber('Stepper_Cmd', String, self.stepper_cmd_callback, queue_size=1, buff_size = 100)
-        self.stepper_pos_pub = rospy.Publisher('Stepper_Pos',Int32, queue_size=1)
+        self.stepper_pos_pub = rospy.Publisher('Stepper_Pos',Int64, queue_size=1)
         self.upper_lim_switch_pub = rospy.Publisher('Upper_Lim_Switch_Status', Int32, queue_size=1)
         self.lower_lim_switch_pub = rospy.Publisher('Lower_Lim_Switch_Status', Int32, queue_size=1)
 

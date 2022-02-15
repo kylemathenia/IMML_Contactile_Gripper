@@ -8,7 +8,7 @@ import time
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
-from std_msgs.msg import Int32
+from std_msgs.msg import Int64
 from contactile_gripper.srv import *
 
 class ControlNode(object):

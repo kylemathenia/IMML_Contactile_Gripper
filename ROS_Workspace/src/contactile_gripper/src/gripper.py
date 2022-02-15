@@ -5,18 +5,25 @@ This module contains a class for the Oregon State IMML Contactile gripper.
 
 import dynamixel_motors
 import time
+import atexit
+
 # If running the script without ROS, rospy logging will not work. Use rospy_shadow instead.
 try: import rospy
 except: import rospy_shadow as rospy
 
 class Gripper(object):
     """Class for the Oregon State IMML Contactile gripper."""
-    def __init__(self):
+    def __init__(self,fast_start=False):
         self.motor = dynamixel_motors.XM430_W210(1, 'FT5NSNJ0', 2.0, 4000000)
         self.grip_range = 4000  # Found from experimentation. Used for fast start method.
+        self.mode_options = set(self.motor.operating_modes.keys())
+        self.mode_options = self.mode_options.add('off')
+        self.mode = None
+        atexit.register(self.shutdown_function)
 
-        # self.fast_start()
-        self.calibrate()
+        if fast_start: self.fast_start()
+        else: self.calibrate()
+        com_error = self.gripper.switch_modes('off')
 
     def calibrate(self):
         """Finds the motor positions for the maximum open and close gripper positions. Records them with slight safety buffer.
@@ -25,7 +32,7 @@ class Gripper(object):
         self.motor.pos_buffer = 100  # units: 0.0791 degrees. Gives buffer from the actual physical hard stops.
         if self.motor.status != 'initialized': self.motor.initialize()
         # Make sure the motor pos is far away from the zero position to keep limit number positive.
-        self.motor.write_torque_mode('off')
+        com_error = self.switch_modes('off')
         self.motor.write_homing_offset(100000)
         self._calibrate_open()
         self.fully_open()
@@ -38,8 +45,8 @@ class Gripper(object):
     def _calibrate_open(self):
         """Finds the fully open gripper position, self.motor.MIN_POS_FULLY_OPEN."""
         opening_current = -7
-        if self.motor.torque != 'on': self.motor.write_torque_mode('on')
-        if self.motor.mode != 'cur_control': self.motor.switch_modes('cur_control')
+        if self.mode != 'cur_control':
+            com_error = self.switch_modes('cur_control')
 
         # Get the motor moving in the open direction.
         self.motor.write_goal_cur(opening_current)
@@ -62,8 +69,8 @@ class Gripper(object):
         """Finds self.motor.MAX_POS_FULLY_CLOSED. Executes the portion of the calibration for closing the gripper."""
         closing_current = 10
         max_velocity = 25
-        if self.motor.torque != 'on': self.motor.write_torque_mode('on')
-        if self.motor.mode != 'cur_control': self.motor.switch_modes('cur_control')
+        if self.mode != 'cur_control':
+            com_error = self.switch_modes('cur_control')
 
         # Get the motor moving in the closed direction.
         self.motor.write_goal_cur(closing_current)
@@ -96,7 +103,7 @@ class Gripper(object):
 
     def fully_open(self):
         """Move to MIN_POS_FULLY_OPEN (which includes the buffer offset)."""
-        self.motor.switch_modes('cur_based_pos_control')
+        com_error = self.switch_modes('cur_based_pos_control')
         self.motor.write_goal_pos(self.motor.MIN_POS_FULLY_OPEN)
         pos, error = self.motor.read_pos()
         while pos > 1.05*self.motor.MIN_POS_FULLY_OPEN:  # Get within 5%.
@@ -105,8 +112,19 @@ class Gripper(object):
         rospy.loginfo('[MIN_POS_FULLY_OPEN] {}'.format(self.motor.MIN_POS_FULLY_OPEN))
         time.sleep(0.5)
 
-    def __repr__(self):
-        pass
+    def switch_modes(self,mode):
+        """Combines the dynamixel torque mode and operating mode into a single gripper mode. If not 'off', the motor
+        torque is on."""
+        if mode in self.mode_options and mode == 'off':
+            com_error = self.motor.write_torque_mode('off')
+        elif mode in self.mode_options:
+            com_error = self.motor.switch_modes(mode)
+        if mode in self.mode_options:
+            if not com_error: self.mode = mode
+            return com_error
+
+    def shutdown_function(self):
+        self.switch_modes('off')
 
 def test():
     g = Gripper()

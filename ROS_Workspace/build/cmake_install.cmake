@@ -133,6 +133,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/gtest/cmake_install.cmake")
   include("/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/contactile_gripper/cmake_install.cmake")
   include("/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/dynamixel_sdk/cmake_install.cmake")
+  include("/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/papillarray_ros_v2/cmake_install.cmake")
 
 endif()
 
