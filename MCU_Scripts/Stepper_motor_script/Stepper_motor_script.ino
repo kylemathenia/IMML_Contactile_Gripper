@@ -54,11 +54,14 @@ AccelStepper stepper(AccelStepper::DRIVER, 8, 9, true);
 // other
 int rate = 40; //Hz. Rate to send outgoing data. 
 auto timer = timer_create_default(); // Create a timer to be used with function to send data out. 
+long timeOfLastCommand = 0;
+long stepperOffTimeout = 60000;  // milliseconds
+int motorTimeoutFlag = 0;
 String delimeter = "_";
 String start_char = "<";
 String end_char = ">";
-//long baudrate = 9600;
 long baudrate = 2500000;
+//long baudrate = 9600;
 
 const byte buffSize = 40;
 char inputBuffer[buffSize];
@@ -77,10 +80,10 @@ void setup()
 {
   limSwitchSetup();
   stepperSetup();
-  timer.every(1000/rate, sendData); //Only sends data at the rate specified to not overwhelm the serial com with outgoing messages.
-  
   Serial.begin(baudrate);
-//  Serial.setTimeout(20);
+  // Give the timer functions to run and the period to run them. 
+  timer.every(1000/rate, sendData); //Only sends data at the rate specified to not overwhelm the serial com with outgoing messages.
+  timer.every(120000, checkMotorTimeout);
 }
 
 void loop()
@@ -89,7 +92,7 @@ void loop()
   cur_pos = stepper.currentPosition();
   checkSerial();
   executeCommand();
-  timer.tick(); // Run the function to send data if it is time. 
+  timer.tick(); // Run the functions to send data if it is time. 
 }
 
 
@@ -118,6 +121,26 @@ void stepperSetup()
   motorOff(); //disable outputs so the motor is not getting warm (no current)
 }
 
+
+bool checkMotorTimeout(void *) {
+  if (((millis() - timeOfLastCommand) > stepperOffTimeout) && motorStatus == 1){
+    motorTimeoutFlag = 1;
+  }
+  return true; //Return true to repeat the function.
+}
+
+bool sendData(void *)
+{
+  Serial.println(start_char + switch1State + delimeter + switch2State + delimeter + cur_pos + end_char);
+  Serial.flush();
+  return true; //Return true to repeat the function.
+}
+
+
+void resetMotorTimeout() {
+  timeOfLastCommand = millis();
+  motorTimeoutFlag =0;
+}
 
 void updateSwitchStatus()
 {
@@ -152,9 +175,7 @@ void checkSerial() {
 
 void parseData() {
   //Splits the new message into parts and sets vars. 
-  
   char * strtokIndx; // this is used by strtok() as an index
-  
   strtokIndx = strtok(inputBuffer,"_");      // get the first part - the string
   strcpy(cmd_mode, strtokIndx);
   
@@ -168,16 +189,27 @@ void parseData() {
     goal_vel = atoi(strtokIndx); 
     stepper.setSpeed(goal_vel);
   }
+  resetMotorTimeout();
 }
 
 
 void executeCommand()
 {
   //Turn on the motor if it isn't but should be. 
-  if (strcmp(cmd_mode, "x") != 0 && motorStatus == 0){
+  if (strcmp(cmd_mode, "x") != 0 && motorTimeoutFlag == 0 && motorStatus == 0){
     motorOn();
   }
 
+  if (switch1State == 1 || switch2State == 1){
+    switchOnExecute();
+  }
+  else{
+    normalExecute();
+  }
+}
+
+
+void switchOnExecute(){
   // If the limit switches are engaged and the goal is the wrong direction, stop.
   if (switch1State == 1 && strcmp(cmd_mode, "p") == 0 && cmd_pos < 0){
     limitStop();
@@ -191,14 +223,20 @@ void executeCommand()
   else if (switch2State == 1 && strcmp(cmd_mode, "s") == 0 && goal_vel > 0){
     limitStop();
   }
+  else{
+    normalExecute();
+  }
+}
+
+void normalExecute(){
+  if (strcmp(cmd_mode, "x") == 0 || (motorTimeoutFlag == 1 && motorStatus == 1)){
+    motorOff();
+  }
   else if (strcmp(cmd_mode, "p") == 0){
     stepper.run(); //Move one step.
   }
   else if (strcmp(cmd_mode, "s") == 0){
     stepper.runSpeed(); //Move one step.
-  }
-  else if (strcmp(cmd_mode, "x") == 0){
-    motorOff();
   }
 }
 
@@ -211,15 +249,6 @@ void limitStop(){
   stepper.move(cmd_pos);
   stepper.setSpeed(goal_vel);
 }
-
-
-bool sendData(void *)
-{
-  Serial.println(start_char + switch1State + delimeter + switch2State + delimeter + cur_pos + end_char);
-  Serial.flush()
-  return true; //Return true to repeat the function.
-}
-
 
 void motorOff()
 {
