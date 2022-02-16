@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "contactile_gripper: 0 messages, 1 services")
+message(STATUS "contactile_gripper: 0 messages, 4 services")
 
 set(MSG_I_FLAGS "-Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg;-Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg")
 
@@ -22,6 +22,21 @@ add_custom_target(_contactile_gripper_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "contactile_gripper" "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv" ""
 )
 
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv" NAME_WE)
+add_custom_target(_contactile_gripper_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "contactile_gripper" "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv" ""
+)
+
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv" NAME_WE)
+add_custom_target(_contactile_gripper_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "contactile_gripper" "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv" ""
+)
+
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv" NAME_WE)
+add_custom_target(_contactile_gripper_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "contactile_gripper" "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv" ""
+)
+
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
@@ -32,6 +47,24 @@ add_custom_target(_contactile_gripper_generate_messages_check_deps_${_filename}
 ### Generating Services
 _generate_srv_cpp(contactile_gripper
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_cpp(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_cpp(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_cpp(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/contactile_gripper
@@ -51,6 +84,12 @@ add_dependencies(contactile_gripper_generate_messages contactile_gripper_generat
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv" NAME_WE)
 add_dependencies(contactile_gripper_generate_messages_cpp _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_cpp _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_cpp _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_cpp _contactile_gripper_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(contactile_gripper_gencpp)
@@ -65,6 +104,24 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS contactile_gripper_generate_message
 ### Generating Services
 _generate_srv_eus(contactile_gripper
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_eus(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_eus(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_eus(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/contactile_gripper
@@ -84,6 +141,12 @@ add_dependencies(contactile_gripper_generate_messages contactile_gripper_generat
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv" NAME_WE)
 add_dependencies(contactile_gripper_generate_messages_eus _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_eus _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_eus _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_eus _contactile_gripper_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(contactile_gripper_geneus)
@@ -98,6 +161,24 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS contactile_gripper_generate_message
 ### Generating Services
 _generate_srv_lisp(contactile_gripper
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_lisp(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_lisp(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_lisp(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/contactile_gripper
@@ -117,6 +198,12 @@ add_dependencies(contactile_gripper_generate_messages contactile_gripper_generat
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv" NAME_WE)
 add_dependencies(contactile_gripper_generate_messages_lisp _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_lisp _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_lisp _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_lisp _contactile_gripper_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(contactile_gripper_genlisp)
@@ -131,6 +218,24 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS contactile_gripper_generate_message
 ### Generating Services
 _generate_srv_nodejs(contactile_gripper
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_nodejs(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_nodejs(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_nodejs(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/contactile_gripper
@@ -150,6 +255,12 @@ add_dependencies(contactile_gripper_generate_messages contactile_gripper_generat
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv" NAME_WE)
 add_dependencies(contactile_gripper_generate_messages_nodejs _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_nodejs _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_nodejs _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_nodejs _contactile_gripper_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(contactile_gripper_gennodejs)
@@ -168,6 +279,24 @@ _generate_srv_py(contactile_gripper
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/contactile_gripper
 )
+_generate_srv_py(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_py(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/contactile_gripper
+)
+_generate_srv_py(contactile_gripper
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/contactile_gripper
+)
 
 ### Generating Module File
 _generate_module_py(contactile_gripper
@@ -182,6 +311,12 @@ add_dependencies(contactile_gripper_generate_messages contactile_gripper_generat
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_py _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_py _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv" NAME_WE)
+add_dependencies(contactile_gripper_generate_messages_py _contactile_gripper_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv" NAME_WE)
 add_dependencies(contactile_gripper_generate_messages_py _contactile_gripper_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

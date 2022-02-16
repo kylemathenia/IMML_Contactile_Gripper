@@ -42,8 +42,11 @@ class Stepper(object):
         line = self.serial.read_until().decode('ascii')
         data = line.strip('<>\n\r').split('_')
         self.serial.reset_input_buffer()
-        if '<' in line and '>' in line:
-            return int(data[0]), int(data[1]), int(data[2]), True
+        try:
+            if '<' in line and '>' in line:
+                return int(data[0]), int(data[1]), int(data[2]), True
+        except:
+            print('STEPPER READ COM ERROR: {}'.format(line))
         else:
             return None, None, None, False
 

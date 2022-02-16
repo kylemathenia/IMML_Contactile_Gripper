@@ -29,7 +29,7 @@ class GripperNode(object):
         self.gripper_cmd_sub = rospy.Subscriber('Gripper_Cmd', Int64, self.gripper_cmd_callback, queue_size=1, buff_size = 100)
 
         # Services
-        self.change_mode_srv = rospy.Service('change_mode_srv', ChangeMode, self.srv_handle_change_mode)
+        self.gripper_change_mode_srv = rospy.Service('gripper_change_mode_srv', GripperChangeMode, self.srv_handle_change_mode)
 
         # Setup and start
         rospy.on_shutdown(self.shutdown_function)
@@ -61,7 +61,7 @@ class GripperNode(object):
             com_error = self.gripper.switch_modes('cur_based_pos_control')
         else:
             rospy.logerr('Change mode service failed. "{}" is not a valid mode.'.format(req.mode))
-        return ChangeModeResponse('Mode changed')
+        return GripperChangeModeResponse('Mode changed')
 
     def shutdown_function(self):
         com_error = self.gripper.switch_modes('off')

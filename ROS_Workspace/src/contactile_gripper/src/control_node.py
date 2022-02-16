@@ -10,7 +10,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Float32
 from std_msgs.msg import Int32
 from std_msgs.msg import Int64
-from contactile_gripper.srv import *
+import srv_clients
 
 #TODO: Add a subscriber for the motor mode.
 #TODO: Add a subscriber for the UI menu
@@ -70,7 +70,8 @@ class ControlNode(object):
             if msg.data == 'passive': pass # service call was made directly in the ui_node to make passive.
             elif msg.data == 'cur_based_pos_control':
                 self.goal_pos = self.motor_pos
-                _ = self.change_mode_srv_client('cur_based_pos_control')
+                _ = srv_clients.gripper_change_mode_srv_client('cur_based_pos_control')
+                # _ = self.gripper_change_mode_srv_client('cur_based_pos_control')
             self.UI_mode = msg.data
         except: rospy.logwarn('Cannot change UI mode. {} not in UI mode options: {}'.format(msg.data,self.UI_mode_options))
 
@@ -91,15 +92,6 @@ class ControlNode(object):
                 pass
 
             self.motor_command_loop_rate_obj.sleep()
-
-    def change_mode_srv_client(self,mode):
-        rospy.wait_for_service('change_mode_srv')
-        try:
-            change_mode_srv = rospy.ServiceProxy('change_mode_srv',ChangeMode)
-            msg = change_mode_srv(mode)
-            return msg.response
-        except:
-            rospy.logerr('Change mode service failed.')
 
     def shutdown_function(self):
         """This function runs when the ROS node is shutdown for some reason.

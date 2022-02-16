@@ -1,6 +1,6 @@
 
 <launch>
-    <node pkg="contactile_gripper" name="motor" type="motor_node.py"/>
+    <node pkg="contactile_gripper" name="motor" type="gripper_node.py"/>
     <node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal -e"/>
     <node pkg="contactile_gripper" name="UI" type="ui_node.py" launch-prefix="gnome-terminal -e"/>
 </launch>

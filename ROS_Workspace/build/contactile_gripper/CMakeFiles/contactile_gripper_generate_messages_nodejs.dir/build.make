@@ -54,6 +54,9 @@ CMAKE_BINARY_DIR = /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Worksp
 include contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/progress.make
 
 contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/ChangeMode.js
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/GripperChangeMode.js
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperOff.js
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperSetLimit.js
 
 
 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/ChangeMode.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
@@ -61,8 +64,26 @@ contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs: /home
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from contactile_gripper/ChangeMode.srv"
 	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/contactile_gripper && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv -Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p contactile_gripper -o /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv
 
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/GripperChangeMode.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/GripperChangeMode.js: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from contactile_gripper/GripperChangeMode.srv"
+	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/contactile_gripper && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv -Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p contactile_gripper -o /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv
+
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperOff.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperOff.js: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from contactile_gripper/StepperOff.srv"
+	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/contactile_gripper && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv -Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p contactile_gripper -o /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv
+
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperSetLimit.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperSetLimit.js: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from contactile_gripper/StepperSetLimit.srv"
+	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/contactile_gripper && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv -Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p contactile_gripper -o /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv
+
 contactile_gripper_generate_messages_nodejs: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs
 contactile_gripper_generate_messages_nodejs: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/ChangeMode.js
+contactile_gripper_generate_messages_nodejs: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/GripperChangeMode.js
+contactile_gripper_generate_messages_nodejs: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperOff.js
+contactile_gripper_generate_messages_nodejs: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperSetLimit.js
 contactile_gripper_generate_messages_nodejs: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make
 
 .PHONY : contactile_gripper_generate_messages_nodejs

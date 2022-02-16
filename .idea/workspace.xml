@@ -5,221 +5,104 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_catkin_empty_exported_target.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_catkin_empty_exported_target.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_catkin_empty_exported_target.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_catkin_empty_exported_target.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_BiasRequest.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_BiasRequest.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_BiasRequest.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_BiasRequest.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_BiasRequest.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_BiasRequest.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_PillarState.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_PillarState.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_PillarState.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_PillarState.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_PillarState.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_PillarState.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_SensorState.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_SensorState.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_SensorState.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_SensorState.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_SensorState.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_SensorState.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StartSlipDetection.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StartSlipDetection.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StartSlipDetection.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StartSlipDetection.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StartSlipDetection.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StartSlipDetection.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StopSlipDetection.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StopSlipDetection.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StopSlipDetection.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StopSlipDetection.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StopSlipDetection.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/_papillarray_ros_v2_generate_messages_check_deps_StopSlipDetection.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_gencpp.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_gencpp.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_gencpp.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_gencpp.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_geneus.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_geneus.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_geneus.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_geneus.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_genlisp.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_genlisp.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_genlisp.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_genlisp.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_gennodejs.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_gennodejs.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_gennodejs.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_gennodejs.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_genpy.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_genpy.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_genpy.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_genpy.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/CXX.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/src/papillarray_ros_node.cpp.o" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/installspace/papillarray_ros_v2-msg-extras.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/installspace/papillarray_ros_v2-msg-paths.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/installspace/papillarray_ros_v2.pc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/installspace/papillarray_ros_v2Config-version.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/installspace/papillarray_ros_v2Config.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/ordered_paths.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/package.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/papillarray_ros_v2-msg-extras.cmake.develspace.in" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/papillarray_ros_v2-msg-extras.cmake.installspace.in" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/pkg.develspace.context.pc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/pkg.installspace.context.pc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/stamps/papillarray_ros_v2/package.xml.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/stamps/papillarray_ros_v2/pkg-genmsg.cmake.em.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/catkin_generated/stamps/papillarray_ros_v2/pkg.pc.em.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/cmake/papillarray_ros_v2-genmsg-context.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/cmake/papillarray_ros_v2-genmsg.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/BiasRequest.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/BiasRequestRequest.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/BiasRequestResponse.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/PillarState.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/SensorState.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/StartSlipDetection.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/StartSlipDetectionRequest.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/StartSlipDetectionResponse.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/StopSlipDetection.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/StopSlipDetectionRequest.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/papillarray_ros_v2/StopSlipDetectionResponse.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/papillarray_ros_v2/papillarray_ros_v2_node" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/pkgconfig/papillarray_ros_v2.pc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/msg/_PillarState.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/msg/_SensorState.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/msg/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/srv/_BiasRequest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/srv/_StartSlipDetection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/srv/_StopSlipDetection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/srv/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/msg/PillarState.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/msg/SensorState.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/msg/_package.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/msg/_package_PillarState.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/msg/_package_SensorState.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/msg/papillarray_ros_v2-msg.asd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/BiasRequest.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/StartSlipDetection.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/StopSlipDetection.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/_package.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/_package_BiasRequest.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/_package_StartSlipDetection.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/_package_StopSlipDetection.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/papillarray_ros_v2-srv.asd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/_index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/msg/PillarState.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/msg/SensorState.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/msg/_index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/srv/BiasRequest.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/srv/StartSlipDetection.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/srv/StopSlipDetection.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/srv/_index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/papillarray_ros_v2/cmake/papillarray_ros_v2-msg-extras.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/papillarray_ros_v2/cmake/papillarray_ros_v2-msg-paths.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/papillarray_ros_v2/cmake/papillarray_ros_v2Config-version.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/papillarray_ros_v2/cmake/papillarray_ros_v2Config.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/papillarray_ros_v2/manifest.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/papillarray_ros_v2/msg/PillarState.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/papillarray_ros_v2/msg/SensorState.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/papillarray_ros_v2/srv/BiasRequest.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/papillarray_ros_v2/srv/StartSlipDetection.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/papillarray_ros_v2/srv/StopSlipDetection.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/exp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/include/papillarray_ros_node.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/launch/papillarray.launch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/lib/PTSDKConstants.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/lib/PTSDKListener.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/lib/PTSDKPillar.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/lib/PTSDKSensor.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/lib/PTSDK_CPP_LIB.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/lib/libPTSDK.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/msg/PillarState.msg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/msg/SensorState.msg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/package.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/src/papillarray_ros_node.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/srv/BiasRequest.srv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/srv/StartSlipDetection.srv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/srv/StopSlipDetection.srv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_GripperChangeMode.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_GripperChangeMode.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_GripperChangeMode.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_GripperChangeMode.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_GripperChangeMode.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_GripperChangeMode.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperOff.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperOff.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperOff.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperOff.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperOff.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperOff.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperSetLimit.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperSetLimit.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperSetLimit.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperSetLimit.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperSetLimit.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperSetLimit.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/GripperChangeMode.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/GripperChangeModeRequest.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/GripperChangeModeResponse.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/StepperOff.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/StepperOffRequest.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/StepperOffResponse.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimit.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimitRequest.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimitResponse.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_GripperChangeMode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_StepperOff.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_StepperSetLimit.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/GripperChangeMode.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/StepperOff.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/StepperSetLimit.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_GripperChangeMode.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_StepperOff.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_StepperSetLimit.lisp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/GripperChangeMode.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperOff.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperSetLimit.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/GripperChangeMode.l" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/StepperOff.l" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/StepperSetLimit.l" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/srv_clients.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeCache.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/CMakeRuleHashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/CMakeRuleHashes.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/TargetDirectories.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CTestTestfile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CTestTestfile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/order_packages.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/order_packages.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/setup_cached.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/catkin_generated/setup_cached.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/catkin_make.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/catkin_make.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/cmake_install.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/IMU_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/IMU_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.develspace.in" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.develspace.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.installspace.in" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.installspace.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripper-msg-extras.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripper-msg-extras.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg-context.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg-context.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package.lisp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package.lisp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/contactile_gripper-srv.asd" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/contactile_gripper-srv.asd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/contactile_gripper/cmake/contactile_gripper-msg-extras.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/contactile_gripper/cmake/contactile_gripper-msg-extras.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/_index.js" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/_index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/gripper.launch" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/gripper.launch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/dynamixel_motors.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/dynamixel_motors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_pub_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_pub_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/test_stand_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/test_stand_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,10 +140,11 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv" />
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">

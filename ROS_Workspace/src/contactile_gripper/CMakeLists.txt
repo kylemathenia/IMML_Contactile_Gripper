@@ -56,6 +56,9 @@ add_message_files(
 add_service_files(
   FILES 
   ChangeMode.srv
+  GripperChangeMode.srv
+  StepperSetLimit.srv
+  StepperOff.srv
 )
 
 ## Generate actions in the 'action' folder

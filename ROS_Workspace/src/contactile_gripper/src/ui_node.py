@@ -7,23 +7,20 @@ import time
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Int32
-from contactile_gripper.srv import *
+import srv_clients
 import sys, select, termios, tty
 settings = termios.tcgetattr(sys.stdin)
-
-#TODO: Need to implement services for changing stepper motor limit values directly with the stepper motor.
-#TODO: Need to implement services for changing the stepper motor to passive as well.
 
 key_map = {'grip_open':'d',
             'grip_close':'f',
             'grip_increment_inc':'e',
             'grip_increment_dec':'r',
-            'step_up':'j',
-            'step_down':'k',
+            'step_up':'k',
+            'step_down':'j',
             'step_increment_inc':'u',
             'step_increment_dec':'i',
-            'set_upper_lim': 'q',
-            'set_lower_lim': 'w',
+            'set_upper_lim': 'w',
+            'set_lower_lim': 'q',
             'complete': 'c',
             'clear_limits': 'a',
             'prompt': 'p',
@@ -113,9 +110,9 @@ class UiNode(object):
         \n\nSET STEPPER LIMITS
         {}/{}: Gripper open/close
         {}/{}: Gripper increase/decrease increment
-        {}/{}: Stepper up/down
+        {}/{}: Stepper down/up
         {}/{}: Stepper increase/decrease increment
-        {}/{}: Set upper/lower stepper limit (AWAY/TOWARDS the motor) 
+        {}/{}: Set lower/upper stepper limit (AWAY/TOWARDS the motor) 
         {}: Complete
         {}: Clear limits
         {}: Show prompt again
@@ -133,7 +130,8 @@ class UiNode(object):
 
     def change_to_passive(self):
         pass  # TODO: Change both stepper and gripper to passive.
-        # _ = self.change_mode_srv_client('passive')
+        _ = srv_clients.gripper_change_mode_srv_client('passive')
+        _ = srv_clients.stepper_off_srv_client('passive')
 
     def routine_running_callback(self, msg):
         self.routine_running = msg.data
@@ -151,11 +149,11 @@ class UiNode(object):
         elif key == key_map['grip_increment_dec']:
             self.gripper_pos_increment -= 1
             rospy.loginfo('Gripper increment: {}'.format(self.gripper_pos_increment))
-        elif key == key_map['step_up']:
-            rospy.loginfo('Stepper open - increment: {}'.format(self.stepper_pos_increment))
-            self.ui_stepper_cmd_pub.publish(str(-self.stepper_pos_increment))
         elif key == key_map['step_down']:
-            rospy.loginfo('Stepper close - increment: {}'.format(self.stepper_pos_increment))
+            rospy.loginfo('Stepper down - increment: {}'.format(self.stepper_pos_increment))
+            self.ui_stepper_cmd_pub.publish(str(-self.stepper_pos_increment))
+        elif key == key_map['step_up']:
+            rospy.loginfo('Stepper up - increment: {}'.format(self.stepper_pos_increment))
             self.ui_stepper_cmd_pub.publish(str(self.stepper_pos_increment))
         elif key == key_map['step_increment_inc']:
             self.stepper_pos_increment += 1
@@ -174,18 +172,18 @@ class UiNode(object):
         elif key == key_map['complete']:
             rospy.loginfo("Limits not set. Lower: {}, Upper: {}".format(self.stepper_lower_lim,self.stepper_upper_lim))
         elif key == key_map['set_lower_lim']:
-            self.stepper_lower_lim = 80
+            self.stepper_lower_lim = srv_clients.stepper_set_limit_srv_client('lower','set')
             rospy.loginfo("Lower limit set to: {}".format(self.stepper_lower_lim))
-            # TODO: Make service calls to the stepper node.
         elif key == key_map['set_upper_lim']:
-            self.stepper_upper_lim = 90
+            self.stepper_upper_lim = srv_clients.stepper_set_limit_srv_client('upper','set')
             rospy.loginfo("Upper limit set to: {}".format(self.stepper_upper_lim))
-            # TODO: Make service calls to the stepper node.
         elif key == key_map['clear_limits']:
+            self.stepper_upper_lim = srv_clients.stepper_set_limit_srv_client('none', 'clear')
             self.stepper_upper_lim = None
             self.stepper_lower_lim = None
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
-            # TODO: Make service calls to the stepper node.
+
+
 
 def getKey():
     tty.setraw(sys.stdin.fileno())

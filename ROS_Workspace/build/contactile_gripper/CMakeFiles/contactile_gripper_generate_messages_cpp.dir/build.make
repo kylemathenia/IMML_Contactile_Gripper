@@ -54,6 +54,9 @@ CMAKE_BINARY_DIR = /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Worksp
 include contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/progress.make
 
 contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/ChangeMode.h
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/GripperChangeMode.h
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperOff.h
+contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimit.h
 
 
 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/ChangeMode.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
@@ -63,8 +66,32 @@ contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp: /home/te
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from contactile_gripper/ChangeMode.srv"
 	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper && /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/ChangeMode.srv -Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p contactile_gripper -o /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper -e /opt/ros/melodic/share/gencpp/cmake/..
 
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/GripperChangeMode.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/GripperChangeMode.h: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/GripperChangeMode.h: /opt/ros/melodic/share/gencpp/msg.h.template
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/GripperChangeMode.h: /opt/ros/melodic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from contactile_gripper/GripperChangeMode.srv"
+	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper && /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/GripperChangeMode.srv -Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p contactile_gripper -o /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper -e /opt/ros/melodic/share/gencpp/cmake/..
+
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperOff.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperOff.h: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperOff.h: /opt/ros/melodic/share/gencpp/msg.h.template
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperOff.h: /opt/ros/melodic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from contactile_gripper/StepperOff.srv"
+	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper && /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperOff.srv -Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p contactile_gripper -o /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper -e /opt/ros/melodic/share/gencpp/cmake/..
+
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimit.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimit.h: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimit.h: /opt/ros/melodic/share/gencpp/msg.h.template
+/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimit.h: /opt/ros/melodic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from contactile_gripper/StepperSetLimit.srv"
+	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper && /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/srv/StepperSetLimit.srv -Icontactile_gripper:/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p contactile_gripper -o /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper -e /opt/ros/melodic/share/gencpp/cmake/..
+
 contactile_gripper_generate_messages_cpp: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp
 contactile_gripper_generate_messages_cpp: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/ChangeMode.h
+contactile_gripper_generate_messages_cpp: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/GripperChangeMode.h
+contactile_gripper_generate_messages_cpp: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperOff.h
+contactile_gripper_generate_messages_cpp: /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimit.h
 contactile_gripper_generate_messages_cpp: contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make
 
 .PHONY : contactile_gripper_generate_messages_cpp
