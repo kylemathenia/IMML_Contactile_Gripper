@@ -216,7 +216,7 @@ void limitStop(){
 bool sendData(void *)
 {
   Serial.println(start_char + switch1State + delimeter + switch2State + delimeter + cur_pos + end_char);
-  Serial.flush()
+  Serial.flush();
   return true; //Return true to repeat the function.
 }
 
