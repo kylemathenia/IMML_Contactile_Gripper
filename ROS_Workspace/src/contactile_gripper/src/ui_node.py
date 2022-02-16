@@ -41,7 +41,7 @@ class UiNode(object):
         
         #Setup
         self.gripper_pos_increment = 5
-        self.stepper_pos_increment = 100
+        self.stepper_pos_increment = 500
         self.stepper_upper_lim = None
         self.stepper_lower_lim = None
 
@@ -83,7 +83,7 @@ class UiNode(object):
         elif key in key_map.values():
             self.dir_control_handle(key)
     menu_sys_direct_control.prompt= """
-        \n\nPOSITION CONTROL MODE\n
+        \n\nDIRECT CONTROL MODE\n
         {}/{}: Gripper open/close
         {}/{}: Gripper increase/decrease increment
         {}/{}: Stepper up/down
@@ -102,6 +102,8 @@ class UiNode(object):
     def menu_step_cal(self,key):
         if key in key_map['EMO_bindings']:  # EMERGENCY OFF. Space, enter, backspace, or esc.
             self.change_to_passive()
+            self.current_menu = self.menu_main
+            self.new_menu_update()
         elif key==key_map['set_lower_lim'] or key==key_map['set_upper_lim'] or key==key_map['clear_limits'] or key==key_map['complete']:
             self.set_limit_handle(key)
         elif key in key_map.values():
@@ -116,11 +118,12 @@ class UiNode(object):
         {}: Complete
         {}: Clear limits
         {}: Show prompt again
-        {}: EMERGENCY OFF/PASSIVE MODE\n
+        {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
         """.format(key_map['grip_open'], key_map['grip_close'],key_map['grip_increment_inc'],
                    key_map['grip_increment_dec'], key_map['step_up'], key_map['step_down'],
                    key_map['step_increment_inc'],key_map['step_increment_dec'],key_map['set_upper_lim'],
                    key_map['set_lower_lim'],key_map['complete'],key_map['clear_limits'],key_map['prompt'],key_map['EMO'])
+
 
 
     ############ Supporting methods ############
@@ -129,8 +132,7 @@ class UiNode(object):
         self.menu_pub.publish(self.current_menu.__name__)
 
     def change_to_passive(self):
-        pass  # TODO: Change both stepper and gripper to passive.
-        _ = srv_clients.gripper_change_mode_srv_client('passive')
+        # _ = srv_clients.gripper_change_mode_srv_client('passive')
         _ = srv_clients.stepper_off_srv_client('passive')
 
     def routine_running_callback(self, msg):
@@ -165,12 +167,10 @@ class UiNode(object):
             rospy.loginfo(self.current_menu.prompt)
 
     def set_limit_handle(self,key):
-        if key == key_map['complete'] and self.stepper_lower_lim is not None and self.stepper_upper_lim is not None:
+        if key == key_map['complete']:
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
             self.current_menu = self.menu_main
             self.new_menu_update()
-        elif key == key_map['complete']:
-            rospy.loginfo("Limits not set. Lower: {}, Upper: {}".format(self.stepper_lower_lim,self.stepper_upper_lim))
         elif key == key_map['set_lower_lim']:
             self.stepper_lower_lim = srv_clients.stepper_set_limit_srv_client('lower','set')
             rospy.loginfo("Lower limit set to: {}".format(self.stepper_lower_lim))

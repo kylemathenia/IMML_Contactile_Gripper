@@ -45,9 +45,8 @@ class Stepper(object):
         try:
             if '<' in line and '>' in line:
                 return int(data[0]), int(data[1]), int(data[2]), True
+            else: raise Exception
         except:
-            print('STEPPER READ COM ERROR: {}'.format(line))
-        else:
             return None, None, None, False
 
     def write(self, cmd):
