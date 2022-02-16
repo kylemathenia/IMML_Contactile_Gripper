@@ -29,8 +29,7 @@ class StepperNode(object):
         self.lower_switch_status = None
 
         # Subscribers
-        # TODO: change to 'Stepper_Cmd'. UI_Stepper_Cmd should come through the control node.
-        self.stepper_cmd_sub = rospy.Subscriber('UI_Stepper_Cmd', String, self.stepper_cmd_callback, queue_size=1, buff_size = 100)
+        self.stepper_cmd_sub = rospy.Subscriber('Stepper_Cmd', String, self.stepper_cmd_callback, queue_size=1, buff_size = 100)
 
         # Services
         self.stepper_off_srv = rospy.Service('stepper_off_srv', StepperOff, self.srv_handle_stepper_off)
