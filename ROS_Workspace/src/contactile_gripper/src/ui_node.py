@@ -32,8 +32,8 @@ class UiNode(object):
     def __init__(self):
         # Publishers
         self.menu_pub = rospy.Publisher('UI_Menu', String, queue_size=100, latch=True)
-        self.ui_gripper_cmd_pub = rospy.Publisher('UI_Gripper_Cmd',String, queue_size=5)
-        self.ui_stepper_cmd_pub = rospy.Publisher('UI_Stepper_Cmd',String, queue_size=5)
+        self.gripper_cmd_pub = rospy.Publisher('Gripper_Cmd',String, queue_size=5)
+        self.stepper_cmd_pub = rospy.Publisher('Stepper_Cmd',String, queue_size=5)
 
         # Subscribers
         self.routine_running_sub = rospy.Subscriber('Routine_Running', String, self.routine_running_callback, queue_size=100)
@@ -55,11 +55,14 @@ class UiNode(object):
         while not rospy.is_shutdown():
             key = getKey()
             if key == '': pass # No entry.
-            else: self.current_menu(key)
+            else:
+                self.current_menu(key)
+                rospy.logdebug('current_menu: {} key: {}'.format(self.current_menu.__name__,key))
 
 
     ############ Menus ############
     def menu_main(self,key):
+        rospy.logdebug('[menu_main] key: {}'.format(key))
         if key == '1':
             self.current_menu = self.menu_sys_direct_control
         elif key == '2':
@@ -76,6 +79,7 @@ class UiNode(object):
     """
 
     def menu_sys_direct_control(self,key):
+        rospy.logdebug('[menu_sys_direct_control] key: {}'.format(key))
         if key in key_map['EMO_bindings']: # EMERGENCY OFF. Space, enter, backspace, or esc.
             self.change_to_passive()
             self.current_menu = self.menu_main
@@ -100,6 +104,7 @@ class UiNode(object):
     menu_routines.prompt = None
 
     def menu_step_cal(self,key):
+        rospy.logdebug('[menu_step_cal] key: {}'.format(key))
         if key in key_map['EMO_bindings']:  # EMERGENCY OFF. Space, enter, backspace, or esc.
             self.change_to_passive()
             self.current_menu = self.menu_main
@@ -128,23 +133,27 @@ class UiNode(object):
 
     ############ Supporting methods ############
     def new_menu_update(self):
+        rospy.logdebug('[new_menu_update]')
         rospy.loginfo(self.current_menu.prompt)
         self.menu_pub.publish(self.current_menu.__name__)
 
     def change_to_passive(self):
-        # _ = srv_clients.gripper_change_mode_srv_client('passive')
-        _ = srv_clients.stepper_off_srv_client('passive')
+        rospy.logdebug('[change_to_passive]')
+        _ = srv_clients.gripper_change_mode_srv_client('off')
+        # _ = srv_clients.('passive')
 
     def routine_running_callback(self, msg):
+        rospy.logdebug('[routine_running_callback]')
         self.routine_running = msg.data
 
     def dir_control_handle(self,key):
+        rospy.logdebug('[dir_control_handle] key: {}'.format(key))
         if key == key_map['grip_open']:
             rospy.loginfo('Gripper open - increment: {}'.format(self.gripper_pos_increment))
-            self.ui_gripper_cmd_pub.publish(str(-self.gripper_pos_increment))
+            self.gripper_cmd_pub.publish('position_'+str(-self.gripper_pos_increment))
         elif key == key_map['grip_close']:
             rospy.loginfo('Gripper close - increment: {}'.format(self.gripper_pos_increment))
-            self.ui_gripper_cmd_pub.publish(str(self.gripper_pos_increment))
+            self.gripper_cmd_pub.publish('position_'+str(self.gripper_pos_increment))
         elif key == key_map['grip_increment_inc']:
             self.gripper_pos_increment += 1
             rospy.loginfo('Gripper increment: {}'.format(self.gripper_pos_increment))
@@ -153,10 +162,10 @@ class UiNode(object):
             rospy.loginfo('Gripper increment: {}'.format(self.gripper_pos_increment))
         elif key == key_map['step_down']:
             rospy.loginfo('Stepper down - increment: {}'.format(self.stepper_pos_increment))
-            self.ui_stepper_cmd_pub.publish(str(-self.stepper_pos_increment))
+            self.stepper_cmd_pub.publish(str(-self.stepper_pos_increment))
         elif key == key_map['step_up']:
             rospy.loginfo('Stepper up - increment: {}'.format(self.stepper_pos_increment))
-            self.ui_stepper_cmd_pub.publish(str(self.stepper_pos_increment))
+            self.stepper_cmd_pub.publish(str(self.stepper_pos_increment))
         elif key == key_map['step_increment_inc']:
             self.stepper_pos_increment += 1
             rospy.loginfo('Stepper increment: {}'.format(self.stepper_pos_increment))
@@ -167,8 +176,10 @@ class UiNode(object):
             rospy.loginfo(self.current_menu.prompt)
 
     def set_limit_handle(self,key):
+        rospy.logdebug('[set_limit_handle] key: {}'.format(key))
         if key == key_map['complete']:
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
+            self.change_to_passive()
             self.current_menu = self.menu_main
             self.new_menu_update()
         elif key == key_map['set_lower_lim']:
@@ -182,7 +193,6 @@ class UiNode(object):
             self.stepper_upper_lim = None
             self.stepper_lower_lim = None
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
-
 
 
 def getKey():
@@ -200,7 +210,7 @@ def test():
     
 
 def main():
-    rospy.init_node('ui_node', anonymous=False, log_level=rospy.DEBUG)
+    rospy.init_node('ui_node', anonymous=False, log_level=rospy.INFO)
     _ = UiNode()
 
 if __name__ == '__main__':

@@ -70,6 +70,26 @@ class Dynamixel(object):
         dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(self.portHandler, self.id, self.addr_homing_offset, value)
         error = self.log_com_if_error(dxl_comm_result, dxl_error)
 
+    def write_pos_p_gain(self,value):
+        rospy.logdebug('[write_pos_p_gain] {}'.format(value))
+        dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.addr_pos_p_gain, value)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
+
+    def write_pos_i_gain(self,value):
+        rospy.logdebug('[write_pos_i_gain] {}'.format(value))
+        dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.addr_pos_i_gain, value)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
+
+    def write_pos_d_gain(self,value):
+        rospy.logdebug('[write_pos_d_gain] {}'.format(value))
+        dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.addr_pos_d_gain, value)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
+
+    def write_led(self,value):
+        rospy.logdebug('[write_led] {}'.format(value))
+        dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, self.id, self.addr_led, value)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
+
     def write_torque_mode(self,mode):
         """Arguments: 'on','off' """
         dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, self.id,self.addr_torque_mode,self.torque_modes[mode])
@@ -97,6 +117,7 @@ class Dynamixel(object):
         except AssertionError: rospy.logwarn('Write failed. Motor is not in the correct state. req torque: off ''({})'.format(self.torque))
         dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.id, self.addr_current_limit, value)
         error = self.log_com_if_error(dxl_comm_result, dxl_error)
+        self.MAX_CURRENT_ABS = value
 
     def switch_modes(self,mode):
         """Arguments: 'cur_control', 'vel_control', 'pos_control', 'ext_pos_control', 'cur_based_pos_control', 'PWM_control'
@@ -175,7 +196,6 @@ class Dynamixel(object):
         # Find and set the current operating mode, and set current.
         self.read_mode()
         self.write_torque_mode('off')
-        self.write_current_limit(self.MAX_CURRENT_ABS)
         self.status = 'initialized'
         rospy.loginfo('[motor status] {}'.format(self.status))
 
@@ -228,6 +248,10 @@ class XM430_W210(Dynamixel):
         self.addr_current_limit = 38
         self.addr_shutdown = 63
         self.addr_torque_mode = 64
+        self.addr_led = 65
+        self.addr_pos_d_gain = 80
+        self.addr_pos_i_gain = 82
+        self.addr_pos_p_gain = 84
         self.addr_goal_PWM = 100
         self.addr_goal_cur = 102
         self.addr_goal_vel = 104
