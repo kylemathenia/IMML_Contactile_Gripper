@@ -3,6 +3,9 @@
 User interface node to control the system.
 """
 
+#TODO: Add a key to shut down all of the nodes at once.
+#TODO: Need to add home position to communicate to control node.
+
 import time
 import rospy
 from std_msgs.msg import String
@@ -10,6 +13,7 @@ from std_msgs.msg import Int32
 import srv_clients
 import sys, select, termios, tty
 settings = termios.tcgetattr(sys.stdin)
+import rosbag
 
 key_map = {'grip_open':'d',
             'grip_close':'f',
@@ -44,10 +48,12 @@ class UiNode(object):
         self.stepper_pos_increment = 500
         self.stepper_upper_lim = None
         self.stepper_lower_lim = None
+        self.bag = rosbag.Bag('test.bag','w')
 
         self.current_menu = self.menu_step_cal
         self.new_menu_update()
 
+        rospy.on_shutdown(self.shutdown_function)
         self.main_loop()
 
     def main_loop(self):
@@ -194,6 +200,8 @@ class UiNode(object):
             self.stepper_lower_lim = None
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
 
+    def shutdown_function(self):
+        self.bag.close()
 
 def getKey():
     tty.setraw(sys.stdin.fileno())

@@ -22,6 +22,8 @@ class UiNode(object):
     def main_loop(self):
         """Continuously get the key inputs from the user and pass the key to the current menu method."""
         while True:
-            self.current_menu('hi')
+            self.func()
+            time.sleep(1)
+
 
 x = UiNode()
