@@ -1,5 +1,6 @@
 # Hashes of file build rules.
 538e45eef794a4273e8cc304dfea489b /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/ChangeMode.h
+3bb88423dc4e9014160f010cb2f5cc65 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/DataRecorder.h
 c92b2ade49c6d35dc8dfa794b4b077f5 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/GripperChangeMode.h
 45c4ecf91e5a3ca30f60901579b9a9e5 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperOff.h
 7190bd30464aed191e6252e769e84559 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/contactile_gripper/StepperSetLimit.h
@@ -9,6 +10,7 @@ e8009602458830622cc590158201c73c /home/ted/Documents/GitHub/IMML_Contactile_Grip
 6b27fea13d892a9fc3e0c137d90a01f2 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/papillarray_ros_v2/StartSlipDetection.h
 179548dc6bd22495139c9be2e0490f25 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/include/papillarray_ros_v2/StopSlipDetection.h
 511455cbf6a08e201028aad8b41dcbb0 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_ChangeMode.py
+0b45648a97f857ff37eced8942d39857 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_DataRecorder.py
 b44a554b0b8624fc16a5cd6dcd3be5fc /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_GripperChangeMode.py
 21affedfd04791b60a8790bc22ffe0f7 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_StepperOff.py
 d3606134b58a69478a1a5aede26a1790 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_StepperSetLimit.py
@@ -21,6 +23,7 @@ f1f7d225f7fb6ba93b08f84aadc4c989 /home/ted/Documents/GitHub/IMML_Contactile_Grip
 6e7d7d635f97a9758db7e335717cd7d2 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/srv/_StopSlipDetection.py
 a90344e0fddfa73b06b123e12a6ce5d8 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/lib/python2.7/dist-packages/papillarray_ros_v2/srv/__init__.py
 662e64933644a3a4e1dd5e04400b2469 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/ChangeMode.lisp
+9148b90e7f6036c2a5b7c81d63d5473c /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/DataRecorder.lisp
 667b074d84c60f9a0cbc74e44b498534 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/GripperChangeMode.lisp
 26b408418fb42bccbf4215f3cfb2177a /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/StepperOff.lisp
 eed7d4ea314b18d6b1cb29c8ec3d96d2 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/StepperSetLimit.lisp
@@ -30,6 +33,7 @@ fdf056c323535b1657154770cbf1fc56 /home/ted/Documents/GitHub/IMML_Contactile_Grip
 7c4eef013045d89a7a7bc380c2400b02 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/StartSlipDetection.lisp
 125af57da707dcabd417980c824749e3 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/papillarray_ros_v2/srv/StopSlipDetection.lisp
 ec6c1cf70142106b361051729b1dd3e6 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/ChangeMode.js
+98d4778168eeda29d47e9baefdb697d4 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/DataRecorder.js
 a1bd0c1084008fe70f5b4a9ba39c9dad /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/GripperChangeMode.js
 0dcfb6b98b2e4d2c52ef8e8343a0f45a /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperOff.js
 5c279d4ebe54a965abba46553474c31c /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperSetLimit.js
@@ -40,6 +44,7 @@ e0626500dff50dd7ffd0d626d2f1baf2 /home/ted/Documents/GitHub/IMML_Contactile_Grip
 5ada9c57ad27e4f02286d457a174bf8e /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/papillarray_ros_v2/srv/StopSlipDetection.js
 d4ead492929f5f410a589c4843c27632 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/manifest.l
 f2fb3f5f4835db7fdec13d7d01c9d73d /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/ChangeMode.l
+b43fff765f9b03f7d1bcf1a40ea90119 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/DataRecorder.l
 934a73b3c17810ea718cb89536e8cf4a /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/GripperChangeMode.l
 fe50ba053f1e103b6478ed3eb3a067b5 /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/StepperOff.l
 c01cd71887647de973c67284f94d7bfe /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/StepperSetLimit.l
@@ -51,6 +56,7 @@ cc9d1c726224b1838a33a031fb563dff /home/ted/Documents/GitHub/IMML_Contactile_Grip
 e6b62995f1993d11053f8fa3c3e8a79f /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/roseus/ros/papillarray_ros_v2/srv/StopSlipDetection.l
 29aa7f5b0eea8b29c0a667d9070489e3 CMakeFiles/clean_test_results
 866e58747b7c79a15a3343a4bc470e40 contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_ChangeMode
+63acc1ed6845ea2beaca212b7dc1a649 contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_DataRecorder
 6f1730680befa926133fb2965b294958 contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_GripperChangeMode
 994aeab55ee95dfdf3a2f7809e5d7ce3 contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperOff
 02db29d63e5bfea4555fd8151e2d1e34 contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_StepperSetLimit

@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/ChangeMode.lisp"
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/GripperChangeMode.lisp"
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/StepperOff.lisp"
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/DataRecorder.lisp"
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/StepperSetLimit.lisp"
 )
 

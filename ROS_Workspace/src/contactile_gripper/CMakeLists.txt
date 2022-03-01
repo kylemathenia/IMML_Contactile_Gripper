@@ -59,6 +59,7 @@ add_service_files(
   GripperChangeMode.srv
   StepperSetLimit.srv
   StepperOff.srv
+  DataRecorder.srv
 )
 
 ## Generate actions in the 'action' folder

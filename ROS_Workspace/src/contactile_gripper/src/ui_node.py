@@ -3,7 +3,7 @@
 User interface node to control the system.
 """
 
-#TODO: Add a key to shut down all of the nodes at once.
+#TODO: Add a key to shut down all of the nodes at once. rosnode kill -a from the command line works.
 #TODO: Need to add home position to communicate to control node.
 
 import time
@@ -13,7 +13,6 @@ from std_msgs.msg import Int32
 import srv_clients
 import sys, select, termios, tty
 settings = termios.tcgetattr(sys.stdin)
-import rosbag
 
 key_map = {'grip_open':'d',
             'grip_close':'f',
@@ -48,7 +47,6 @@ class UiNode(object):
         self.stepper_pos_increment = 500
         self.stepper_upper_lim = None
         self.stepper_lower_lim = None
-        self.bag = rosbag.Bag('test.bag','w')
 
         self.current_menu = self.menu_step_cal
         self.new_menu_update()
@@ -75,6 +73,8 @@ class UiNode(object):
             self.current_menu = self.menu_routines
         elif key == '3':
             self.current_menu = self.menu_step_cal
+        elif key == '4':
+            self.shutdown_function()
             
         if key == '1' or key == '2' or key == '3': self.new_menu_update()
     menu_main.prompt = """  
@@ -82,6 +82,7 @@ class UiNode(object):
     1: Direct control
     2: Routines
     3: Calibrate
+    4: System Shutdown
     """
 
     def menu_sys_direct_control(self,key):
@@ -201,7 +202,7 @@ class UiNode(object):
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
 
     def shutdown_function(self):
-        self.bag.close()
+        pass
 
 def getKey():
     tty.setraw(sys.stdin.fileno())

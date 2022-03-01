@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/ChangeMode.js"
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/GripperChangeMode.js"
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperOff.js"
+  "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/DataRecorder.js"
   "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/StepperSetLimit.js"
 )
 

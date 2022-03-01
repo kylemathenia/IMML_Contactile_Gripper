@@ -4,12 +4,13 @@ This module contains the gripper node.
 """
 
 import roslib; roslib.load_manifest('contactile_gripper')
-from contactile_gripper.srv import *
+from contactile_gripper.srv import GripperChangeMode
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
 from std_msgs.msg import Int64
 import gripper
+import srv_clients
 
 #TODO: Refactor to work with goal position.
 #TODO: Refactor to not have differt sets of modes.
@@ -35,6 +36,9 @@ class GripperNode(object):
 
         # Services
         self.gripper_change_mode_srv = rospy.Service('gripper_change_mode_srv', GripperChangeMode, self.srv_handle_change_mode)
+
+        # TODO: Remove data recorder.
+        srv_clients.data_recorder_client(['/Gripper_Pos','/Gripper_Mode'], file_prefix="experiment1", stop=False)
 
         # Setup and start
         self.cmd_mode = None
@@ -102,8 +106,9 @@ class GripperNode(object):
             self.gripper.motor.write_goal_cur(self.cmd_val)
 
     def shutdown_function(self):
-        pass
-        # com_error = self.gripper.switch_modes('off')
+        #TODO: remove
+        srv_clients.data_recorder_client(['/Gripper_Pos','/Gripper_Mode'], file_prefix='experiment1', stop=True)
+        # pass
 
 def main():
     rospy.init_node('gripper_node', anonymous=False, log_level=rospy.DEBUG)

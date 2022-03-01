@@ -11,10 +11,12 @@ from std_msgs.msg import Float32
 from std_msgs.msg import Int32
 from std_msgs.msg import Int64
 from papillarray_ros_v2.msg import SensorState
+from contactile_gripper.srv import DataRecorder
 import srv_clients
 
 
 #TODO: Need to set the self.stepper_home value.
+#TODO: Add logging functionality as shown in gripper node. Get the bag files to save to a different directory. The bag directory.
 
 class ControlNode(object):
     def __init__(self):
@@ -36,31 +38,33 @@ class ControlNode(object):
         self.tact_sensor0 = None
         self.tact_pillar_sub = rospy.Subscriber('/hub_0/sensor_1', SensorState, self.tact_1_callback, queue_size=1)
         self.tact_sensor1 = None
+        # Access data in this form: self.tact_sensor0.pillars[0].fX
 
         # Setup
+        self.routine_bindings = {'menu1': self.grasp_and_pull_routine, 'menu2': self.grasp_routine} # TODO: Add actual routine method names here.
+        self.routine_menus = set(self.routine_bindings.keys())
+        self.control_function = self.no_routine
         self.stepper_home = None
-        self.routine_menus = set({'experiment1','experiment2'}) # TODO: Add actual routine method names here.
         self.routine_running = False
         self.routine_stage = 0
         self.grasping = False
         self.stage_start_time = None
         self.recording_data = False
 
-        rospy.on_shutdown(self.shutdown_function)
-        self.main_loop_rate = 0.5  # Hz
-        self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
-
         self.wait_for_sensors()
         self.gripper_goal_pos = self.gripper_pos
         self.gripper_goal_cur = 0
 
+        rospy.on_shutdown(self.shutdown_function)
+        self.main_loop_rate = 0.5  # Hz
+        self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
         self.main_loop()
 
 
     ######################## Subscriber callbacks ########################
     def menu_callback(self,msg):
         """Callback for when the user inputs a command in the ui node."""
-        self.check_if_routine(msg.data)
+        self.check_if_leave_or_enter_routine(msg.data)
         self.menu = msg.data
     def tact_0_callback(self,msg):
         self.tact_sensor0 = msg
@@ -73,24 +77,51 @@ class ControlNode(object):
     def imu_callback(self,msg):
         pass
 
-    ######################## Main control loop ########################
+    ######################## Main loop ########################
     def main_loop(self):
         """Publishes motor commands to the motor depending on the current operating mode parameters."""
         while not rospy.is_shutdown():
-            # Execute control function for this cycle.
-            self.grasp_and_pull_routine()
-            # How will the function know that it is finished? Need to signal to gripper that it is finished when done.
-            # A series of flags to mark different stages of the routine.
-
-            # rospy.loginfo("Tactile Sensor 0 P0 fX: {}".format(self.tact_sensor0.pillars[0].fX))
-            # rospy.loginfo("UI Menu: {}".format(self.menu))
-            # rospy.loginfo("Gripper Pos: {}".format(self.gripper_pos))
-            # rospy.loginfo("Stepper Pos: {}".format(self.stepper_pos))
-
+            self.control_function()
             self.main_loop_rate_obj.sleep()
 
+    ######################## Control/Routine Functions ########################
+    def no_routine(self):
+        """Don't publish commands if the UI is not in a menu for running a routine."""
+        pass
 
-    ######################## Routine Main Functions ########################
+    def grasp_forever_routine(self):
+        self.check_stage()
+        if self.routine_stage == 0:  # Grasp
+            self.grasp()
+            #TODO:
+            self.stepper_cmd_pub.publish("some command for zero speed.")
+
+    def grasp_and_release_routine(self):
+        """Grasps and maintains grasp for an amount of time, then releases."""
+        self.check_stage()
+        if self.routine_stage==0: # Grasp
+            self.grasp()
+            # TODO:
+            self.stepper_cmd_pub.publish("some command for zero speed.")
+            if self.grasping: self.stage_complete = True
+
+        elif self.routine_stage==1: # Maintain grasp for some time. No pull.
+            self.grasp()
+            # TODO:
+            self.stepper_cmd_pub.publish("some command for zero speed.")
+            if self.stage_timeout(timeout=2): self.stage_complete = True
+
+        elif self.routine_stage==2: # Release grasp.
+            self.open()
+            if self.stage_timeout(timeout=0.5):
+                self.stage_complete = True
+                self.record_data(record=False)
+
+        elif self.routine_stage==3: # Publish flag to let UI node know routine is complete.
+            """Need to let the UI node that the routine is complete. """
+            #TODO: Publish routine finish flag.
+
+
     def grasp_and_pull_routine(self):
         self.check_stage()
         if self.routine_stage==0: # Start recording
@@ -99,11 +130,13 @@ class ControlNode(object):
 
         elif self.routine_stage==1: # Grasp
             self.grasp()
+            # TODO:
             self.stepper_cmd_pub.publish("some command for zero speed.")
             if self.grasping: self.stage_complete = True
 
         elif self.routine_stage==2: # Maintain grasp for some time. No pull.
             self.grasp()
+            # TODO:
             self.stepper_cmd_pub.publish("some command for zero speed.")
             if self.stage_timeout(timeout=1): self.stage_complete = True
 
@@ -113,6 +146,7 @@ class ControlNode(object):
 
         elif self.routine_stage==4: # Maintain grasp for some time. No pull.
             self.grasp()
+            # TODO:
             self.stepper_cmd_pub.publish("some command for zero speed.")
             if self.stage_timeout(timeout=1): self.stage_complete = True
 
@@ -133,11 +167,11 @@ class ControlNode(object):
 
     ######################## Routine Support ########################
     def grasp(self):
-        if self.ending_condition:
-            #TODO: Set the stepper to passive/not moving.
-            return True
+        # TODO:
+        if self.grasping_condition:
+            self.grasping = True
         else:
-            return False
+            self.grasping = False
 
     def cable_check_pull(self):
         """Returns True/False for whether or not the check is complete."""
@@ -157,24 +191,32 @@ class ControlNode(object):
             self.stepper_cmd_pub.publish("Command to return to home position")
             return False
 
+    def make_passive(self):
+        pass
+        #TODO: Make srv calls to passify the gripper and stepper.
+
+
     ######################## State Change Support ########################
-    def check_if_routine(self,next_menu):
+    def check_if_leave_or_enter_routine(self,next_menu):
         """Special action taken if entering or leaving a routine."""
         if self.menu not in self.routine_menus and next_menu not in self.routine_menus: # No routine involved.
             return
         elif self.menu not in self.routine_menus and next_menu in self.routine_menus: # Entering a routine.
-            self.entering_routine()
+            self.entering_routine(next_menu)
         elif self.menu in self.routine_menus and next_menu not in self.routine_menus: # Leaving a routine.
             self.exiting_routine()
         else:
             rospy.logerr("Error with ui menu structure.")
             raise Exception
 
-    def entering_routine(self):
+    def entering_routine(self,next_menu):
+        self.control_function = self.routine_bindings[next_menu]
         self.routine_running = True
         self.stage_start_time = time.time()
 
     def exiting_routine(self):
+        self.make_passive()
+        self.control_function = self.no_routine
         self.routine_running = False
         self.routine_stage = 0
         self.grasping = False
@@ -208,8 +250,8 @@ class ControlNode(object):
         """Wait for all sensors to start publishing data before entering the main control loop."""
         while self.menu is None:
             rospy.loginfo("Waiting for: ui_node")
-        while self.stepper_pos is None:
-            rospy.loginfo("Waiting for: stepper_node")
+        while self.stepper_home is None:
+            rospy.loginfo("Waiting for: stepper_node to provide a home position")
         # while self.imu_acc_x is None:
         #     rospy.loginfo("Waiting for: imu_node")
         while self.gripper_pos is None:

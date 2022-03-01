@@ -1,0 +1,5 @@
+
+<launch>
+    <node pkg="contactile_gripper" name="recorder" type="data_recorder_node.py" launch-prefix="gnome-terminal -e"/>
+    <node pkg="contactile_gripper" name="motor" type="gripper_node.py" launch-prefix="gnome-terminal -e"/>
+</launch>

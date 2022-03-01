@@ -56,6 +56,18 @@ CMAKE_BINARY_DIR = /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Worksp
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -100,18 +112,6 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
 
 # Special rule for the target test
 test:
@@ -438,6 +438,21 @@ roscpp_generate_messages_eus/fast:
 .PHONY : roscpp_generate_messages_eus/fast
 
 # Convenience name for target.
+contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_DataRecorder.dir/rule:
+	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_DataRecorder.dir/rule
+.PHONY : contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_DataRecorder.dir/rule
+
+# Convenience name for target.
+_contactile_gripper_generate_messages_check_deps_DataRecorder: contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_DataRecorder.dir/rule
+
+.PHONY : _contactile_gripper_generate_messages_check_deps_DataRecorder
+
+# fast build rule for target.
+_contactile_gripper_generate_messages_check_deps_DataRecorder/fast:
+	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build && $(MAKE) -f contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_DataRecorder.dir/build.make contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_DataRecorder.dir/build
+.PHONY : _contactile_gripper_generate_messages_check_deps_DataRecorder/fast
+
+# Convenience name for target.
 contactile_gripper/CMakeFiles/roscpp_generate_messages_py.dir/rule:
 	cd /home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 contactile_gripper/CMakeFiles/roscpp_generate_messages_py.dir/rule
 .PHONY : contactile_gripper/CMakeFiles/roscpp_generate_messages_py.dir/rule
@@ -623,6 +638,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/local"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... _contactile_gripper_generate_messages_check_deps_StepperOff"
@@ -642,6 +658,7 @@ help:
 	@echo "... contactile_gripper_geneus"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_eus"
+	@echo "... _contactile_gripper_generate_messages_check_deps_DataRecorder"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... contactile_gripper_genpy"
 	@echo "... list_install_components"
@@ -656,7 +673,6 @@ help:
 	@echo "... contactile_gripper_generate_messages_nodejs"
 	@echo "... edit_cache"
 	@echo "... contactile_gripper_generate_messages_py"
-	@echo "... install/local"
 	@echo "... test"
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... rebuild_cache"

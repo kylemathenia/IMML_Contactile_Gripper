@@ -4,7 +4,8 @@ This module contains the node for the test stand stepper motor.
 """
 
 import roslib; roslib.load_manifest('contactile_gripper')
-from contactile_gripper.srv import *
+from contactile_gripper.srv import StepperOff
+from contactile_gripper.srv import StepperSetLimit
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
