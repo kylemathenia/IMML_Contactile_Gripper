@@ -35,11 +35,11 @@ class StepperNode(object):
         self.stepper_off_srv = rospy.Service('stepper_off_srv', StepperOff, self.srv_handle_stepper_off)
         self.stepper_set_limit_srv = rospy.Service('stepper_set_limit_srv', StepperSetLimit, self.srv_handle_stepper_set_limit)
 
-        self.pub_loop_rate = 60 # Hz
+        self.pub_loop_rate = 1 # Hz
         self.pub_loop_rate_obj = rospy.Rate(self.pub_loop_rate)
         self.upper_lim = None
         self.lower_lim = None
-        self.cmd_mode = None
+        self.cmd_mode = 'off'
         self.cmd_val = None
 
         rospy.on_shutdown(self.shutdown_function)
@@ -48,6 +48,7 @@ class StepperNode(object):
 
     ######################## Subscriber and service callbacks ########################
     def srv_handle_stepper_off(self, req):
+        print('req: {}'.format(req))
         self.stepper.write('<x_0>')
         self.cmd_mode = 'off'
         return StepperOffResponse('Stepper off')
@@ -86,7 +87,7 @@ class StepperNode(object):
 
     def read_data_update_vals(self):
         lower_switch_status, upper_switch_status, cur_pos, com_success = self.stepper.read()
-        rospy.loginfo('{} {} {} {}'.format(lower_switch_status, upper_switch_status, cur_pos, com_success))
+        rospy.logdebug('{} {} {} {}'.format(lower_switch_status, upper_switch_status, cur_pos, com_success))
         if com_success:
             self.cur_pos = int(cur_pos)
             self.upper_switch_status = int(upper_switch_status)
@@ -97,6 +98,7 @@ class StepperNode(object):
         self.limit_switch_pub.publish([self.upper_switch_status,self.lower_switch_status])
 
     def write_command(self):
+        print('cmd_mode: {}'.format(self.cmd_mode))
         if self.cmd_mode == 'position':
             self.check_limits_write_pos()
         elif self.cmd_mode == 'speed':
@@ -105,20 +107,26 @@ class StepperNode(object):
             pass
 
     def check_limits_write_pos(self):
-        new_pos = self.cmd_val
-        cmd = '<p_' + new_pos + '>'
+        goal_pos = self.cmd_val
+        pos_change = goal_pos - self.cur_pos
+        cmd = '<p_' + str(pos_change) + '>'
+        print('cmd: {}'.format(cmd))
         if self.upper_lim is None and self.lower_lim is None:
             self.stepper.write(cmd)
+            print('p1')
         elif self.upper_lim is not None and self.lower_lim is None:
-            if new_pos < self.upper_lim: self.stepper.write(cmd)
+            if goal_pos < self.upper_lim: self.stepper.write(cmd)
+            print('p2')
         elif self.upper_lim is None and self.lower_lim is not None:
-            if new_pos > self.lower_lim: self.stepper.write(cmd)
-        elif new_pos < self.upper_lim and new_pos > self.lower_lim:
+            if goal_pos > self.lower_lim: self.stepper.write(cmd)
+            print('p3')
+        elif goal_pos < self.upper_lim and goal_pos > self.lower_lim:
             self.stepper.write(cmd)
+            print('p4')
 
     def check_limits_write_speed(self):
         new_speed = self.cmd_val
-        cmd = '<s_' + new_speed + '>'
+        cmd = '<s_' + str(new_speed) + '>'
         if self.upper_lim is None and self.lower_lim is None:
             self.stepper.write(cmd)
         elif self.upper_lim is not None and self.lower_lim is None:

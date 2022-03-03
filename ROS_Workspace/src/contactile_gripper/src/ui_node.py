@@ -171,6 +171,7 @@ class UiNode(object):
         rospy.logdebug('[change_to_passive]')
         self.new_menu_update(new_menu_func)
         _ = srv_clients.gripper_change_mode_srv_client('off')
+        _ = srv_clients.stepper_off_srv_client('off')
 
     def dir_control_handle(self,key):
         rospy.logdebug('[dir_control_handle] key: {}'.format(key))
@@ -200,11 +201,11 @@ class UiNode(object):
         if key == key_map['step_down']:
             rospy.loginfo('Stepper down - increment: {}'.format(self.stepper_pos_increment))
             self.stepper_goal_pos = self.stepper_pos - self.stepper_pos_increment
-            self.gripper_cmd_pub.publish('position_' + str(self.stepper_goal_pos))
+            self.stepper_cmd_pub.publish('position_' + str(self.stepper_goal_pos))
         elif key == key_map['step_up']:
             rospy.loginfo('Stepper up - increment: {}'.format(self.stepper_pos_increment))
             self.stepper_goal_pos = self.stepper_pos + self.stepper_pos_increment
-            self.gripper_cmd_pub.publish('position_' + str(self.stepper_goal_pos))
+            self.stepper_cmd_pub.publish('position_' + str(self.stepper_goal_pos))
         elif key == key_map['step_increment_inc']:
             self.stepper_pos_increment += 1
             rospy.loginfo('Stepper increment: {}'.format(self.stepper_pos_increment))
@@ -228,7 +229,7 @@ class UiNode(object):
             self.stepper_upper_lim = srv_clients.stepper_set_limit_srv_client('none', 'clear')
             self.stepper_upper_lim = None
             self.stepper_lower_lim = None
-            rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
+            rospy.loginfo("\nUpper limit: {}, Lower limit: {}\n".format(self.stepper_upper_lim,self.stepper_lower_lim))
 
     def shutdown_entire_system(self):
         msg = "rosnode kill -a"

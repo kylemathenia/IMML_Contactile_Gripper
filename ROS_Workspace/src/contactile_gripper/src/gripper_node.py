@@ -92,10 +92,11 @@ class GripperNode(object):
             self.gripper_mode_pub.publish(self.gripper.mode)
 
     def read_and_publish(self):
-        pos, com_err = self.gripper.motor.read_pos()
-        if not com_err:
-            self.gripper_pos_pub.publish(pos)
-            self.gripper_pos = pos
+        if self.cmd_mode != 'off':
+            pos, com_err = self.gripper.motor.read_pos()
+            if not com_err:
+                self.gripper_pos_pub.publish(pos)
+                self.gripper_pos = pos
 
     def send_command(self):
         if self.cmd_mode == 'position':

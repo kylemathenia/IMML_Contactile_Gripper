@@ -183,7 +183,7 @@ void parseData() {
 
   if (strcmp(cmd_mode, "p") == 0){
     cmd_pos = atoi(strtokIndx); 
-    stepper.move(cmd_pos);
+    stepper.moveTo(cmd_pos);
   }
   else if (strcmp(cmd_mode, "s") == 0){
     goal_vel = atoi(strtokIndx); 
@@ -246,7 +246,7 @@ void limitStop(){
 //  motorOff();
   goal_vel=0;
   cmd_pos=0;
-  stepper.move(cmd_pos);
+  stepper.moveTo(cmd_pos);
   stepper.setSpeed(goal_vel);
 }
 

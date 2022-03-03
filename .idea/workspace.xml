@@ -6,21 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenuResponse.h" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenuResponse.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_UIMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_UIMenu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/UIMenu.lisp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/UIMenu.lisp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_UIMenu.lisp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_UIMenu.lisp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/UIMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/UIMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/UIMenu.l" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/UIMenu.l" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/pap_and_grip.launch" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/pap_and_grip.launch" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/data_recorder_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/data_recorder_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/srv_clients.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/srv_clients.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/UIMenu.srv" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/UIMenu.srv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

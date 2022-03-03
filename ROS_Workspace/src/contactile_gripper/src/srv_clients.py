@@ -4,7 +4,6 @@ from contactile_gripper.srv import *
 
 def gripper_change_mode_srv_client(mode):
     rospy.logdebug('[gripper_change_mode_srv_client] {}'.format(mode))
-    print('[gripper_change_mode_srv_client] {}'.format(mode))
     rospy.wait_for_service('gripper_change_mode_srv')
     gripper_change_mode_srv = rospy.ServiceProxy('gripper_change_mode_srv', GripperChangeMode)
     msg = gripper_change_mode_srv(mode)
