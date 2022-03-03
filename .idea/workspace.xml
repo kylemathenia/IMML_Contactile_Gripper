@@ -5,132 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Float32List.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Float32List.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Float32List.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Float32List.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Float32List.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Float32List.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Int32List.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Int32List.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Int32List.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Int32List.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Int32List.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_Int32List.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_UIMenu.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_UIMenu.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_UIMenu.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_UIMenu.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_UIMenu.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/_contactile_gripper_generate_messages_check_deps_UIMenu.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/Float32List.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/Int32List.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenu.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenuRequest.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenuResponse.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/msg/_Float32List.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/msg/_Int32List.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/msg/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_UIMenu.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/msg/Float32List.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/msg/Int32List.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/msg/_package.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/msg/_package_Float32List.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/msg/_package_Int32List.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/msg/contactile_gripper-msg.asd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/UIMenu.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_UIMenu.lisp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/msg/Float32List.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/msg/Int32List.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/msg/_index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/UIMenu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/msg/Float32List.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/msg/Int32List.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/UIMenu.l" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/examples/complex_node_example.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/msg/Float32List.msg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/msg/Int32List.msg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/experiment1_2022-03-02-23-24-50.bag" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/shadow_system_node.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/UIMenu.srv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/IMU.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/dynamixel_motors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/gripper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/rospy_shadow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/stepper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/CMakeRuleHashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/CMakeRuleHashes.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_cpp.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_eus.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_lisp.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_nodejs.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/contactile_gripper_generate_messages_py.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.develspace.in" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.develspace.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.installspace.in" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/contactile_gripper-msg-extras.cmake.installspace.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripper-msg-extras.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/catkin_generated/installspace/contactile_gripper-msg-extras.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg-context.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg-context.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake/contactile_gripper-genmsg.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/contactile_gripper/cmake_install.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/dynamixel_sdk/CMakeFiles/dynamixel_sdk.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/CMakeFiles/gmock_main.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_cpp.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_eus.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_lisp.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_nodejs.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_generate_messages_py.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package.lisp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package.lisp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/contactile_gripper-srv.asd" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/contactile_gripper-srv.asd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/contactile_gripper/cmake/contactile_gripper-msg-extras.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/contactile_gripper/cmake/contactile_gripper-msg-extras.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/_index.js" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/_index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/_index.js" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/_index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/IMU.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/IMU_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/IMU_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/complex_node_example.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenuResponse.h" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenuResponse.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_UIMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_UIMenu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/UIMenu.lisp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/UIMenu.lisp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_UIMenu.lisp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_UIMenu.lisp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/UIMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/UIMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/UIMenu.l" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/UIMenu.l" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/pap_and_grip.launch" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/pap_and_grip.launch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/data_recorder_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/data_recorder_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/dynamixel_motors.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/experiment1_2022-03-01_01:45:13.254325.bag" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/experiment1_2022-03-01_01:50:46.743468.bag" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/experiment1_2022-03-01_01:51:41.249169.bag" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/experiment1_2022-03-01_01:51:41.249169/Gripper_Pos.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/menus.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/motor_node.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/notes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/rosbag_test_node.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/rospy_shadow.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/srv_clients.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/srv_clients.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_pub_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/test.bag" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/test_stand_node.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/testingbag.bag" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/UIMenu.srv" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv/UIMenu.srv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,17 +1,14 @@
 
 import rospy
-from contactile_gripper.srv import GripperChangeMode,StepperOff,StepperSetLimit,DataRecorder,UIMenu
+from contactile_gripper.srv import *
 
 def gripper_change_mode_srv_client(mode):
     rospy.logdebug('[gripper_change_mode_srv_client] {}'.format(mode))
     print('[gripper_change_mode_srv_client] {}'.format(mode))
     rospy.wait_for_service('gripper_change_mode_srv')
-    try:
-        gripper_change_mode_srv = rospy.ServiceProxy('gripper_change_mode_srv',GripperChangeMode)
-        msg = gripper_change_mode_srv(mode)
-        return msg.response
-    except:
-        rospy.logerr('Change mode service failed.')
+    gripper_change_mode_srv = rospy.ServiceProxy('gripper_change_mode_srv', GripperChangeMode)
+    msg = gripper_change_mode_srv(mode)
+    return msg.response
 
 def stepper_off_srv_client(mode):
     rospy.wait_for_service('stepper_off_srv')
@@ -41,8 +38,5 @@ def data_recorder_srv_client(topic_list,file_prefix='contactile',stop=False):
 
 def ui_menu_srv_client(menu):
     rospy.wait_for_service('ui_menu_srv')
-    try:
-        stepper_off_srv = rospy.ServiceProxy('ui_menu_srv', UIMenu)
-        _ = stepper_off_srv(menu)
-    except:
-        rospy.logerr('data_recorder_srv failed.')
+    stepper_off_srv = rospy.ServiceProxy('ui_menu_srv', UIMenu)
+    _ = stepper_off_srv(menu)

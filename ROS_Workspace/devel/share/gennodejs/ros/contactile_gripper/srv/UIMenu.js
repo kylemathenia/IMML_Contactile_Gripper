@@ -94,13 +94,22 @@ class UIMenuResponse {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
+      this.response = null;
     }
     else {
+      if (initObj.hasOwnProperty('response')) {
+        this.response = initObj.response
+      }
+      else {
+        this.response = '';
+      }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type UIMenuResponse
+    // Serialize message field [response]
+    bufferOffset = _serializer.string(obj.response, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -108,11 +117,15 @@ class UIMenuResponse {
     //deserializes a message object of type UIMenuResponse
     let len;
     let data = new UIMenuResponse(null);
+    // Deserialize message field [response]
+    data.response = _deserializer.string(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 0;
+    let length = 0;
+    length += object.response.length;
+    return length + 4;
   }
 
   static datatype() {
@@ -122,13 +135,13 @@ class UIMenuResponse {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'd41d8cd98f00b204e9800998ecf8427e';
+    return '6de314e2dc76fbff2b6244a6ad70b68d';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    
+    string response
     
     `;
   }
@@ -139,6 +152,13 @@ class UIMenuResponse {
       msg = {};
     }
     const resolved = new UIMenuResponse(null);
+    if (msg.response !== undefined) {
+      resolved.response = msg.response;
+    }
+    else {
+      resolved.response = ''
+    }
+
     return resolved;
     }
 };
@@ -146,6 +166,6 @@ class UIMenuResponse {
 module.exports = {
   Request: UIMenuRequest,
   Response: UIMenuResponse,
-  md5sum() { return 'c203365aa9fc4c84f5cecbbb5ac3272a'; },
+  md5sum() { return '61c60e1f23cfdf7f6bcc81df7ce1f6cc'; },
   datatype() { return 'contactile_gripper/UIMenu'; }
 };

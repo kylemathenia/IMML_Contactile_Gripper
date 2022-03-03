@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-from contactile_gripper.srv import DataRecorder
+from contactile_gripper.srv import *
 import subprocess, shlex
 import datetime as dt
 import os

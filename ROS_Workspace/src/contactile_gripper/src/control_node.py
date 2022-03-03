@@ -9,12 +9,9 @@ import rospy
 from std_msgs.msg import String,Float32,Int64,Int32
 from papillarray_ros_v2.msg import SensorState
 from contactile_gripper.msg import Float32List,Int32List
-from contactile_gripper.srv import DataRecorder,UIMenu
+from contactile_gripper.srv import *
 import srv_clients
 
-
-#TODO: Need to set the self.stepper_home value.
-#TODO: Add logging functionality as shown in gripper node. Get the bag files to save to a different directory. The bag directory.
 
 class ControlNode(object):
     def __init__(self):
@@ -65,9 +62,14 @@ class ControlNode(object):
 
     ######################## Subscriber and service callbacks ########################
     def menu_srv(self,req):
-        """Callback for when the user inputs a command in the ui node."""
+        """Callback for when the user inputs a command in the ui node. req.menu is a string of the ui menu function."""
+        rospy.logdebug('[menu_srv] req: {}'.format(req))
         self.check_if_leave_or_enter_routine(req.menu)
-        self.menu = req.menu
+        if req.menu in self.routine_menus:
+            self.menu = self.routine_bindings[req.menu]
+        else:
+            self.menu = self.no_routine
+        return UIMenuResponse('Menu changed')
     def tact_0_callback(self,msg):
         self.tact_sensor0 = msg
     def tact_1_callback(self,msg):
@@ -233,8 +235,6 @@ class ControlNode(object):
 
     ######################## Other ########################
     def record_data(self,topic_list=None,file_prefix=" ",record=True):
-        #TODO: If already recording and trying to start a new recording, end, start a new one, and log warning.
-        # If already not recording, handle that too.
         if record:
             srv_clients.data_recorder_srv_client(topic_list, file_prefix="experiment1", stop=False)
             self.recording_data = True
@@ -251,10 +251,10 @@ class ControlNode(object):
             rospy.loginfo("Waiting for: stepper_node")
         # while self.imu_acc_x is None:
         #     rospy.loginfo("Waiting for: imu_node")
-        while self.gripper_pos is None:
-            rospy.loginfo("Waiting for: gripper_node")
-        while self.tact_sensor0 is None:
-            rospy.loginfo("Waiting for: papillarray node")
+        # while self.gripper_pos is None:
+        #     rospy.loginfo("Waiting for: gripper_node")
+        # while self.tact_sensor0 is None:
+        #     rospy.loginfo("Waiting for: papillarray node")
 
     def shutdown_function(self):
         self.record_data(record=False)

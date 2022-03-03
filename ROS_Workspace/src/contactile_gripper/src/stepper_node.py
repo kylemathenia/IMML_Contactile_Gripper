@@ -7,7 +7,7 @@ import sys,os
 sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'support'))
 import roslib; roslib.load_manifest('contactile_gripper')
 import rospy
-from contactile_gripper.srv import StepperOff,StepperSetLimit
+from contactile_gripper.srv import *
 from std_msgs.msg import String,Float32,Int64,Int32
 from contactile_gripper.msg import Float32List,Int32List
 import stepper
@@ -35,36 +35,21 @@ class StepperNode(object):
         self.stepper_off_srv = rospy.Service('stepper_off_srv', StepperOff, self.srv_handle_stepper_off)
         self.stepper_set_limit_srv = rospy.Service('stepper_set_limit_srv', StepperSetLimit, self.srv_handle_stepper_set_limit)
 
-        self.pub_loop_rate = 40 # Hz
+        self.pub_loop_rate = 60 # Hz
         self.pub_loop_rate_obj = rospy.Rate(self.pub_loop_rate)
         self.upper_lim = None
         self.lower_lim = None
+        self.cmd_mode = None
+        self.cmd_val = None
 
         rospy.on_shutdown(self.shutdown_function)
         self.pub_loop()
 
-    def pub_loop(self):
-        self.stepper.clean_before_read_start()
-        while not rospy.is_shutdown():
-            com_success = self.update_vals()
-            if com_success: self.publish_data()
-            self.pub_loop_rate_obj.sleep()
 
-    def update_vals(self):
-        lower_switch_status, upper_switch_status, cur_pos, com_success = self.stepper.read()
-        rospy.loginfo('{} {} {} {}'.format(lower_switch_status, upper_switch_status, cur_pos, com_success))
-        if com_success:
-            self.cur_pos = int(cur_pos)
-            self.upper_switch_status = int(upper_switch_status)
-            self.lower_switch_status = int(lower_switch_status)
-        return com_success
-
-    def publish_data(self):
-        self.stepper_pos_pub.publish(self.cur_pos)
-        self.upper_lim_switch_pub.publish([self.upper_switch_status,self.lower_switch_status])
-
+    ######################## Subscriber and service callbacks ########################
     def srv_handle_stepper_off(self, req):
         self.stepper.write('<x_0>')
+        self.cmd_mode = 'off'
         return StepperOffResponse('Stepper off')
 
     def srv_handle_stepper_set_limit(self, req):
@@ -78,13 +63,50 @@ class StepperNode(object):
         elif req.switch == 'lower' and req.action == 'set':
             self.lower_lim = self.cur_pos
             limit_value = self.lower_lim
-        else: rospy.logwarn('StepperSetLimit service failed. Key error with action: {} or switch: {}'.format(req.action,req.switch))
+        else:
+            rospy.logwarn('StepperSetLimit service failed. Key error with action: {} or switch: {}'.format(req.action, req.switch))
         return StepperSetLimitResponse(limit_value)
 
-    def stepper_cmd_callback(self,msg):
-        val = int(msg.data)
-        new_pos = self.cur_pos + val
-        cmd = '<p_' + msg.data + '>'
+    def stepper_cmd_callback(self, msg):
+        cmd = msg.data.split('_')
+        self.cmd_mode = cmd[0]
+        self.cmd_val = int(cmd[1])
+
+
+    ######################## Main loop ########################
+    def pub_loop(self):
+        self.stepper.clean_before_read_start()
+        while not rospy.is_shutdown():
+            self.read_data_update_vals()
+            self.publish_data()
+            self.write_command()
+            self.pub_loop_rate_obj.sleep()
+
+    ######################## Other ########################
+
+    def read_data_update_vals(self):
+        lower_switch_status, upper_switch_status, cur_pos, com_success = self.stepper.read()
+        rospy.loginfo('{} {} {} {}'.format(lower_switch_status, upper_switch_status, cur_pos, com_success))
+        if com_success:
+            self.cur_pos = int(cur_pos)
+            self.upper_switch_status = int(upper_switch_status)
+            self.lower_switch_status = int(lower_switch_status)
+
+    def publish_data(self):
+        self.stepper_pos_pub.publish(self.cur_pos)
+        self.limit_switch_pub.publish([self.upper_switch_status,self.lower_switch_status])
+
+    def write_command(self):
+        if self.cmd_mode == 'position':
+            self.check_limits_write_pos()
+        elif self.cmd_mode == 'speed':
+            self.check_limits_write_speed()
+        elif self.cmd_mode == 'off':
+            pass
+
+    def check_limits_write_pos(self):
+        new_pos = self.cmd_val
+        cmd = '<p_' + new_pos + '>'
         if self.upper_lim is None and self.lower_lim is None:
             self.stepper.write(cmd)
         elif self.upper_lim is not None and self.lower_lim is None:
@@ -93,6 +115,26 @@ class StepperNode(object):
             if new_pos > self.lower_lim: self.stepper.write(cmd)
         elif new_pos < self.upper_lim and new_pos > self.lower_lim:
             self.stepper.write(cmd)
+
+    def check_limits_write_speed(self):
+        new_speed = self.cmd_val
+        cmd = '<s_' + new_speed + '>'
+        if self.upper_lim is None and self.lower_lim is None:
+            self.stepper.write(cmd)
+        elif self.upper_lim is not None and self.lower_lim is None:
+            if self.cur_pos < self.upper_lim or new_speed < 0: self.stepper.write(cmd)
+        elif self.upper_lim is None and self.lower_lim is not None:
+            if self.cur_pos > self.lower_lim or new_speed > 0: self.stepper.write(cmd)
+        # Both an upper and lower limit and cur pos is within limits
+        elif self.cur_pos < self.upper_lim and self.cur_pos > self.lower_lim:
+            self.stepper.write(cmd)
+        # Both an upper and lower limit and cur pos is beyond upper limit
+        elif self.cur_pos > self.upper_lim:
+            if new_speed < 0: self.stepper.write(cmd)
+        # Both an upper and lower limit and cur pos is beyond lower limit
+        elif self.cur_pos < self.lower_lim:
+            if new_speed > 0: self.stepper.write(cmd)
+
 
     def shutdown_function(self):
         """This function runs when the ROS node is shutdown for some reason.

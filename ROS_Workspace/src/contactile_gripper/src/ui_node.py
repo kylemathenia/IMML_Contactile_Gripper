@@ -38,6 +38,12 @@ class UiNode(object):
         # Subscribers
         self.routine_running_sub = rospy.Subscriber('Routine_Running', String, self.routine_running_callback, queue_size=100)
         self.routine_running = 'No'
+        self.gripper_pos_sub = rospy.Subscriber('Gripper_Pos', Int64, self.gripper_pos_callback, queue_size=1, buff_size=1)
+        self.gripper_pos = 0
+        self.gripper_goal_pos = None
+        self.stepper_pos_sub = rospy.Subscriber('Stepper_Pos', Int64, self.stepper_pos_callback, queue_size=1, buff_size=1)
+        self.stepper_pos = 0
+        self.stepper_goal_pos = None
         
         #Setup
         self.gripper_pos_increment = 5
@@ -50,6 +56,18 @@ class UiNode(object):
 
         self.main_loop()
 
+
+    ######################## Subscriber and service callbacks ########################
+    def gripper_pos_callback(self,msg):
+        self.gripper_pos = msg.data
+    def stepper_pos_callback(self,msg):
+        self.stepper_pos = msg.data
+    def routine_running_callback(self, msg):
+        rospy.logdebug('[routine_running_callback]')
+        self.routine_running = msg.data
+
+
+    ######################## Main loop ########################
     def main_loop(self):
         """Continuously get the key inputs from the user and pass the key to the current menu method."""
         while not rospy.is_shutdown():
@@ -122,27 +140,9 @@ class UiNode(object):
                    key_map['step_increment_inc'],key_map['step_increment_dec'],key_map['set_upper_lim'],
                    key_map['set_lower_lim'],key_map['complete'],key_map['clear_limits'],key_map['prompt'],key_map['EMO'])
 
+    #TODO: Implement all of the routine menus.
     def menu_routines(self,key):
         rospy.logdebug('[menu_routines] key: {}'.format(key))
-        if key == '1':
-            self.new_menu_update(self.menu_routines_grasp_and_release)
-        elif key == '2':
-            self.new_menu_update(self.menu_routines_grasp_forever)
-        elif key == '3':
-            self.new_menu_update(self.menu_routines_cable_pull_experiment)
-        elif key == '4':
-            self.new_menu_update(self.menu_main)
-
-    menu_routines.prompt = """  
-        \n\nROUTINES MENU\n
-        1: Grasp & Release
-        2: Grasp Forever
-        3: Cable Pull Experiment
-        4: Back
-        """
-
-    def menu_routines_grasp_and_release(self,key):
-        rospy.logdebug('[menu_routines_grasp_and_release] key: {}'.format(key))
         if key == '1':
             self.new_menu_update(self.menu_routines_grasp_and_release)
         elif key == '2':
@@ -172,38 +172,46 @@ class UiNode(object):
         self.new_menu_update(new_menu_func)
         _ = srv_clients.gripper_change_mode_srv_client('off')
 
-    def routine_running_callback(self, msg):
-        rospy.logdebug('[routine_running_callback]')
-        self.routine_running = msg.data
-
     def dir_control_handle(self,key):
         rospy.logdebug('[dir_control_handle] key: {}'.format(key))
+        self.gripper_dir_control_handle(key)
+        self.stepper_dir_control_handle(key)
+        if key == key_map['prompt']:
+            rospy.loginfo(self.current_menu.prompt)
+
+    def gripper_dir_control_handle(self,key):
         if key == key_map['grip_open']:
             rospy.loginfo('Gripper open - increment: {}'.format(self.gripper_pos_increment))
-            self.gripper_cmd_pub.publish('position_'+str(-self.gripper_pos_increment))
+            self.gripper_goal_pos = self.gripper_pos - self.gripper_pos_increment
+            self.gripper_cmd_pub.publish('position_' + str(self.gripper_goal_pos))
         elif key == key_map['grip_close']:
             rospy.loginfo('Gripper close - increment: {}'.format(self.gripper_pos_increment))
-            self.gripper_cmd_pub.publish('position_'+str(self.gripper_pos_increment))
+            self.gripper_goal_pos = self.gripper_pos + self.gripper_pos_increment
+            self.gripper_cmd_pub.publish('position_' + str(self.gripper_goal_pos))
         elif key == key_map['grip_increment_inc']:
             self.gripper_pos_increment += 1
             rospy.loginfo('Gripper increment: {}'.format(self.gripper_pos_increment))
         elif key == key_map['grip_increment_dec']:
             self.gripper_pos_increment -= 1
             rospy.loginfo('Gripper increment: {}'.format(self.gripper_pos_increment))
-        elif key == key_map['step_down']:
+
+
+    def stepper_dir_control_handle(self, key):
+        if key == key_map['step_down']:
             rospy.loginfo('Stepper down - increment: {}'.format(self.stepper_pos_increment))
-            self.stepper_cmd_pub.publish(str(-self.stepper_pos_increment))
+            self.stepper_goal_pos = self.stepper_pos - self.stepper_pos_increment
+            self.gripper_cmd_pub.publish('position_' + str(self.stepper_goal_pos))
         elif key == key_map['step_up']:
             rospy.loginfo('Stepper up - increment: {}'.format(self.stepper_pos_increment))
-            self.stepper_cmd_pub.publish(str(self.stepper_pos_increment))
+            self.stepper_goal_pos = self.stepper_pos + self.stepper_pos_increment
+            self.gripper_cmd_pub.publish('position_' + str(self.stepper_goal_pos))
         elif key == key_map['step_increment_inc']:
             self.stepper_pos_increment += 1
             rospy.loginfo('Stepper increment: {}'.format(self.stepper_pos_increment))
         elif key == key_map['step_increment_dec']:
             self.stepper_pos_increment -= 1
             rospy.loginfo('Stepper increment: {}'.format(self.stepper_pos_increment))
-        elif key == key_map['prompt']:
-            rospy.loginfo(self.current_menu.prompt)
+
 
     def set_limit_handle(self,key):
         rospy.logdebug('[set_limit_handle] key: {}'.format(key))

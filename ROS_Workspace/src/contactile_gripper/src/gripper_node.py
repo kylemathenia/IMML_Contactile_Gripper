@@ -6,7 +6,7 @@ import sys,os
 sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'support'))
 import roslib; roslib.load_manifest('contactile_gripper')
 import rospy
-from contactile_gripper.srv import GripperChangeMode
+from contactile_gripper.srv import *
 from std_msgs.msg import String,Float32,Int64,Int32
 import gripper
 import srv_clients
@@ -50,7 +50,7 @@ class GripperNode(object):
         """This is the main loop for the node which executes at self.pub_loop_rate."""
         while not rospy.is_shutdown():
             self.check_if_change_mode()
-            self.get_pos()
+            self.read_and_publish()
             self.send_command()
             self.pub_loop_rate_obj.sleep()
 
@@ -62,7 +62,7 @@ class GripperNode(object):
             self.update_cmd_mode(msg_cmd_mode)
 
     def srv_handle_change_mode(self, req):
-        rospy.logwarn('[srv_handle_change_mode] {}'.format(req.mode))
+        rospy.logdebug('[srv_handle_change_mode] {}'.format(req.mode))
         try:
             assert req.mode in self.gripper.mode_options
             if req.mode == 'off':
@@ -91,7 +91,7 @@ class GripperNode(object):
             self.change_mode_flag = False
             self.gripper_mode_pub.publish(self.gripper.mode)
 
-    def get_pos(self):
+    def read_and_publish(self):
         pos, com_err = self.gripper.motor.read_pos()
         if not com_err:
             self.gripper_pos_pub.publish(pos)
@@ -99,7 +99,7 @@ class GripperNode(object):
 
     def send_command(self):
         if self.cmd_mode == 'position':
-            self.gripper.motor.write_goal_pos(self.gripper_pos + self.cmd_val)
+            self.gripper.motor.write_goal_pos(self.cmd_val)
         elif self.cmd_mode == 'current':
             self.gripper.motor.write_goal_cur(self.cmd_val)
 
