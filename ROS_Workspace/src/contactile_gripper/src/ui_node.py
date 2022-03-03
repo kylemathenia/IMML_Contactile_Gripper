@@ -46,7 +46,7 @@ class UiNode(object):
         self.stepper_goal_pos = None
         
         #Setup
-        self.gripper_pos_increment = 5
+        self.gripper_pos_increment = 30
         self.stepper_pos_increment = 500
         self.stepper_upper_lim = None
         self.stepper_lower_lim = None
@@ -207,10 +207,10 @@ class UiNode(object):
             self.stepper_goal_pos = self.stepper_pos + self.stepper_pos_increment
             self.stepper_cmd_pub.publish('position_' + str(self.stepper_goal_pos))
         elif key == key_map['step_increment_inc']:
-            self.stepper_pos_increment += 1
+            self.stepper_pos_increment += 10
             rospy.loginfo('Stepper increment: {}'.format(self.stepper_pos_increment))
         elif key == key_map['step_increment_dec']:
-            self.stepper_pos_increment -= 1
+            self.stepper_pos_increment -= 10
             rospy.loginfo('Stepper increment: {}'.format(self.stepper_pos_increment))
 
 
