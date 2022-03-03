@@ -2,13 +2,12 @@
 """
 This module contains the gripper node.
 """
-
+import sys,os
+sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'support'))
 import roslib; roslib.load_manifest('contactile_gripper')
-from contactile_gripper.srv import GripperChangeMode
 import rospy
-from std_msgs.msg import String
-from std_msgs.msg import Float32
-from std_msgs.msg import Int64
+from contactile_gripper.srv import GripperChangeMode
+from std_msgs.msg import String,Float32,Int64,Int32
 import gripper
 import srv_clients
 
@@ -19,6 +18,8 @@ class GripperNode(object):
     """ROS node for the gripper. Max com speed is ~62hz for read or write operation. This is both reading
     and writing, so rate is 30hz. """
     def __init__(self):
+        rospy.init_node('gripper_node', anonymous=False, log_level=rospy.DEBUG)
+
         # Initialize and calibrate gripper.
         self.gripper = gripper.Gripper(fast_start=True)
 
@@ -36,9 +37,6 @@ class GripperNode(object):
 
         # Services
         self.gripper_change_mode_srv = rospy.Service('gripper_change_mode_srv', GripperChangeMode, self.srv_handle_change_mode)
-
-        # TODO: Remove data recorder.
-        srv_clients.data_recorder_client(['/Gripper_Pos','/Gripper_Mode'], file_prefix="experiment1", stop=False)
 
         # Setup and start
         self.cmd_mode = None
@@ -111,8 +109,7 @@ class GripperNode(object):
         # pass
 
 def main():
-    rospy.init_node('gripper_node', anonymous=False, log_level=rospy.DEBUG)
-    gripper_node = GripperNode()
+    _ = GripperNode()
 
 if __name__ == '__main__':
     main()

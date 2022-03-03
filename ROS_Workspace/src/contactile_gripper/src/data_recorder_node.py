@@ -12,6 +12,7 @@ class DataRecorderNode(object):
         rospy.init_node('data_recorder_node')
         self.active_process = None
         rospy.Service('data_recorder_srv', DataRecorder, self.callback)
+        rospy.on_shutdown(self.shutdown_function)
 
     def callback(self, req):
         if req.stop:
@@ -29,14 +30,12 @@ class DataRecorderNode(object):
 
     def start(self,file_prefix,topic_list):
         self.stop() # Stop if already recording.
-        path = '/home/ted/Documents/GitHub/IMML_Contactile_Gripper/bag/'
-        timestamp = str(dt.datetime.now())
-        timestamp = timestamp.replace(' ','_')
-        filename = path + file_prefix + '_' + timestamp
-        msg = "rosbag record -O {} ".format(filename) + ' '.join(topic_list)
+        msg = "rosbag record -o {} ".format(file_prefix) + ' '.join(topic_list)
         args = shlex.split(msg)
         self.active_process = subprocess.Popen(args, stderr=subprocess.PIPE, shell=False)
 
+    def shutdown_function(self):
+        self.stop()
 
 if __name__ == '__main__':
     _ = DataRecorderNode()

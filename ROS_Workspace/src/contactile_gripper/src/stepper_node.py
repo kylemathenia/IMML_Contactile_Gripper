@@ -3,16 +3,16 @@
 This module contains the node for the test stand stepper motor.
 """
 
+import sys,os
+sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'support'))
 import roslib; roslib.load_manifest('contactile_gripper')
-from contactile_gripper.srv import StepperOff
-from contactile_gripper.srv import StepperSetLimit
 import rospy
-from std_msgs.msg import String
-from std_msgs.msg import Float32
-from std_msgs.msg import Int64
-from std_msgs.msg import Int32
+from contactile_gripper.srv import StepperOff,StepperSetLimit
+from std_msgs.msg import String,Float32,Int64,Int32
+from contactile_gripper.msg import Float32List,Int32List
 import stepper
 import time
+
 
 class StepperNode(object):
     """ROS node for the Dynamixel motor. Max com speed is ~62hz for read or write operation. This is both reading
@@ -24,9 +24,8 @@ class StepperNode(object):
         # Publishers
         self.stepper_pos_pub = rospy.Publisher('Stepper_Pos',Int64, queue_size=1)
         self.cur_pos = None
-        self.upper_lim_switch_pub = rospy.Publisher('Upper_Lim_Switch_Status', Int32, queue_size=1)
+        self.limit_switch_pub = rospy.Publisher('Limit_Switch_Status', Int32List, queue_size=1)
         self.upper_switch_status = None
-        self.lower_lim_switch_pub = rospy.Publisher('Lower_Lim_Switch_Status', Int32, queue_size=1)
         self.lower_switch_status = None
 
         # Subscribers
@@ -62,8 +61,7 @@ class StepperNode(object):
 
     def publish_data(self):
         self.stepper_pos_pub.publish(self.cur_pos)
-        self.upper_lim_switch_pub.publish(self.upper_switch_status)
-        self.lower_lim_switch_pub.publish(self.lower_switch_status)
+        self.upper_lim_switch_pub.publish([self.upper_switch_status,self.lower_switch_status])
 
     def srv_handle_stepper_off(self, req):
         self.stepper.write('<x_0>')

@@ -50,6 +50,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
+  Float32List.msg
+  Int32List.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -60,6 +62,7 @@ add_service_files(
   StepperSetLimit.srv
   StepperOff.srv
   DataRecorder.srv
+  UIMenu.srv
 )
 
 ## Generate actions in the 'action' folder

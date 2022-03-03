@@ -6,12 +6,10 @@ subscriber. This examples does not function.
 
 import time
 import rospy
-from std_msgs.msg import String
-from std_msgs.msg import Float32
-from std_msgs.msg import Int32
-from std_msgs.msg import Int64
+from std_msgs.msg import String,Float32,Int64,Int32
 from papillarray_ros_v2.msg import SensorState
-from contactile_gripper.srv import DataRecorder
+from contactile_gripper.msg import Float32List,Int32List
+from contactile_gripper.srv import DataRecorder,UIMenu
 import srv_clients
 
 
@@ -26,8 +24,6 @@ class ControlNode(object):
         self.routine_running_pub = rospy.Publisher('Routine_Running', String, queue_size=100)
 
         # Subscribers
-        self.menu_sub = rospy.Subscriber('UI_Menu', String, self.menu_callback, queue_size=100)
-        self.menu = None
         self.gripper_pos_sub = rospy.Subscriber('Gripper_Pos', Int64, self.gripper_pos_callback, queue_size=1, buff_size=1)
         self.gripper_pos = None
         self.stepper_pos_sub = rospy.Subscriber('Stepper_Pos', Int64, self.stepper_pos_callback, queue_size=1, buff_size=1)
@@ -40,8 +36,14 @@ class ControlNode(object):
         self.tact_sensor1 = None
         # Access data in this form: self.tact_sensor0.pillars[0].fX
 
+        # Services
+        self.change_mode_srv = rospy.Service('ui_menu_srv', UIMenu, self.menu_srv)
+        self.menu = None
+
         # Setup
-        self.routine_bindings = {'menu1': self.grasp_and_pull_routine, 'menu2': self.grasp_routine} # TODO: Add actual routine method names here.
+        self.routine_bindings = {'menu_routines_grasp_and_release': self.grasp_and_release_routine,
+                                 'menu_routines_grasp_forever': self.grasp_forever_routine,
+                                 'menu_routines_cable_pull_experiment': self.cable_pull_experiment_routine}
         self.routine_menus = set(self.routine_bindings.keys())
         self.control_function = self.no_routine
         self.stepper_home = None
@@ -61,11 +63,11 @@ class ControlNode(object):
         self.main_loop()
 
 
-    ######################## Subscriber callbacks ########################
-    def menu_callback(self,msg):
+    ######################## Subscriber and service callbacks ########################
+    def menu_srv(self,req):
         """Callback for when the user inputs a command in the ui node."""
-        self.check_if_leave_or_enter_routine(msg.data)
-        self.menu = msg.data
+        self.check_if_leave_or_enter_routine(req.menu)
+        self.menu = req.menu
     def tact_0_callback(self,msg):
         self.tact_sensor0 = msg
     def tact_1_callback(self,msg):
@@ -115,17 +117,18 @@ class ControlNode(object):
             self.open()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
-                self.record_data(record=False)
 
         elif self.routine_stage==3: # Publish flag to let UI node know routine is complete.
             """Need to let the UI node that the routine is complete. """
             #TODO: Publish routine finish flag.
 
 
-    def grasp_and_pull_routine(self):
+    def cable_pull_experiment_routine(self):
         self.check_stage()
         if self.routine_stage==0: # Start recording
-            self.record_data(record=True)
+            topic_list = ['/Gripper_Pos','/Gripper_Mode']
+            self.record_data(topic_list,file_prefix="cable_pull",record=True)
+            self.stepper_home = self.stepper_pos
             self.stage_complete = True
 
         elif self.routine_stage==1: # Grasp
@@ -186,14 +189,9 @@ class ControlNode(object):
         if self.stepper_pos == self.stepper_home:
             return True
         else:
-            # self.stepper_home
             # TODO
             self.stepper_cmd_pub.publish("Command to return to home position")
             return False
-
-    def make_passive(self):
-        pass
-        #TODO: Make srv calls to passify the gripper and stepper.
 
 
     ######################## State Change Support ########################
@@ -215,7 +213,6 @@ class ControlNode(object):
         self.stage_start_time = time.time()
 
     def exiting_routine(self):
-        self.make_passive()
         self.control_function = self.no_routine
         self.routine_running = False
         self.routine_stage = 0
@@ -235,14 +232,14 @@ class ControlNode(object):
         else: return False
 
     ######################## Other ########################
-    def record_data(self,record=True):
+    def record_data(self,topic_list=None,file_prefix=" ",record=True):
         #TODO: If already recording and trying to start a new recording, end, start a new one, and log warning.
         # If already not recording, handle that too.
         if record:
-            # TODO: Start recording the data
-            self.recording_data = False
+            srv_clients.data_recorder_srv_client(topic_list, file_prefix="experiment1", stop=False)
+            self.recording_data = True
         elif not record:
-            # TODO: Stop recording the data
+            srv_clients.data_recorder_srv_client([], file_prefix=" ", stop=True)
             self.recording_data = False
         else: rospy.logerr("record_data method argument is not boolean. ({})".format(record))
 
@@ -250,8 +247,8 @@ class ControlNode(object):
         """Wait for all sensors to start publishing data before entering the main control loop."""
         while self.menu is None:
             rospy.loginfo("Waiting for: ui_node")
-        while self.stepper_home is None:
-            rospy.loginfo("Waiting for: stepper_node to provide a home position")
+        while self.stepper_pos is None:
+            rospy.loginfo("Waiting for: stepper_node")
         # while self.imu_acc_x is None:
         #     rospy.loginfo("Waiting for: imu_node")
         while self.gripper_pos is None:
@@ -260,9 +257,7 @@ class ControlNode(object):
             rospy.loginfo("Waiting for: papillarray node")
 
     def shutdown_function(self):
-        """This function runs when the ROS node is shutdown for some reason.
-        It might be useful to publish messages to other nodes. Perhaps if this node crashes it should trigger and EMO."""
-        pass
+        self.record_data(record=False)
 
 def main():
     rospy.init_node('control_node',anonymous=False,log_level=rospy.INFO)

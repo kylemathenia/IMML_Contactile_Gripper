@@ -3,14 +3,12 @@
 User interface node to control the system.
 """
 
-#TODO: Add a key to shut down all of the nodes at once. rosnode kill -a from the command line works.
-#TODO: Need to add home position to communicate to control node.
 
 import time
 import rospy
-from std_msgs.msg import String
-from std_msgs.msg import Int32
+from std_msgs.msg import String,Float32,Int64,Int32
 import srv_clients
+import subprocess, shlex
 import sys, select, termios, tty
 settings = termios.tcgetattr(sys.stdin)
 
@@ -34,7 +32,6 @@ key_map = {'grip_open':'d',
 class UiNode(object):
     def __init__(self):
         # Publishers
-        self.menu_pub = rospy.Publisher('UI_Menu', String, queue_size=100, latch=True)
         self.gripper_cmd_pub = rospy.Publisher('Gripper_Cmd',String, queue_size=5)
         self.stepper_cmd_pub = rospy.Publisher('Stepper_Cmd',String, queue_size=5)
 
@@ -48,10 +45,9 @@ class UiNode(object):
         self.stepper_upper_lim = None
         self.stepper_lower_lim = None
 
-        self.current_menu = self.menu_step_cal
-        self.new_menu_update()
+        self.current_menu = None
+        self.new_menu_update(self.menu_step_cal)
 
-        rospy.on_shutdown(self.shutdown_function)
         self.main_loop()
 
     def main_loop(self):
@@ -64,33 +60,30 @@ class UiNode(object):
                 rospy.logdebug('current_menu: {} key: {}'.format(self.current_menu.__name__,key))
 
 
-    ############ Menus ############
+    ######################## Menus ########################
     def menu_main(self,key):
         rospy.logdebug('[menu_main] key: {}'.format(key))
         if key == '1':
-            self.current_menu = self.menu_sys_direct_control
+            self.new_menu_update(self.menu_sys_direct_control)
         elif key == '2':
-            self.current_menu = self.menu_routines
+            self.new_menu_update(self.menu_routines)
         elif key == '3':
-            self.current_menu = self.menu_step_cal
+            self.new_menu_update(self.menu_step_cal)
         elif key == '4':
-            self.shutdown_function()
-            
-        if key == '1' or key == '2' or key == '3': self.new_menu_update()
+            self.shutdown_entire_system()
+
     menu_main.prompt = """  
     \n\nMAIN MENU\n
     1: Direct control
     2: Routines
     3: Calibrate
-    4: System Shutdown
+    4: Shutdown System
     """
 
     def menu_sys_direct_control(self,key):
         rospy.logdebug('[menu_sys_direct_control] key: {}'.format(key))
         if key in key_map['EMO_bindings']: # EMERGENCY OFF. Space, enter, backspace, or esc.
-            self.change_to_passive()
-            self.current_menu = self.menu_main
-            self.new_menu_update()
+            self.change_to_passive(self.menu_main)
         elif key in key_map.values():
             self.dir_control_handle(key)
     menu_sys_direct_control.prompt= """
@@ -105,17 +98,10 @@ class UiNode(object):
                    key_map['grip_increment_dec'], key_map['step_up'], key_map['step_down'],
                    key_map['step_increment_inc'],key_map['step_increment_dec'],key_map['prompt'],key_map['EMO'])
 
-    def menu_routines(self,key):
-        #TODO: Make routines menu.
-        pass
-    menu_routines.prompt = None
-
     def menu_step_cal(self,key):
         rospy.logdebug('[menu_step_cal] key: {}'.format(key))
         if key in key_map['EMO_bindings']:  # EMERGENCY OFF. Space, enter, backspace, or esc.
-            self.change_to_passive()
-            self.current_menu = self.menu_main
-            self.new_menu_update()
+            self.change_to_passive(self.menu_main)
         elif key==key_map['set_lower_lim'] or key==key_map['set_upper_lim'] or key==key_map['clear_limits'] or key==key_map['complete']:
             self.set_limit_handle(key)
         elif key in key_map.values():
@@ -136,18 +122,55 @@ class UiNode(object):
                    key_map['step_increment_inc'],key_map['step_increment_dec'],key_map['set_upper_lim'],
                    key_map['set_lower_lim'],key_map['complete'],key_map['clear_limits'],key_map['prompt'],key_map['EMO'])
 
+    def menu_routines(self,key):
+        rospy.logdebug('[menu_routines] key: {}'.format(key))
+        if key == '1':
+            self.new_menu_update(self.menu_routines_grasp_and_release)
+        elif key == '2':
+            self.new_menu_update(self.menu_routines_grasp_forever)
+        elif key == '3':
+            self.new_menu_update(self.menu_routines_cable_pull_experiment)
+        elif key == '4':
+            self.new_menu_update(self.menu_main)
 
+    menu_routines.prompt = """  
+        \n\nROUTINES MENU\n
+        1: Grasp & Release
+        2: Grasp Forever
+        3: Cable Pull Experiment
+        4: Back
+        """
 
-    ############ Supporting methods ############
-    def new_menu_update(self):
+    def menu_routines_grasp_and_release(self,key):
+        rospy.logdebug('[menu_routines_grasp_and_release] key: {}'.format(key))
+        if key == '1':
+            self.new_menu_update(self.menu_routines_grasp_and_release)
+        elif key == '2':
+            self.new_menu_update(self.menu_routines_grasp_forever)
+        elif key == '3':
+            self.new_menu_update(self.menu_routines_cable_pull_experiment)
+        elif key == '4':
+            self.new_menu_update(self.menu_main)
+
+    menu_routines.prompt = """  
+        \n\nROUTINES MENU\n
+        1: Grasp & Release
+        2: Grasp Forever
+        3: Cable Pull Experiment
+        4: Back
+        """
+
+    ######################## Supporting methods ########################
+    def new_menu_update(self,new_menu_func):
         rospy.logdebug('[new_menu_update]')
+        self.current_menu = new_menu_func
+        srv_clients.ui_menu_srv_client(self.current_menu.__name__)
         rospy.loginfo(self.current_menu.prompt)
-        self.menu_pub.publish(self.current_menu.__name__)
 
-    def change_to_passive(self):
+    def change_to_passive(self, new_menu_func):
         rospy.logdebug('[change_to_passive]')
+        self.new_menu_update(new_menu_func)
         _ = srv_clients.gripper_change_mode_srv_client('off')
-        # _ = srv_clients.('passive')
 
     def routine_running_callback(self, msg):
         rospy.logdebug('[routine_running_callback]')
@@ -186,9 +209,7 @@ class UiNode(object):
         rospy.logdebug('[set_limit_handle] key: {}'.format(key))
         if key == key_map['complete']:
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
-            self.change_to_passive()
-            self.current_menu = self.menu_main
-            self.new_menu_update()
+            self.change_to_passive(self.menu_main)
         elif key == key_map['set_lower_lim']:
             self.stepper_lower_lim = srv_clients.stepper_set_limit_srv_client('lower','set')
             rospy.loginfo("Lower limit set to: {}".format(self.stepper_lower_lim))
@@ -201,8 +222,10 @@ class UiNode(object):
             self.stepper_lower_lim = None
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}".format(self.stepper_upper_lim,self.stepper_lower_lim))
 
-    def shutdown_function(self):
-        pass
+    def shutdown_entire_system(self):
+        msg = "rosnode kill -a"
+        args = shlex.split(msg)
+        _ = subprocess.Popen(args, stderr=subprocess.PIPE, shell=False)
 
 def getKey():
     tty.setraw(sys.stdin.fileno())

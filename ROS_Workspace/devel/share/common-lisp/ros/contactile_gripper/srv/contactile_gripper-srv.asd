@@ -14,4 +14,6 @@
     (:file "_package_StepperOff" :depends-on ("_package"))
     (:file "StepperSetLimit" :depends-on ("_package_StepperSetLimit"))
     (:file "_package_StepperSetLimit" :depends-on ("_package"))
+    (:file "UIMenu" :depends-on ("_package_UIMenu"))
+    (:file "_package_UIMenu" :depends-on ("_package"))
   ))
