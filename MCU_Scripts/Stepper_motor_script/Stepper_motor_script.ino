@@ -117,7 +117,7 @@ void stepperSetup()
   //setting up some values for maximum speed and maximum acceleration
   stepper.setMaxSpeed(200000); //SPEED = Steps / second
   stepper.setAcceleration(40000); //ACCELERATION = Steps /(second)^2
-  stepper.setCurrentPosition(1000000);  //Set cur pos to a large positive number so that all positions will stay positive to simplify things. 
+  stepper.setCurrentPosition(0); 
   motorOff(); //disable outputs so the motor is not getting warm (no current)
 }
 
@@ -182,11 +182,11 @@ void parseData() {
   strtokIndx = strtok(NULL, "_"); // this continues where the previous call left off
 
   if (strcmp(cmd_mode, "p") == 0){
-    cmd_pos = atoi(strtokIndx); 
+    cmd_pos = atol(strtokIndx); 
     stepper.moveTo(cmd_pos);
   }
   else if (strcmp(cmd_mode, "s") == 0){
-    goal_vel = atoi(strtokIndx); 
+    goal_vel = atol(strtokIndx); 
     stepper.setSpeed(goal_vel);
   }
   resetMotorTimeout();
@@ -211,13 +211,13 @@ void executeCommand()
 
 void switchOnExecute(){
   // If the limit switches are engaged and the goal is the wrong direction, stop.
-  if (switch1State == 1 && strcmp(cmd_mode, "p") == 0 && cmd_pos < 0){
+  if (switch1State == 1 && strcmp(cmd_mode, "p") == 0 && cmd_pos < cur_pos){
     limitStop();
   }
   else if (switch1State == 1 && strcmp(cmd_mode, "s") == 0 && goal_vel < 0){
     limitStop();
   }
-  else if (switch2State == 1 && strcmp(cmd_mode, "p") == 0 && cmd_pos > 0){
+  else if (switch2State == 1 && strcmp(cmd_mode, "p") == 0 && cmd_pos > cur_pos){
     limitStop();
   }
   else if (switch2State == 1 && strcmp(cmd_mode, "s") == 0 && goal_vel > 0){
@@ -245,7 +245,7 @@ void limitStop(){
   stepper.stop();
 //  motorOff();
   goal_vel=0;
-  cmd_pos=0;
+  cmd_pos=cur_pos;
   stepper.moveTo(cmd_pos);
   stepper.setSpeed(goal_vel);
 }
