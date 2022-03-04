@@ -24,17 +24,14 @@ struct UIMenuResponse_
   typedef UIMenuResponse_<ContainerAllocator> Type;
 
   UIMenuResponse_()
-    : response()  {
+    {
     }
   UIMenuResponse_(const ContainerAllocator& _alloc)
-    : response(_alloc)  {
+    {
   (void)_alloc;
     }
 
 
-
-   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _response_type;
-  _response_type response;
 
 
 
@@ -62,19 +59,6 @@ return s;
 }
 
 
-template<typename ContainerAllocator1, typename ContainerAllocator2>
-bool operator==(const ::contactile_gripper::UIMenuResponse_<ContainerAllocator1> & lhs, const ::contactile_gripper::UIMenuResponse_<ContainerAllocator2> & rhs)
-{
-  return lhs.response == rhs.response;
-}
-
-template<typename ContainerAllocator1, typename ContainerAllocator2>
-bool operator!=(const ::contactile_gripper::UIMenuResponse_<ContainerAllocator1> & lhs, const ::contactile_gripper::UIMenuResponse_<ContainerAllocator2> & rhs)
-{
-  return !(lhs == rhs);
-}
-
-
 } // namespace contactile_gripper
 
 namespace ros
@@ -88,12 +72,12 @@ namespace message_traits
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::contactile_gripper::UIMenuResponse_<ContainerAllocator> >
-  : FalseType
+  : TrueType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::contactile_gripper::UIMenuResponse_<ContainerAllocator> const>
-  : FalseType
+  : TrueType
   { };
 
 template <class ContainerAllocator>
@@ -122,12 +106,12 @@ struct MD5Sum< ::contactile_gripper::UIMenuResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "6de314e2dc76fbff2b6244a6ad70b68d";
+    return "d41d8cd98f00b204e9800998ecf8427e";
   }
 
   static const char* value(const ::contactile_gripper::UIMenuResponse_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x6de314e2dc76fbffULL;
-  static const uint64_t static_value2 = 0x2b6244a6ad70b68dULL;
+  static const uint64_t static_value1 = 0xd41d8cd98f00b204ULL;
+  static const uint64_t static_value2 = 0xe9800998ecf8427eULL;
 };
 
 template<class ContainerAllocator>
@@ -146,7 +130,7 @@ struct Definition< ::contactile_gripper::UIMenuResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "string response\n"
+    return "\n"
 ;
   }
 
@@ -163,10 +147,8 @@ namespace serialization
 
   template<class ContainerAllocator> struct Serializer< ::contactile_gripper::UIMenuResponse_<ContainerAllocator> >
   {
-    template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
-    {
-      stream.next(m.response);
-    }
+    template<typename Stream, typename T> inline static void allInOne(Stream&, T)
+    {}
 
     ROS_DECLARE_ALLINONE_SERIALIZER
   }; // struct UIMenuResponse_
@@ -182,11 +164,8 @@ namespace message_operations
 template<class ContainerAllocator>
 struct Printer< ::contactile_gripper::UIMenuResponse_<ContainerAllocator> >
 {
-  template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::contactile_gripper::UIMenuResponse_<ContainerAllocator>& v)
-  {
-    s << indent << "response: ";
-    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.response);
-  }
+  template<typename Stream> static void stream(Stream&, const std::string&, const ::contactile_gripper::UIMenuResponse_<ContainerAllocator>&)
+  {}
 };
 
 } // namespace message_operations

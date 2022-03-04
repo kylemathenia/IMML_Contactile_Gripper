@@ -1,7 +1,6 @@
 
 <launch>
-    <node pkg="contactile_gripper" name="control" type="control_node.py" output="screen"/>
-
+<!--     <node pkg="contactile_gripper" name="control" type="control_node.py" output="screen"/> -->
 <!--     <node pkg="contactile_gripper" name="motor" type="gripper_node.py" launch-prefix="gnome-terminal -e"/> -->
 <!--     <node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal -e"/> -->
 <!--     <node pkg="contactile_gripper" name="UI" type="ui_node.py" launch-prefix="gnome-terminal -e"/> -->
@@ -20,7 +19,7 @@
 		<!-- COM port setup -->
 
 			<!-- Name of COM port to connect with -->
-			<param name="com_port" type="string" value="/dev/ttyACM0"/>
+			<param name="com_port" type="string" value="/dev/ttyACM1"/>
 			<!-- Rate of serial connection -->
 			<param name="baud_rate" type="int" value="9600"/>
 			<!-- Parity: 0=PARITY_NONE, 1=PARITY_ODD, 2=PARITY_EVEN -->

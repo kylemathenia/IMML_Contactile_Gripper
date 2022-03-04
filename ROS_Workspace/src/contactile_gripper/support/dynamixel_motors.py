@@ -128,8 +128,12 @@ class Dynamixel(object):
         self.write_torque_mode('on')
 
     def read_pos(self):
-        result, dxl_comm_result, dxl_error = self.packetHandler.read4ByteTxRx(self.portHandler, self.id,self.addr_present_pos)
-        error = self.log_com_if_error(dxl_comm_result, dxl_error)
+        try:
+            result, dxl_comm_result, dxl_error = self.packetHandler.read4ByteTxRx(self.portHandler, self.id,self.addr_present_pos)
+            error = self.log_com_if_error(dxl_comm_result, dxl_error)
+        except:
+            result=0
+            error = True
         rospy.logdebug('[read_pos] {}'.format(result))
         return result, error
 

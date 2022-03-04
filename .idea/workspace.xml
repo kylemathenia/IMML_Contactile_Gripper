@@ -5,9 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/test_node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/get_comport_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/src/papillarray_ros_node.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/build/papillarray_ros_v2/CMakeFiles/papillarray_ros_v2_node.dir/src/papillarray_ros_node.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenuResponse.h" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/include/contactile_gripper/UIMenuResponse.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/lib/papillarray_ros_v2/papillarray_ros_v2_node" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/papillarray_ros_v2/papillarray_ros_v2_node" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_UIMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/lib/python2.7/dist-packages/contactile_gripper/srv/_UIMenu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/UIMenu.lisp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/UIMenu.lisp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_UIMenu.lisp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/common-lisp/ros/contactile_gripper/srv/_package_UIMenu.lisp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/UIMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/gennodejs/ros/contactile_gripper/srv/UIMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/UIMenu.l" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/devel/share/roseus/ros/contactile_gripper/srv/UIMenu.l" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/pap_and_grip.launch" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/pap_and_grip.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/t1.launch" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch/t1.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/control_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/gripper_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/ui_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/dynamixel_motors.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/dynamixel_motors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/src/papillarray_ros_node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/papillarray_ros_v2/src/papillarray_ros_node.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +61,13 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/msg" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/msg" />
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
+      <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support" />
+      <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/msg" />
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/srv" />
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch" />
     </key>
@@ -57,7 +75,28 @@
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.bagpy_example">
+  <component name="RunManager" selected="Python.get_comport_info">
+    <configuration name="IMU" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="IMML_Contactile_Gripper" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/IMU.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="bagpy_example" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="IMML_Contactile_Gripper" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -100,6 +139,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="get_comport_info" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="IMML_Contactile_Gripper" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/get_comport_info.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="gripper" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="IMML_Contactile_Gripper" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -121,55 +181,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="stepper" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="IMML_Contactile_Gripper" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/stepper.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="stepper_motor_script" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="IMML_Contactile_Gripper" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/MCU_Scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MCU_Scripts/stepper_motor_script.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.get_comport_info" />
+        <item itemvalue="Python.IMU" />
         <item itemvalue="Python.bagpy_example" />
         <item itemvalue="Python.gripper" />
         <item itemvalue="Python.exp" />
-        <item itemvalue="Python.stepper" />
-        <item itemvalue="Python.stepper_motor_script" />
       </list>
     </recent_temporary>
   </component>
@@ -213,6 +231,11 @@
           <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/bagpy_example.py</url>
           <line>7</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/IMU.py</url>
+          <line>40</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

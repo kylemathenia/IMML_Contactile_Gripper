@@ -6,7 +6,7 @@ User interface node to control the system.
 
 import time
 import rospy
-from std_msgs.msg import String,Float32,Int64,Int32
+from std_msgs.msg import String,Float32,Int64,Int32,Bool
 import srv_clients
 import subprocess, shlex
 import sys, select, termios, tty
@@ -30,22 +30,26 @@ key_map = {'grip_open':'d',
              }
 
 class UiNode(object):
+
     def __init__(self):
         # Publishers
         self.gripper_cmd_pub = rospy.Publisher('Gripper_Cmd',String, queue_size=5)
         self.stepper_cmd_pub = rospy.Publisher('Stepper_Cmd',String, queue_size=5)
 
         # Subscribers
-        self.routine_running_sub = rospy.Subscriber('Routine_Running', String, self.routine_running_callback, queue_size=100)
-        self.routine_running = 'No'
+        self.routine_running_sub = rospy.Subscriber('Routine_Running', Bool, self.routine_running_callback, queue_size=100)
+        self.routine_running = False
         self.gripper_pos_sub = rospy.Subscriber('Gripper_Pos', Int64, self.gripper_pos_callback, queue_size=1, buff_size=1)
         self.gripper_pos = 0
         self.gripper_goal_pos = None
         self.stepper_pos_sub = rospy.Subscriber('Stepper_Pos', Int64, self.stepper_pos_callback, queue_size=1, buff_size=1)
         self.stepper_pos = 0
         self.stepper_goal_pos = None
-        
+
         #Setup
+        self.routine_menu_funcs = (self.menu_routines_grasp_and_release,
+                                   self.menu_routines_grasp_forever,
+                                   self.menu_routines_cable_pull_experiment)
         self.gripper_pos_increment = 30
         self.stepper_pos_increment = 500
         self.stepper_upper_lim = None
@@ -140,7 +144,13 @@ class UiNode(object):
                    key_map['step_increment_inc'],key_map['step_increment_dec'],key_map['set_upper_lim'],
                    key_map['set_lower_lim'],key_map['complete'],key_map['clear_limits'],key_map['prompt'],key_map['EMO'])
 
-    #TODO: Implement all of the routine menus.
+
+    ######################## Routine Menus ########################
+    routine_running_prompt = """
+        \n\nGrasp & Release Routine\n
+        {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
+        """.format(key_map['EMO'])
+
     def menu_routines(self,key):
         rospy.logdebug('[menu_routines] key: {}'.format(key))
         if key == '1':
@@ -149,20 +159,32 @@ class UiNode(object):
             self.new_menu_update(self.menu_routines_grasp_forever)
         elif key == '3':
             self.new_menu_update(self.menu_routines_cable_pull_experiment)
-        elif key == '4':
+        elif key in key_map['EMO_bindings']:
             self.new_menu_update(self.menu_main)
-
     menu_routines.prompt = """  
         \n\nROUTINES MENU\n
         1: Grasp & Release
         2: Grasp Forever
         3: Cable Pull Experiment
-        4: Back
-        """
+        {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
+        """.format(key_map['EMO'])
+
+    def menu_routines_grasp_and_release(self,key):
+        self.routine_handle(key)
+    menu_routines_grasp_and_release.prompt = routine_running_prompt
+    def menu_routines_grasp_forever(self, key):
+        self.routine_handle(key)
+    menu_routines_grasp_forever.prompt = routine_running_prompt
+    def menu_routines_cable_pull_experiment(self, key):
+        self.routine_handle(key)
+    menu_routines_cable_pull_experiment.prompt = routine_running_prompt
+
 
     ######################## Supporting methods ########################
     def new_menu_update(self,new_menu_func):
         rospy.logdebug('[new_menu_update]')
+        if new_menu_func in self.routine_menu_funcs:
+            self.routine_running = True
         self.current_menu = new_menu_func
         srv_clients.ui_menu_srv_client(self.current_menu.__name__)
         rospy.loginfo(self.current_menu.prompt)
@@ -230,6 +252,18 @@ class UiNode(object):
             self.stepper_upper_lim = None
             self.stepper_lower_lim = None
             rospy.loginfo("\nUpper limit: {}, Lower limit: {}\n".format(self.stepper_upper_lim,self.stepper_lower_lim))
+
+    def routine_handle(self,key):
+        """All specific routines are handled the same. Unique menus are needed to communicate to the control node
+        which routine to run."""
+        try:
+            assert self.current_menu in self.routine_menu_funcs
+        except:
+            rospy.logerr("The current routine menu ({}) needs to be added to self.routine_menu_funcs"
+                         "Failure to include may cause the routine to never run because routine_running flag"
+                         "never gets set to True.")
+        if key in key_map['EMO_bindings'] or not self.routine_running:  # EMERGENCY OFF. Space, enter, backspace, or esc.
+            self.change_to_passive(self.menu_routines)
 
     def shutdown_entire_system(self):
         msg = "rosnode kill -a"

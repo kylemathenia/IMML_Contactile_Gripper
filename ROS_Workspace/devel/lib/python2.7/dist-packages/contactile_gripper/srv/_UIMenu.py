@@ -135,13 +135,12 @@ import struct
 
 
 class UIMenuResponse(genpy.Message):
-  _md5sum = "6de314e2dc76fbff2b6244a6ad70b68d"
+  _md5sum = "d41d8cd98f00b204e9800998ecf8427e"
   _type = "contactile_gripper/UIMenuResponse"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """string response
-"""
-  __slots__ = ['response']
-  _slot_types = ['string']
+  _full_text = """"""
+  __slots__ = []
+  _slot_types = []
 
   def __init__(self, *args, **kwds):
     """
@@ -151,7 +150,7 @@ class UIMenuResponse(genpy.Message):
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       response
+       
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -159,11 +158,6 @@ class UIMenuResponse(genpy.Message):
     """
     if args or kwds:
       super(UIMenuResponse, self).__init__(*args, **kwds)
-      # message fields cannot be None, assign default values for those that are
-      if self.response is None:
-        self.response = ''
-    else:
-      self.response = ''
 
   def _get_types(self):
     """
@@ -177,12 +171,7 @@ class UIMenuResponse(genpy.Message):
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self.response
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      pass
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -195,15 +184,6 @@ class UIMenuResponse(genpy.Message):
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
       end = 0
-      start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      start = end
-      end += length
-      if python3:
-        self.response = str[start:end].decode('utf-8', 'rosmsg')
-      else:
-        self.response = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -216,12 +196,7 @@ class UIMenuResponse(genpy.Message):
     :param numpy: numpy python module
     """
     try:
-      _x = self.response
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      pass
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -235,15 +210,6 @@ class UIMenuResponse(genpy.Message):
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
       end = 0
-      start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      start = end
-      end += length
-      if python3:
-        self.response = str[start:end].decode('utf-8', 'rosmsg')
-      else:
-        self.response = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -254,6 +220,6 @@ def _get_struct_I():
     return _struct_I
 class UIMenu(object):
   _type          = 'contactile_gripper/UIMenu'
-  _md5sum = '61c60e1f23cfdf7f6bcc81df7ce1f6cc'
+  _md5sum = 'c203365aa9fc4c84f5cecbbb5ac3272a'
   _request_class  = UIMenuRequest
   _response_class = UIMenuResponse

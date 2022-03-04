@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::contactile_gripper::UIMenu > {
   static const char* value()
   {
-    return "61c60e1f23cfdf7f6bcc81df7ce1f6cc";
+    return "c203365aa9fc4c84f5cecbbb5ac3272a";
   }
 
   static const char* value(const ::contactile_gripper::UIMenu&) { return value(); }

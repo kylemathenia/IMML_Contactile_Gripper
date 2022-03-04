@@ -18,7 +18,7 @@ PapillArrayNode::PapillArrayNode(ros::NodeHandle& nh) : listener_(true) { // lis
 
 		// Setup publisher for sensor
 		std::string topic = "/hub_" + std::to_string(hub_id_) + "/sensor_" + std::to_string(i);
-		ros::Publisher sensor_pub = nh.advertise<papillarray_ros_v2::SensorState>(topic, sampling_rate_);
+		ros::Publisher sensor_pub = nh.advertise<papillarray_ros_v2::SensorState>(topic, 1);
 		sensor_pubs_.push_back(sensor_pub);
 	}
 
