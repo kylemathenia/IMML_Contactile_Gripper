@@ -14,7 +14,7 @@
 		<!-- COM port setup -->
 
 			<!-- Name of COM port to connect with -->
-			<param name="com_port" type="string" value="/dev/ttyACM1"/>
+			<param name="com_port" type="string" value="/dev/ttyACM2"/>
 			<!-- Rate of serial connection -->
 			<param name="baud_rate" type="int" value="9600"/>
 			<!-- Parity: 0=PARITY_NONE, 1=PARITY_ODD, 2=PARITY_EVEN -->
@@ -33,10 +33,17 @@
 			<param name="sampling_rate" type="int" value="500"/>
     </node>
 
-    <node pkg="contactile_gripper" name="data_recorder" type="data_recorder_node.py"/>
+<!--     <node pkg="contactile_gripper" name="data_recorder" type="data_recorder_node.py" launch-prefix="gnome-terminal -e" output="screen"/> -->
+
     <node pkg="contactile_gripper" name="gripper" type="gripper_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
     <node pkg="contactile_gripper" name="stepper" type="stepper_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
     <node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
     <node pkg="contactile_gripper" name="UI" type="ui_node.py" output="screen"/>
+
+<!--     <node pkg="contactile_gripper" name="data_recorder" type="data_recorder_node.py"/> -->
+<!--     <node pkg="contactile_gripper" name="gripper" type="gripper_node.py"/> -->
+<!--     <node pkg="contactile_gripper" name="stepper" type="stepper_node.py"/> -->
+<!--     <node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal -e" output="screen"/> -->
+<!--     <node pkg="contactile_gripper" name="UI" type="ui_node.py" output="screen"/> -->
 
 </launch>

@@ -68,6 +68,7 @@ class UiNode(object):
         self.stepper_pos = msg.data
     def routine_running_callback(self, msg):
         rospy.logdebug('[routine_running_callback]')
+        rospy.loginfo('Routine running: {}'.format(msg.data))
         self.routine_running = msg.data
 
 

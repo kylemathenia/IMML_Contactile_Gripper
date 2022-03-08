@@ -61,6 +61,7 @@ class ControlNode(object):
         self.wait_for_sensors()
         self.gripper_goal_pos = self.gripper_pos
         self.gripper_goal_cur = 0
+        self.gripper_goal_cur = 30
 
         rospy.on_shutdown(self.shutdown_function)
         self.main_loop_rate = 30  # Hz
@@ -104,30 +105,41 @@ class ControlNode(object):
     def grasp_forever_routine(self):
         self.check_stage()
         if self.routine_stage == 0:  # Grasp
+            srv_success = srv_clients.bias_request_srv_client()
+            self.stage_complete = True
+        if self.routine_stage == 1:  # Grasp
             self.grasp()
-            self.stepper_stop()
+            # self.stepper_stop()
 
     def grasp_and_release_routine(self):
         """Grasps and maintains grasp for an amount of time, then releases."""
         self.check_stage()
-        if self.routine_stage==0: # Grasp
+        if self.routine_stage==0: # Setup
+            srv_success = srv_clients.bias_request_srv_client()
+            topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
+            self.record_data(topic_list, file_prefix="grasp_and_release", record=True)
+            self.stage_complete = True
+
+        elif self.routine_stage==1: # Grasp
             self.grasp()
-            self.stepper_stop()
+            # self.stepper_stop()
             if self.grasping: self.stage_complete = True
 
-        elif self.routine_stage==1: # Maintain grasp for some time. No pull.
+        elif self.routine_stage==2: # Maintain grasp for some time.
             self.grasp()
-            self.stepper_stop()
-            if self.stage_timeout(timeout=2): self.stage_complete = True
+            # self.stepper_stop()
+            if self.stage_timeout(timeout=3): self.stage_complete = True
 
-        elif self.routine_stage==2: # Release grasp.
+        elif self.routine_stage==3: # Release grasp.
             self.open()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
 
-        elif self.routine_stage==3: # Publish flag to let UI node know routine is complete.
+        elif self.routine_stage==4: # Finish
             """Need to let the UI node that the routine is complete. """
+            self.record_data(record=False)
             self.routine_running_pub.publish(False)
+            self.stage_complete = True
 
 
     def cable_pull_experiment_routine(self):
@@ -179,9 +191,24 @@ class ControlNode(object):
     def grasp(self):
         """Close the gripper unitl the global z force is at a certain level."""
         global_z_force = self.tact_sensor0.gfZ
+        print("Global z force: {}".format(global_z_force))
         if global_z_force > 2:
             self.grasping = True
         else:
+            self.grasping = False
+        if not self.grasping: # Not in contact. Move faster than PID control.
+            pos_change = 100
+            self.gripper_goal_pos = self.gripper_pos + int(pos_change)
+            self.gripper_cmd_pub.publish('position_' + str(self.gripper_goal_pos))
+        else: # Apply a constant torque
+            self.gripper_cmd_pub.publish('current_' + str(self.gripper_goal_cur))
+
+    def grasp_feedback(self):
+        """Close the gripper unitl the global z force is at a certain level."""
+        global_z_force = self.tact_sensor0.gfZ
+        if global_z_force > 2:
+            self.grasping = True
+        else: #TODO: p gain to 100 when moving.
             self.grasping = False
         if not self.grasping: # Not in contact. Move faster than PID control.
             pos_change = 20
@@ -191,6 +218,10 @@ class ControlNode(object):
             self.total_error += error
             pos_change = (error*self.p_gain) + (change_in_error*self.d_gain) + (self.total_error*self.i_gain)
         self.gripper_goal_pos = self.gripper_pos + int(pos_change)
+        self.gripper_cmd_pub.publish('position_' + str(self.gripper_goal_pos))
+
+    def open(self):
+        self.gripper_goal_pos = 10 # Set to a really small position to open all the way.
         self.gripper_cmd_pub.publish('position_' + str(self.gripper_goal_pos))
 
     def cable_check_pull(self):
@@ -214,15 +245,15 @@ class ControlNode(object):
         self.stepper_cmd_pub.publish("speed_0")
 
 
-    ######################## State Change Support ######################
-    # ##
+    ######################## State Change Support #########################
     def check_if_leave_or_enter_routine(self,next_menu):
         """Special action taken if entering or leaving a routine."""
-        if self.control_function not in self.routine_menus and next_menu not in self.routine_menus: # No routine involved.
+        routine_control_functions = self.routine_bindings.values()
+        if self.control_function not in routine_control_functions and next_menu not in self.routine_menus: # No routine involved.
             return
-        elif self.control_function not in self.routine_menus and next_menu in self.routine_menus: # Entering a routine.
+        elif self.control_function not in routine_control_functions and next_menu in self.routine_menus: # Entering a routine.
             self.entering_routine(next_menu)
-        elif self.control_function in self.routine_menus and next_menu not in self.routine_menus: # Leaving a routine.
+        elif self.control_function in routine_control_functions and next_menu not in self.routine_menus: # Leaving a routine.
             self.exiting_routine()
         else:
             rospy.logerr("Error with ui menu structure.")
@@ -255,9 +286,9 @@ class ControlNode(object):
         else: return False
 
     ######################## Other ########################
-    def record_data(self,topic_list=None,file_prefix=" ",record=True):
+    def record_data(self,topic_list=None,file_prefix="experiment1",record=True):
         if record:
-            srv_clients.data_recorder_srv_client(topic_list, file_prefix="experiment1", stop=False)
+            srv_clients.data_recorder_srv_client(topic_list, file_prefix=file_prefix, stop=False)
             self.recording_data = True
         elif not record:
             srv_clients.data_recorder_srv_client([], file_prefix=" ", stop=True)

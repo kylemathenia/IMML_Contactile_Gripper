@@ -1,6 +1,7 @@
 
 import rospy
 from contactile_gripper.srv import *
+from papillarray_ros_v2.srv import *
 
 def gripper_change_mode_srv_client(mode):
     rospy.logdebug('[gripper_change_mode_srv_client] {}'.format(mode))
@@ -39,3 +40,9 @@ def ui_menu_srv_client(menu):
     rospy.wait_for_service('ui_menu_srv')
     stepper_off_srv = rospy.ServiceProxy('ui_menu_srv', UIMenu)
     _ = stepper_off_srv(menu)
+
+def bias_request_srv_client():
+    rospy.wait_for_service('/hub_0/send_bias_request')
+    bias_request_srv = rospy.ServiceProxy('/hub_0/send_bias_request', BiasRequest)
+    success = bias_request_srv()
+    return success
