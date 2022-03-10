@@ -15,7 +15,6 @@ class DataRecorderNode(object):
         rospy.on_shutdown(self.shutdown_function)
 
     def callback(self, req):
-        print('[Callback]')
         if req.stop:
             self.stop()
         elif not req.stop:
@@ -25,7 +24,6 @@ class DataRecorderNode(object):
         return []
 
     def stop(self):
-        print('[stop] {}'.format(self.active_process))
         if self.active_process is not None:
             self.active_process.terminate()
             self.active_process = None

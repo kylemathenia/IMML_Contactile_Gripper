@@ -22,6 +22,9 @@ class Gripper(object):
         self.pos_buffer = 100  # units: 0.0791 degrees. Gives buffer from the actual physical hard stops to prevent damage.
         atexit.register(self.shutdown_function)
 
+        self.pos_p_gain = 200
+        self.pos_i_gain = 100
+        self.pos_d_gain = 400
         self.init_motor_settings()
         if fast_start: self.fast_start()
         else: self.calibrate()
@@ -29,9 +32,9 @@ class Gripper(object):
 
     def init_motor_settings(self):
         com_error = self.switch_modes('off')
-        self.motor.write_pos_p_gain(200)
-        self.motor.write_pos_i_gain(100)
-        self.motor.write_pos_d_gain(4000)
+        self.motor.write_pos_p_gain(self.pos_p_gain)
+        self.motor.write_pos_i_gain(self.pos_i_gain)
+        self.motor.write_pos_d_gain(self.pos_d_gain)
         self.motor.write_current_limit(200)
         # Make sure the motor pos is far away from the zero position to keep limit number positive.
         self.motor.write_homing_offset(100000)

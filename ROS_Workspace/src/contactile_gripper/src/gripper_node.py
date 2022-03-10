@@ -71,7 +71,6 @@ class GripperNode(object):
                 self.update_cmd_mode('position')
             elif req.mode == 'cur_control':
                 self.update_cmd_mode('current')
-
         except:
             rospy.logerr('Change mode service failed.')
         return GripperChangeModeResponse('Mode changed')

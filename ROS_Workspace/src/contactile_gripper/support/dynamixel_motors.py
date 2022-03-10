@@ -143,6 +143,12 @@ class Dynamixel(object):
         rospy.logdebug('[read_vel] {}'.format(result))
         return result, error
 
+    def read_cur(self):
+        result, dxl_comm_result, dxl_error = self.packetHandler.read2ByteTxRx(self.portHandler, self.id, self.addr_present_cur)
+        error = self.log_com_if_error(dxl_comm_result, dxl_error)
+        rospy.logdebug('[read_cur] {}'.format(result))
+        return result, error
+
     def read_moving(self):
         """Returns True/False for whether or not the motor is moving (withing the moving threshold value)"""
         result, dxl_comm_result, dxl_error = self.packetHandler.read1ByteTxRx(self.portHandler, self.id, self.addr_moving)

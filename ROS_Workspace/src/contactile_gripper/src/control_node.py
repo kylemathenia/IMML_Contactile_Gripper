@@ -72,6 +72,9 @@ class ControlNode(object):
     ######################## Subscriber and service callbacks ########################
     def menu_srv(self,req):
         """Callback for when the user inputs a command in the ui node. req.menu is a string of the ui menu function."""
+
+        #TODO put a control in place to make sure the contactile sensor is publishing non-zero data. Maybe never let it enter a routine
+        # mode if that is the case
         rospy.logdebug('[menu_srv] req: {}'.format(req))
         self.check_if_leave_or_enter_routine(req.menu)
         if req.menu in self.routine_menus:
@@ -81,6 +84,7 @@ class ControlNode(object):
         return UIMenuResponse()
     def tact_0_callback(self,msg):
         self.tact_sensor0 = msg
+        # rospy.loginfo("Global Z force: {} (N)".format(self.tact_sensor0.gfZ))
     def tact_1_callback(self,msg):
         self.tact_sensor1 = msg
     def gripper_pos_callback(self,msg):
@@ -116,26 +120,30 @@ class ControlNode(object):
         self.check_stage()
         if self.routine_stage==0: # Setup
             srv_success = srv_clients.bias_request_srv_client()
-            topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
+            # topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
+            topic_list = ['/hub_0/sensor_0']
             self.record_data(topic_list, file_prefix="grasp_and_release", record=True)
             self.stage_complete = True
 
-        elif self.routine_stage==1: # Grasp
+        elif self.routine_stage==1: # Wait for data to start recording.
+            if self.stage_timeout(timeout=0.5): self.stage_complete = True
+
+        elif self.routine_stage==2: # Grasp
             self.grasp()
             # self.stepper_stop()
             if self.grasping: self.stage_complete = True
 
-        elif self.routine_stage==2: # Maintain grasp for some time.
+        elif self.routine_stage==3: # Maintain grasp for some time.
             self.grasp()
             # self.stepper_stop()
             if self.stage_timeout(timeout=3): self.stage_complete = True
 
-        elif self.routine_stage==3: # Release grasp.
+        elif self.routine_stage==4: # Release grasp.
             self.open()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
 
-        elif self.routine_stage==4: # Finish
+        elif self.routine_stage==5: # Finish
             """Need to let the UI node that the routine is complete. """
             self.record_data(record=False)
             self.routine_running_pub.publish(False)
@@ -189,26 +197,42 @@ class ControlNode(object):
 
     ######################## Routine Support ########################
     def grasp(self):
-        """Close the gripper unitl the global z force is at a certain level."""
-        global_z_force = self.tact_sensor0.gfZ
-        print("Global z force: {}".format(global_z_force))
-        if global_z_force > 2:
+        """Close the gripper until the global z force is at a certain level."""
+        self.check_if_grasping()
+        if not self.grasping: # Not in contact.
+            self.no_contact_close()
+        elif self.over_z_force_limit(): # Overshooting.
+            self.over_z_force_limit_control()
+        else: # Apply a constant torque
+            self.gripper_cmd_pub.publish('current_' + str(self.gripper_goal_cur))
+
+    def check_if_grasping(self):
+        # If changing a lot in the positive direction.
+        if self.tact_sensor0.gfZ > 2:
             self.grasping = True
         else:
             self.grasping = False
-        if not self.grasping: # Not in contact. Move faster than PID control.
-            pos_change = 100
-            self.gripper_goal_pos = self.gripper_pos + int(pos_change)
-            self.gripper_cmd_pub.publish('position_' + str(self.gripper_goal_pos))
-        else: # Apply a constant torque
-            self.gripper_cmd_pub.publish('current_' + str(self.gripper_goal_cur))
+
+    def no_contact_close(self):
+        self.gripper_cmd_pub.publish('current_' + str(10))
+
+    def over_z_force_limit(self):
+        """Returns T/F for if the z force is over a max threshold."""
+        if self.tact_sensor0.gfZ > 30:
+            return True
+        else:
+            return False
+
+    def over_z_force_limit_control(self):
+        self.gripper_cmd_pub.publish('current_' + str(0))
+
 
     def grasp_feedback(self):
         """Close the gripper unitl the global z force is at a certain level."""
         global_z_force = self.tact_sensor0.gfZ
         if global_z_force > 2:
             self.grasping = True
-        else: #TODO: p gain to 100 when moving.
+        else:
             self.grasping = False
         if not self.grasping: # Not in contact. Move faster than PID control.
             pos_change = 20
