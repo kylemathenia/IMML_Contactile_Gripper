@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d405348f-f7c8-40ed-bd8e-0ce691658f6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/hub_0-sensor_0.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/viz_example.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/viz_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/IMML_Contactile_Gripper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IMML_Contactile_Gripper.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/testing.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/viz_test2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/process_bag.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/process_bag.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/get_csv_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/get_csv_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/viz_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/viz_test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,42 +46,22 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kylem\OneDrive\Documents\GitHub\IMML_Contactile_Gripper\ROS_Workspace\src\contactile_gripper\bag" />
       <recent name="C:\Users\kylem\OneDrive\Documents\GitHub\IMML_Contactile_Gripper\ROS_Workspace\src\contactile_gripper\src" />
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag" />
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src" />
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support" />
-      <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/msg" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kylem\OneDrive\Documents\GitHub\IMML_Contactile_Gripper\ROS_Workspace\src\contactile_gripper\bag" />
       <recent name="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/launch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.process_bag">
-    <configuration name="IMU" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="IMML_Contactile_Gripper" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/IMU.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.viz_test2">
     <configuration name="bag_exp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="IMML_Contactile_Gripper" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -105,7 +83,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="get_comport_info" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="get_csv_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="IMML_Contactile_Gripper" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -113,11 +91,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/support/get_comport_info.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/get_csv_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -159,7 +137,28 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/src/viz_test.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\kylem\OneDrive\Documents\GitHub\IMML_Contactile_Gripper\ROS_Workspace\src\contactile_gripper\bag\viz_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="viz_test2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="IMML_Contactile_Gripper" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/viz_test2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -170,11 +169,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.process_bag" />
+        <item itemvalue="Python.viz_test2" />
         <item itemvalue="Python.viz_test" />
+        <item itemvalue="Python.get_csv_data" />
+        <item itemvalue="Python.process_bag" />
         <item itemvalue="Python.bag_exp" />
-        <item itemvalue="Python.get_comport_info" />
-        <item itemvalue="Python.IMU" />
       </list>
     </recent_temporary>
   </component>
@@ -226,15 +225,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/process_bag.py</url>
-          <line>12</line>
+          <line>7</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/process_bag.py</url>
-          <line>11</line>
+          <line>6</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/get_csv_data.py</url>
+          <line>36</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ROS_Workspace/src/contactile_gripper/bag/viz_test.py</url>
+          <line>87</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>
