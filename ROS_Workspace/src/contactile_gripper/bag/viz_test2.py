@@ -72,7 +72,7 @@ def get_grids(pillar_data):
     ygrid = np.empty(0)
     zgrid = np.empty(0)
     for i, pillar in enumerate(pillar_data):
-        pillar_list = pillar.split('\r\n')
+        pillar_list = pillar.split('\n')
         fx = pillar_list[10].split(':')
         fx = float(fx[1])
         fy = pillar_list[11].split(':')
