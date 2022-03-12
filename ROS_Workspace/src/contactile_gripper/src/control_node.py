@@ -122,7 +122,7 @@ class ControlNode(object):
             srv_success = srv_clients.bias_request_srv_client()
             # topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
             topic_list = ['/hub_0/sensor_0']
-            self.record_data(topic_list, file_prefix="grasp_and_release", record=True)
+            self.record_data(topic_list, file_prefix="cable_-45", record=True)
             self.stage_complete = True
 
         elif self.routine_stage==1: # Wait for data to start recording.

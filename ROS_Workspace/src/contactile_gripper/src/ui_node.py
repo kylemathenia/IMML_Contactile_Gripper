@@ -51,7 +51,7 @@ class UiNode(object):
                                    self.menu_routines_grasp_forever,
                                    self.menu_routines_cable_pull_experiment)
         self.gripper_pos_increment = 30
-        self.stepper_pos_increment = 500
+        self.stepper_pos_increment = 50
         self.stepper_upper_lim = None
         self.stepper_lower_lim = None
 
