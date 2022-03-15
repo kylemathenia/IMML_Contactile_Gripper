@@ -121,8 +121,8 @@ class ControlNode(object):
         if self.routine_stage==0: # Setup
             srv_success = srv_clients.bias_request_srv_client()
             # topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
-            topic_list = ['/hub_0/sensor_0']
-            self.record_data(topic_list, file_prefix="cable_-45", record=True)
+            topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
+            self.record_data(topic_list, file_prefix="cable_45_pull_force_vec", record=True)
             self.stage_complete = True
 
         elif self.routine_stage==1: # Wait for data to start recording.
@@ -140,6 +140,7 @@ class ControlNode(object):
 
         elif self.routine_stage==4: # Release grasp.
             self.open()
+            print('open')
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
 
