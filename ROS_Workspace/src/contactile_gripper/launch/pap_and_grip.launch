@@ -14,7 +14,7 @@
 		<!-- COM port setup -->
 
 			<!-- Name of COM port to connect with -->
-			<param name="com_port" type="string" value="/dev/ttyACM2"/>
+			<param name="com_port" type="string" value="/dev/ttyACM0"/>
 			<!-- Rate of serial connection -->
 			<param name="baud_rate" type="int" value="9600"/>
 			<!-- Parity: 0=PARITY_NONE, 1=PARITY_ODD, 2=PARITY_EVEN -->
