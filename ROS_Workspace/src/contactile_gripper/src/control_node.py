@@ -85,7 +85,6 @@ class ControlNode(object):
     def tact_0_callback(self,msg):
         self.tact_sensor0 = msg
         # rospy.loginfo("Global Z force: {} (N)".format(self.tact_sensor0.gfZ))
-    #     testing
     def tact_1_callback(self,msg):
         self.tact_sensor1 = msg
     def gripper_pos_callback(self,msg):
