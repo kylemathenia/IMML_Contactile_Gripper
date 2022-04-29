@@ -186,6 +186,7 @@ class UiNode(object):
         rospy.logdebug('[new_menu_update]')
         if new_menu_func in self.routine_menu_funcs:
             self.routine_running = True
+            # x=input("Enter a filename for data:\n")
         self.current_menu = new_menu_func
         srv_clients.ui_menu_srv_client(self.current_menu.__name__)
         rospy.loginfo(self.current_menu.prompt)

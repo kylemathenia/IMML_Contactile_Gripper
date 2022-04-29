@@ -121,8 +121,9 @@ class ControlNode(object):
         if self.routine_stage==0: # Setup
             srv_success = srv_clients.bias_request_srv_client()
             # topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
+            file_prefix_ans = raw_input("Enter the filename for data:\n")
             topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
-            self.record_data(topic_list, file_prefix="grasp_release_30degree_0offset", record=True)
+            self.record_data(topic_list, file_prefix=file_prefix_ans, record=True)
             self.stage_complete = True
 
         elif self.routine_stage==1: # Wait for data to start recording.
