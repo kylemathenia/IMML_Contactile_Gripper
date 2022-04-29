@@ -1,0 +1,43 @@
+
+<launch>
+	<node pkg="papillarray_ros_v2"
+	      name="papillarray_ros_v2_node"
+	      type="papillarray_ros_v2_node">
+
+		<param name="hub_id" type="int" value="0"/>
+
+		<!-- Sensor setup parameters -->
+
+			<!-- Number of sensors being used. Value can be 1 or 2 -->
+			<param name="n_sensors" type="int" value="2"/>
+
+		<!-- COM port setup -->
+
+			<!-- Name of COM port to connect with -->
+			<param name="com_port" type="string" value="/dev/ttyACM0"/>
+			<!-- Rate of serial connection -->
+			<param name="baud_rate" type="int" value="9600"/>
+			<!-- Parity: 0=PARITY_NONE, 1=PARITY_ODD, 2=PARITY_EVEN -->
+			<param name="parity" type="int" value="0"/>
+			<!-- Number of bits in byte. Default 8 -->
+			<param name="byte_size" type="int" value="8"/>
+
+		<!-- Read behaviour -->
+
+			<!-- Flushing flag: flush hardware input buffer when it contains too many bytes -->
+			<param name="is_flush" type="bool" value="true"/>
+
+		<!-- Sample Rate -->
+
+			<!-- Rate (Hz): 100, 250, 500 or 1000 -->
+			<param name="sampling_rate" type="int" value="500"/>
+    </node>
+
+
+    <node pkg="contactile_gripper" name="gripper" type="gripper_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
+    <node pkg="contactile_gripper" name="stepper" type="stepper_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
+    <node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
+    <node pkg="contactile_gripper" name="UI" type="ui_node.py" output="screen"/>
+<!--     <node pkg="contactile_gripper" name="data_recorder" type="data_recorder_node.py" launch-prefix="gnome-terminal -e" output="screen"/> -->
+
+</launch>

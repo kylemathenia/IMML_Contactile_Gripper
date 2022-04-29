@@ -13,6 +13,7 @@ class DataRecorderNode(object):
         self.active_process = None
         rospy.Service('data_recorder_srv', DataRecorder, self.callback)
         rospy.on_shutdown(self.shutdown_function)
+        rospy.loginfo("\nData recorder node initialized.\n")
 
     def callback(self, req):
         if req.stop:
@@ -24,12 +25,14 @@ class DataRecorderNode(object):
         return []
 
     def stop(self):
+        rospy.loginfo("\nStop record\n")
         if self.active_process is not None:
             self.active_process.terminate()
             self.active_process = None
 
     def start(self,file_prefix,topic_list):
-        self.stop() # Stop if already recording.
+        rospy.loginfo("\nStart recording\n")
+        # self.stop() # Stop if already recording.
         msg = "rosbag record -o {} ".format(file_prefix) + ' '.join(topic_list)
         args = shlex.split(msg)
         self.active_process = subprocess.Popen(args, stderr=subprocess.PIPE, shell=False)
