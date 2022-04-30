@@ -115,7 +115,78 @@ class ControlNode(object):
             self.grasp()
             # self.stepper_stop()
 
+
     def grasp_and_release_routine(self):
+        """Grasps and maintains grasp for an amount of time, then releases."""
+        self.check_stage()
+        if self.routine_stage==0: # Setup
+            srv_success = srv_clients.bias_request_srv_client()
+            # topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
+            file_prefix_ans = raw_input("Enter the filename for data:\n")
+            topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
+            self.record_data(topic_list, file_prefix=file_prefix_ans, record=True)
+            self.stage_complete = True
+
+        elif self.routine_stage==1: # Wait for data to start recording.
+            if self.stage_timeout(timeout=0.5):
+                self.stage_complete = True
+
+        elif self.routine_stage==2: # Grasp
+            self.grasp()
+            self.check_if_grasping()
+            if self.grasping:
+                self.stage_complete = True
+                self.goal_grasp_force = 4
+
+        elif self.routine_stage==3: # Grasp
+            self.grasp_feedback()
+            if self.stage_timeout(timeout=4):
+                self.stage_complete = True
+                self.goal_grasp_force = 7
+
+        elif self.routine_stage==4: # Maintain grasp for some time.
+            self.grasp_feedback()
+            if self.stage_timeout(timeout=3):
+                self.stage_complete = True
+                self.goal_grasp_force = 10
+
+        elif self.routine_stage==5: # Maintain grasp for some time.
+            self.grasp_feedback()
+            if self.stage_timeout(timeout=3):
+                self.stage_complete = True
+                self.goal_grasp_force = 13
+
+        elif self.routine_stage==6: # Maintain grasp for some time.
+            self.grasp_feedback()
+            if self.stage_timeout(timeout=3):
+                self.stage_complete = True
+                self.goal_grasp_force = 16
+
+        elif self.routine_stage==7: # Maintain grasp for some time.
+            self.grasp_feedback()
+            if self.stage_timeout(timeout=3):
+                self.stage_complete = True
+                self.goal_grasp_force = 19
+
+        elif self.routine_stage==8: # Maintain grasp for some time.
+            self.grasp_feedback()
+            if self.stage_timeout(timeout=3):
+                self.stage_complete = True
+                self.goal_grasp_force = 22
+
+        elif self.routine_stage==9: # Release grasp.
+            self.open()
+            if self.stage_timeout(timeout=0.5):
+                self.stage_complete = True
+
+        elif self.routine_stage==10: # Finish
+            """Need to let the UI node that the routine is complete. """
+            self.record_data(record=False)
+            self.routine_running_pub.publish(False)
+            self.stage_complete = True
+
+
+    def grasp_and_release_routine2(self):
         """Grasps and maintains grasp for an amount of time, then releases."""
         self.check_stage()
         if self.routine_stage==0: # Setup
@@ -149,40 +220,6 @@ class ControlNode(object):
             self.record_data(record=False)
             self.routine_running_pub.publish(False)
             self.stage_complete = True
-
-    # def grasp_and_release_routine(self):
-    #     """Grasps and maintains grasp for an amount of time, then releases."""
-    #     self.check_stage()
-    #     if self.routine_stage==0: # Setup
-    #         srv_success = srv_clients.bias_request_srv_client()
-    #         # topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
-    #         topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
-    #         self.record_data(topic_list, file_prefix="testing_pillar_location", record=True)
-    #         self.stage_complete = True
-    #
-    #     elif self.routine_stage==1: # Wait for data to start recording.
-    #         if self.stage_timeout(timeout=0.5): self.stage_complete = True
-    #
-    #     elif self.routine_stage==2: # Grasp
-    #         self.grasp()
-    #         # self.stepper_stop()
-    #         if self.grasping: self.stage_complete = True
-    #
-    #     elif self.routine_stage==3: # Maintain grasp for some time.
-    #         self.grasp()
-    #         # self.stepper_stop()
-    #         if self.stage_timeout(timeout=4): self.stage_complete = True
-    #
-    #     elif self.routine_stage==4: # Release grasp.
-    #         self.open()
-    #         if self.stage_timeout(timeout=0.5):
-    #             self.stage_complete = True
-    #
-    #     elif self.routine_stage==5: # Finish
-    #         """Need to let the UI node that the routine is complete. """
-    #         self.record_data(record=False)
-    #         self.routine_running_pub.publish(False)
-    #         self.stage_complete = True
 
 
     def cable_pull_experiment_routine(self):
