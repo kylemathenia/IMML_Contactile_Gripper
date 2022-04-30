@@ -60,7 +60,6 @@ class ControlNode(object):
 
         self.wait_for_sensors()
         self.gripper_goal_pos = self.gripper_pos
-        self.gripper_goal_cur = 0
         self.gripper_goal_cur = 18
 
         rospy.on_shutdown(self.shutdown_function)
@@ -130,56 +129,43 @@ class ControlNode(object):
         elif self.routine_stage==1: # Wait for data to start recording.
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
+                self.gripper_goal_cur = 4
 
-        elif self.routine_stage==2: # Grasp
+        elif self.routine_stage==2: # Maintain grasp for some time.
             self.grasp()
-            self.check_if_grasping()
-            if self.grasping:
+            if self.stage_timeout(timeout=3):
                 self.stage_complete = True
-                self.goal_grasp_force = 4
+                self.gripper_goal_cur = 20
 
-        elif self.routine_stage==3: # Grasp
-            self.grasp_feedback()
-            if self.stage_timeout(timeout=4):
+        elif self.routine_stage==3: # Maintain grasp for some time.
+            self.grasp()
+            if self.stage_timeout(timeout=3):
                 self.stage_complete = True
-                self.goal_grasp_force = 7
+                self.gripper_goal_cur = 30
 
         elif self.routine_stage==4: # Maintain grasp for some time.
-            self.grasp_feedback()
+            self.grasp()
             if self.stage_timeout(timeout=3):
                 self.stage_complete = True
-                self.goal_grasp_force = 10
+                self.gripper_goal_cur = 45
 
         elif self.routine_stage==5: # Maintain grasp for some time.
-            self.grasp_feedback()
+            self.grasp()
             if self.stage_timeout(timeout=3):
                 self.stage_complete = True
-                self.goal_grasp_force = 13
+                self.gripper_goal_cur = 65
 
         elif self.routine_stage==6: # Maintain grasp for some time.
-            self.grasp_feedback()
+            self.grasp()
             if self.stage_timeout(timeout=3):
                 self.stage_complete = True
-                self.goal_grasp_force = 16
 
-        elif self.routine_stage==7: # Maintain grasp for some time.
-            self.grasp_feedback()
-            if self.stage_timeout(timeout=3):
-                self.stage_complete = True
-                self.goal_grasp_force = 19
-
-        elif self.routine_stage==8: # Maintain grasp for some time.
-            self.grasp_feedback()
-            if self.stage_timeout(timeout=3):
-                self.stage_complete = True
-                self.goal_grasp_force = 22
-
-        elif self.routine_stage==9: # Release grasp.
+        elif self.routine_stage==7: # Release grasp.
             self.open()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
 
-        elif self.routine_stage==10: # Finish
+        elif self.routine_stage==8: # Finish
             """Need to let the UI node that the routine is complete. """
             self.record_data(record=False)
             self.routine_running_pub.publish(False)
@@ -270,6 +256,8 @@ class ControlNode(object):
     ######################## Routine Support ########################
     def grasp(self):
         """Close the gripper until the global z force is at a certain level."""
+        global_z_force = (self.tact_sensor0.gfZ + self.tact_sensor1.gfZ) / 2
+        rospy.loginfo("z force: {}".format(global_z_force))
         self.check_if_grasping()
         if not self.grasping: # Not in contact.
             self.no_contact_close()
@@ -280,7 +268,7 @@ class ControlNode(object):
 
     def check_if_grasping(self):
         # If changing a lot in the positive direction.
-        if self.tact_sensor0.gfZ > 2:
+        if self.tact_sensor0.gfZ > 1:
             self.grasping = True
         else:
             self.grasping = False
@@ -301,13 +289,14 @@ class ControlNode(object):
 
     def grasp_feedback(self):
         """Close the gripper unitl the global z force is at a certain level."""
-        global_z_force = self.tact_sensor0.gfZ
-        if global_z_force > 2:
+        global_z_force = (self.tact_sensor0.gfZ + self.tact_sensor1.gfZ)/2
+        rospy.loginfo("z force: {}".format(global_z_force))
+        if global_z_force > 1:
             self.grasping = True
         else:
             self.grasping = False
         if not self.grasping: # Not in contact. Move faster than PID control.
-            pos_change = 20
+            pos_change = 10
         else: # PID control
             error = self.goal_grasp_force - global_z_force
             change_in_error = error - self.previous_error
