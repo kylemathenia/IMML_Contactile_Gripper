@@ -16,13 +16,24 @@ class LinearAnalytical:
 
     def predict(self,sensors):
         self.poses = []
-        self.contact_list = []
-        for sensor in sensors:
-            for pillar in sensor.pillars:
-                self.contact_list.append(pillar.in_contact)
-            self.contact_to_points()
-            self.points_to_pose()
+        self.append_pose(sensors[0], sensor_num=0)
+        self.append_pose(sensors[1], sensor_num=1)
         return self.combine_sensor_poses()
+
+    def append_pose(self,sensor,sensor_num):
+        self.contact_list = []
+        for pillar in sensor.pillars:
+            self.contact_list.append(pillar.in_contact)
+        if sensor_num == 1:
+            self.mirror_contact_list()
+        self.contact_to_points()
+        self.points_to_pose()
+
+    def mirror_contact_list(self):
+        """Swap pillars over the x axis, as defined by Contactile."""
+        self.contact_list[0], self.contact_list[6] = self.contact_list[6], self.contact_list[0]
+        self.contact_list[7], self.contact_list[1] = self.contact_list[1], self.contact_list[7]
+        self.contact_list[8], self.contact_list[2] = self.contact_list[2], self.contact_list[8]
 
     def contact_to_points(self):
         self.x_points, self.y_points = [], []
@@ -34,8 +45,7 @@ class LinearAnalytical:
                 self.y_points.append(point[1])
 
     def points_to_pose(self):
-        #TODO if this is the second sensor, need to reflect the pillars...
-        if len(self.x_points) <= 2:
+        if len(self.x_points) <= 3:
             self.poses.append([None,None])
         # Do linear regression on contact points.
         z = np.polyfit(self.x_points, self.y_points, 1)
@@ -47,11 +57,12 @@ class LinearAnalytical:
             slope = p.c[0]
             intercept = p.c[1]
         ang = math.degrees(math.atan(slope))
-        pos = intercept
-        self.poses.append([pos,ang])
+        self.poses.append([intercept,ang])
 
     def combine_sensor_poses(self):
-        if self.poses[0].position is None and self.poses[1].position is None:
+        if self.poses[0].position is not None and self.poses[1].position is not None:
+            return self.average_poses()
+        elif self.poses[0].position is None and self.poses[1].position is None:
             return [None,None]
         elif self.poses[0].position is None and self.poses[1].position is not None:
             return [self.poses[1].position,self.poses[1].orientation]
@@ -59,8 +70,6 @@ class LinearAnalytical:
             return [self.poses[0].position, self.poses[0].orientation]
         elif self.poses[0].position is not None and self.poses[1].position is None:
             return [self.poses[0].position, self.poses[0].orientation]
-        else:
-            return self.average_poses()
 
     def average_poses(self):
         position = (self.poses[0].position + self.poses[1].position) / 2
