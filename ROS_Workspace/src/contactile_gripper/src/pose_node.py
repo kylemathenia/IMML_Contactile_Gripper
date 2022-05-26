@@ -20,7 +20,7 @@ class PoseNode(object):
         self.tact_pillar_sub = rospy.Subscriber('/hub_0/sensor_1', SensorState, self.tact_1_callback, queue_size=1)
         self.tact_sensor1 = None
 
-        self.main_loop_rate = 1  # Hz
+        self.main_loop_rate = 30  # Hz
         self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
         self.wait_for_data()
         self.main_loop()
@@ -36,7 +36,10 @@ class PoseNode(object):
         """This is the main loop for the node which executes at self.main_loop_rate."""
         while not rospy.is_shutdown():
             pose = self.pose_model.predict([self.tact_sensor0,self.tact_sensor1])
-            self.pose_pub.publish(pose)
+            if pose.position is None:
+                self.pose_pub.publish([float(0), float(0)])
+            else:
+                self.pose_pub.publish([float(pose.position),float(pose.orientation)])
             self.main_loop_rate_obj.sleep()
 
     ######################## Functions ########################

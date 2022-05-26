@@ -1,11 +1,10 @@
 """Models to make pose predictions"""
 
-import pandas as pd
 import numpy as np
 import math
 from collections import namedtuple
 
-Pose = namedtuple("Pose", 'position', 'orientation')
+Pose = namedtuple("Pose", "position orientation")
 
 
 class LinearAnalytical:
@@ -45,8 +44,9 @@ class LinearAnalytical:
                 self.y_points.append(point[1])
 
     def points_to_pose(self):
-        if len(self.x_points) <= 3:
-            self.poses.append([None,None])
+        if len(self.x_points) < 3:
+            self.poses.append(Pose(None,None))
+            return
         # Do linear regression on contact points.
         z = np.polyfit(self.x_points, self.y_points, 1)
         p = np.poly1d(z)
@@ -57,24 +57,22 @@ class LinearAnalytical:
             slope = p.c[0]
             intercept = p.c[1]
         ang = math.degrees(math.atan(slope))
-        self.poses.append([intercept,ang])
+        self.poses.append(Pose(intercept,ang))
 
     def combine_sensor_poses(self):
         if self.poses[0].position is not None and self.poses[1].position is not None:
             return self.average_poses()
         elif self.poses[0].position is None and self.poses[1].position is None:
-            return [None,None]
+            return Pose(None,None)
         elif self.poses[0].position is None and self.poses[1].position is not None:
-            return [self.poses[1].position,self.poses[1].orientation]
+            return Pose(self.poses[1].position,self.poses[1].orientation)
         elif self.poses[0].position is not None and self.poses[1].position is None:
-            return [self.poses[0].position, self.poses[0].orientation]
-        elif self.poses[0].position is not None and self.poses[1].position is None:
-            return [self.poses[0].position, self.poses[0].orientation]
+            return Pose(self.poses[0].position,self.poses[0].orientation)
 
     def average_poses(self):
         position = (self.poses[0].position + self.poses[1].position) / 2
         orientation = (self.poses[0].orientation + self.poses[1].orientation) / 2
-        return [position,orientation]
+        return Pose(position,orientation)
 
 def main():
     pass
