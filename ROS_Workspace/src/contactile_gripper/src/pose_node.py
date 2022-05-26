@@ -20,7 +20,7 @@ class PoseNode(object):
         self.tact_pillar_sub = rospy.Subscriber('/hub_0/sensor_1', SensorState, self.tact_1_callback, queue_size=1)
         self.tact_sensor1 = None
 
-        self.main_loop_rate = 30  # Hz
+        self.main_loop_rate = 1  # Hz
         self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
         self.wait_for_data()
         self.main_loop()
