@@ -12,7 +12,6 @@ class LinearAnalytical:
     def __init__(self):
         self.pil_point_map = {0:[1,1], 1:[1,0], 2:[1,-1], 3:[0,1], 4:[0,0], 5:[0,-1], 6:[-1,1], 7:[-1,0], 8:[-1,-1]}
 
-
     def predict(self,sensors):
         self.poses = []
         self.append_pose(sensors[0], sensor_num=0)
