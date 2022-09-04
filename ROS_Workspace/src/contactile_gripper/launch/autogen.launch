@@ -1,0 +1,12 @@
+
+<launch>
+
+<node pkg="contactile_gripper" name="gripper" type="gripper_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
+
+<node pkg="contactile_gripper" name="stepper" type="stepper_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
+
+<node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
+
+<node pkg="contactile_gripper" name="UI" type="ui_node.py" output="screen"/>
+
+</launch>

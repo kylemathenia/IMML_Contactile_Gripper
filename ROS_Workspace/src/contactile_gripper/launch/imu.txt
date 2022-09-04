@@ -1,0 +1,1 @@
+<node pkg="contactile_gripper" name="imu" type="IMU_node.py" launch-prefix="gnome-terminal -e" output="screen"/>

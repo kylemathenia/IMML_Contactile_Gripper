@@ -1,0 +1,1 @@
+<node pkg="contactile_gripper" name="gripper" type="gripper_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
