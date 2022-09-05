@@ -13,8 +13,8 @@ def gripper_change_mode_srv_client(mode):
 def stepper_off_srv_client(mode):
     rospy.wait_for_service('stepper_off_srv')
     try:
-        stepper_off_srv = rospy.ServiceProxy('stepper_off_srv',StepperOff)
-        msg = stepper_off_srv(mode)
+        srv = rospy.ServiceProxy('stepper_off_srv',StepperOff)
+        msg = srv(mode)
         return msg.response
     except:
         rospy.logerr('Change mode service failed.')
@@ -22,8 +22,8 @@ def stepper_off_srv_client(mode):
 def stepper_set_limit_srv_client(switch,action):
     rospy.wait_for_service('stepper_set_limit_srv')
     try:
-        stepper_off_srv = rospy.ServiceProxy('stepper_set_limit_srv',StepperSetLimit)
-        msg = stepper_off_srv(switch,action)
+        srv = rospy.ServiceProxy('stepper_set_limit_srv',StepperSetLimit)
+        msg = srv(switch,action)
         return msg.response
     except:
         rospy.logerr('Change mode service failed.')
@@ -31,18 +31,18 @@ def stepper_set_limit_srv_client(switch,action):
 def data_recorder_srv_client(topic_list,file_prefix='contactile',stop=False):
     rospy.wait_for_service('data_recorder_srv')
     try:
-        stepper_off_srv = rospy.ServiceProxy('data_recorder_srv',DataRecorder)
-        _ = stepper_off_srv(file_prefix,topic_list,stop)
+        srv = rospy.ServiceProxy('data_recorder_srv',DataRecorder)
+        _ = srv(file_prefix,topic_list,stop)
     except:
         rospy.logerr('data_recorder_srv failed.')
 
 def ui_menu_srv_client(menu):
     rospy.wait_for_service('ui_menu_srv')
-    stepper_off_srv = rospy.ServiceProxy('ui_menu_srv', UIMenu)
-    _ = stepper_off_srv(menu)
+    srv = rospy.ServiceProxy('ui_menu_srv', UIMenu)
+    _ = srv(menu)
 
 def bias_request_srv_client():
     rospy.wait_for_service('/hub_0/send_bias_request')
-    bias_request_srv = rospy.ServiceProxy('/hub_0/send_bias_request', BiasRequest)
-    success = bias_request_srv()
+    srv = rospy.ServiceProxy('/hub_0/send_bias_request', BiasRequest)
+    success = srv()
     return success

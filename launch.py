@@ -10,14 +10,14 @@ generates a launch file."""
 
 import serial
 import serial.tools.list_ports
-import subprocess, shlex
+import subprocess, shlex, os
 import time
 import logging
 
 logging.basicConfig(level = logging.INFO)
 
 # Config options
-stepper = True
+stepper = False
 IMU = False
 camera = False
 
@@ -56,7 +56,7 @@ def launch():
 def launch_data_recorder():
     """For some reason, the data recorder node must be started outside of the launch file."""
     time.sleep(10)
-    _ = subprocess.Popen(data_recorder_path, stderr=subprocess.PIPE, shell=False)
+    os.system("gnome-terminal -- " + data_recorder_path)
 
 def write_contactile(write_file):
     read_file_path = launch_dir + contactile_node_txt
