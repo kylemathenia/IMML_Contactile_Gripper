@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import rospy
 from contactile_gripper.srv import *
@@ -14,6 +14,7 @@ class DataRecorderNode(object):
         rospy.Service('data_recorder_srv', DataRecorder, self.callback)
         rospy.on_shutdown(self.shutdown_function)
         rospy.loginfo("\nData recorder node initialized.\n")
+        rospy.spin()
 
     def callback(self, req):
         if req.stop:
@@ -42,4 +43,3 @@ class DataRecorderNode(object):
 
 if __name__ == '__main__':
     _ = DataRecorderNode()
-    rospy.spin()

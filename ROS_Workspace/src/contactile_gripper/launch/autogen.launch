@@ -31,13 +31,17 @@
 		<!-- Sample Rate -->
 
 			<!-- Rate (Hz): 100, 250, 500 or 1000 -->
-			<param name="sampling_rate" type="int" value="500"/>
+			<param name="sampling_rate" type="int" value="250"/>
     </node>
 
-<node pkg="contactile_gripper" name="gripper" type="gripper_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
+<node pkg="contactile_gripper" name="gripper" type="gripper_node.py" launch-prefix="gnome-terminal --" output="screen"/>
 
-<node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal -e" output="screen"/>
+<node pkg="contactile_gripper" name="imu" type="IMU_node.py"/>
 
-<node pkg="contactile_gripper" name="UI" type="ui_node.py" output="screen"/>
+<node pkg="contactile_gripper" name="pose" type="pose_node.py"/>
+
+<node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal --" output="screen"/>
+
+<node pkg="contactile_gripper" name="UI" type="ui_node.py" launch-prefix="gnome-terminal --" output="screen"/>
 
 </launch>

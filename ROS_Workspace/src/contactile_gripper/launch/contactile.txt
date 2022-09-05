@@ -28,5 +28,5 @@
 		<!-- Sample Rate -->
 
 			<!-- Rate (Hz): 100, 250, 500 or 1000 -->
-			<param name="sampling_rate" type="int" value="500"/>
+			<param name="sampling_rate" type="int" value="250"/>
     </node>

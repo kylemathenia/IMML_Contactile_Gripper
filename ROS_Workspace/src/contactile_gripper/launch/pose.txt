@@ -1,0 +1,1 @@
+<node pkg="contactile_gripper" name="pose" type="pose_node.py"/>

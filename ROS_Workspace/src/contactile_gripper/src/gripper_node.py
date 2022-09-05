@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 This module contains the gripper node.
 """
@@ -18,7 +18,7 @@ class GripperNode(object):
     """ROS node for the gripper. Max com speed is ~62hz for read or write operation. This is both reading
     and writing, so rate is 30hz. """
     def __init__(self):
-        rospy.init_node('gripper_node', anonymous=False, log_level=rospy.DEBUG)
+        rospy.init_node('gripper_node', anonymous=False, log_level=rospy.INFO)
 
         # Initialize and calibrate gripper.
         self.gripper = gripper.Gripper(fast_start=True)

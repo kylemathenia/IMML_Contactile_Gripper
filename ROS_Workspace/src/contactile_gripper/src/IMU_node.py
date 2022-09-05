@@ -1,22 +1,19 @@
 #!/usr/bin/env python
 """
-This module contains a node to test the system hardware, and publish a message if everything is good. Takes in
-command line arguments for the configuration of the system.
+This module contains the IMU node.
 """
 
 import sys,os
+sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'support'))
 import rospy
 from contactile_gripper.msg import Float32List
+import IMU
 
-class TestNode(object):
-    """Test hardware and publish a message if everything looks good."""
+class IMUNode(object):
+    """ROS node for the IMU."""
     def __init__(self):
-        rospy.init_node('sys_test_node', anonymous=False, log_level=rospy.DEBUG)
-        self.config = sys.argv
-        if "camera" in self.config:
-            pass
-        if "IMU" in self.config:
-            pass
+        rospy.init_node('IMU_node', anonymous=False, log_level=rospy.INFO)
+        self.IMU = IMU.IMU()
         self.IMU_pub = rospy.Publisher('IMU_Acc', Float32List, queue_size=1)
         # Read rate must be faster than Arduino write rate to not have latency build-up in the communication buffer.
         # Arduino writes at roughly 280 hz on average.

@@ -30,6 +30,7 @@ gripper_node_txt = "gripper.txt"
 stepper_node_txt = "stepper.txt"
 imu_node_txt = "imu.txt"
 control_node_txt = "control.txt"
+pose_node_txt = "pose.txt"
 UI_node_txt = "UI.txt"
 data_recorder_path = "./ROS_Workspace/src/contactile_gripper/src/data_recorder_node.py"
 
@@ -38,13 +39,14 @@ def generate_file():
     with open(gen_file_path, 'w') as genFile:
         genFile.write("\n<launch>")
         write_contactile(genFile)
-        write_gripper(genFile)
+        write_all_txt(genFile,gripper_node_txt)
         if stepper:
-            write_stepper(genFile)
+            write_all_txt(genFile, stepper_node_txt)
         if IMU:
-            write_imu(genFile)
-        write_control(genFile)
-        write_UI(genFile)
+            write_all_txt(genFile,imu_node_txt)
+        write_all_txt(genFile,pose_node_txt)
+        write_all_txt(genFile, control_node_txt)
+        write_all_txt(genFile, UI_node_txt)
         genFile.write("\n\n</launch>")
         logging.info("Launch file generated.")
 
@@ -55,7 +57,7 @@ def launch():
 
 def launch_data_recorder():
     """For some reason, the data recorder node must be started outside of the launch file."""
-    time.sleep(10)
+    time.sleep(5)
     os.system("gnome-terminal -- " + data_recorder_path)
 
 def write_contactile(write_file):
@@ -78,27 +80,8 @@ def find_contactile_port():
     print("\nContactile sensor hub port info not found.\n")
     raise LookupError
 
-def write_gripper(write_file):
-    read_file_path = launch_dir + gripper_node_txt
-    write_all_lines(read_file_path,write_file)
-
-def write_imu(write_file):
-    read_file_path = launch_dir + imu_node_txt
-    write_all_lines(read_file_path,write_file)
-
-def write_stepper(write_file):
-    read_file_path = launch_dir + stepper_node_txt
-    write_all_lines(read_file_path,write_file)
-
-def write_control(write_file):
-    read_file_path = launch_dir + control_node_txt
-    write_all_lines(read_file_path,write_file)
-
-def write_UI(write_file):
-    read_file_path = launch_dir + UI_node_txt
-    write_all_lines(read_file_path,write_file)
-
-def write_all_lines(read_file_path,write_file):
+def write_all_txt(write_file,file_txt):
+    read_file_path = launch_dir + file_txt
     with open(read_file_path, 'r') as read_file:
         lines = read_file.readlines()
         write_file.write("\n\n")

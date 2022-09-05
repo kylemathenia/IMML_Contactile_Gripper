@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import sys,os
 sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'support'))
@@ -10,7 +10,7 @@ from papillarray_ros_v2.msg import SensorState
 
 class PoseNode(object):
     def __init__(self):
-        rospy.init_node('pose_node', anonymous=False, log_level=rospy.DEBUG)
+        rospy.init_node('pose_node', anonymous=False, log_level=rospy.INFO)
         self.pose_model = LinearAnalytical()
         # Publishers
         self.pose_pub = rospy.Publisher('Pose', Float32List, queue_size=1)

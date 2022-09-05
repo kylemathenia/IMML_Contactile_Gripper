@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 User interface node to control the system.
 """
@@ -26,6 +26,8 @@ key_map = {'grip_open':'d',
 class UiNode(object):
 
     def __init__(self):
+        rospy.init_node('ui_node', anonymous=False, log_level=rospy.INFO)
+
         # Publishers
         self.gripper_cmd_pub = rospy.Publisher('Gripper_Cmd',String, queue_size=5)
 
@@ -45,7 +47,7 @@ class UiNode(object):
         self.current_menu = self.menu_main
         self.new_menu_update(self.menu_main)
 
-        self.main_loop_rate = 10  # Hz
+        self.main_loop_rate = 50  # Hz
         self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
         self.main_loop()
 
@@ -201,7 +203,6 @@ def test():
     
 
 def main():
-    rospy.init_node('ui_node', anonymous=False, log_level=rospy.INFO)
     _ = UiNode()
 
 if __name__ == '__main__':

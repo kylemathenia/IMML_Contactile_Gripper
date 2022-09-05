@@ -1,30 +1,42 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
-This module contains the IMU node.
+This module contains a node to test the system hardware, and publish a message if everything is good. Takes in
+command line arguments for the configuration of the system.
 """
 
-import time
+import sys,os
 import rospy
-from std_msgs.msg import String,Float32,Int64,Int32,Bool
-from papillarray_ros_v2.msg import SensorState
-from contactile_gripper.msg import Float32List,Int32List
-from contactile_gripper.srv import *
-import srv_clients
+from contactile_gripper.msg import Float32List
 
-class TESTNode(object):
-    """ROS node for the IMU."""
+class TestNode(object):
+    """Test hardware and publish a message if everything looks good."""
     def __init__(self):
-        rospy.init_node('test_node', anonymous=False, log_level=rospy.DEBUG)
-        self.tact_pillar_sub = rospy.Subscriber('/hub_0/sensor_0', SensorState, self.tact_0_callback, queue_size=1)
-        self.tact_sensor0 = None
+        rospy.init_node('sys_test_node', anonymous=False, log_level=rospy.INFO)
+        self.config = sys.argv
+        if "camera" in self.config:
+            pass
+        if "IMU" in self.config:
+            pass
+        self.IMU_pub = rospy.Publisher('IMU_Acc', Float32List, queue_size=1)
+        # Read rate must be faster than Arduino write rate to not have latency build-up in the communication buffer.
+        # Arduino writes at roughly 280 hz on average.
+        self.main_loop_rate = 300
+        self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
 
-    def tact_0_callback(self,msg):
-        self.tact_sensor0 = msg
-        print("Global z force: {}".format(msg.gfZ))
+        self.IMU.clean_before_read_start()
+        self.main_loop()
+
+    def main_loop(self):
+        """This is the main loop for the node which executes at self.main_loop_rate."""
+        while not rospy.is_shutdown():
+            rospy.logdebug('In waiting: {}'.format(self.IMU.serial.in_waiting))
+            x,y,z,com_success = self.IMU.read()
+            if com_success:
+                self.IMU_pub.publish([x,y,z])
+            self.main_loop_rate_obj.sleep()
 
 def main():
-    _ = TESTNode()
-    rospy.spin()
+    _ = IMUNode()
 
 if __name__ == '__main__':
     main()

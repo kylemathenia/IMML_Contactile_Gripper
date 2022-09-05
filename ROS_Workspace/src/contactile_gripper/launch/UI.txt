@@ -1,1 +1,1 @@
-<node pkg="contactile_gripper" name="UI" type="ui_node.py" output="screen"/>
+<node pkg="contactile_gripper" name="UI" type="ui_node.py" launch-prefix="gnome-terminal --" output="screen"/>
