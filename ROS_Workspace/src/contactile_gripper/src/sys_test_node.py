@@ -4,6 +4,8 @@ This module contains a node to test the system hardware, and publish a message i
 command line arguments for the configuration of the system.
 """
 
+#TODO Implement a test node. Command line arguments are passed to the script. These are created in the launch.py file.
+
 import sys,os
 import rospy
 from contactile_gripper.msg import Float32List

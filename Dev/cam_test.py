@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 
+"""
+https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html
+https://www.geeksforgeeks.org/camera-calibration-with-python-opencv/
+https://www.youtube.com/watch?v=3h7wgR5fYik
+"""
+
 import cv2
 import numpy as np
 import os
 import glob
 
 # Defining the dimensions of checkerboard
+# The units don't really matter, but make sure it
 CHECKERBOARD = (6, 9)
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
@@ -14,7 +21,8 @@ objpoints = []
 # Creating vector to store vectors of 2D points for each checkerboard image
 imgpoints = []
 
-# Defining the world coordinates for 3D points
+# Defining the world coordinates for 3D points.
+# objp[0][0] = array([0., 0., 0.], dtype=float32)
 objp = np.zeros((1, CHECKERBOARD[0] * CHECKERBOARD[1], 3), np.float32)
 objp[0, :, :2] = np.mgrid[0:CHECKERBOARD[0], 0:CHECKERBOARD[1]].T.reshape(-1, 2)
 prev_img_shape = None

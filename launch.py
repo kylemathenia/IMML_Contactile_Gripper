@@ -32,6 +32,7 @@ imu_node_txt = "imu.txt"
 control_node_txt = "control.txt"
 pose_node_txt = "pose.txt"
 UI_node_txt = "UI.txt"
+sys_test_txt = "sys_test.txt"
 data_recorder_path = "./ROS_Workspace/src/contactile_gripper/src/data_recorder_node.py"
 
 def generate_file():
@@ -47,6 +48,7 @@ def generate_file():
         write_all_txt(genFile,pose_node_txt)
         write_all_txt(genFile, control_node_txt)
         write_all_txt(genFile, UI_node_txt)
+        # write_sys_test(genFile)
         genFile.write("\n\n</launch>")
         logging.info("Launch file generated.")
 
@@ -71,14 +73,16 @@ def write_contactile(write_file):
                 line = line.replace("TBD",'"'+port_path+'"')
             write_file.write(line)
 
-def find_contactile_port():
-    """Returns the comport path for the contactile sensor hub."""
-    comport_info = get_com_info()
-    for port in comport_info:
-        if port['serial_number'] == '10129740':
-            return port['device']
-    print("\nContactile sensor hub port info not found.\n")
-    raise LookupError
+def write_sys_test(write_file):
+    read_file_path = launch_dir + sys_test_txt
+    sys_test_args = find_sys_test_args()
+    with open(read_file_path,'r') as read_file:
+        lines = read_file.readlines()
+        write_file.write("\n\n")
+        for line in lines:
+            if "TBD" in line:
+                line = line.replace("TBD",'"'+sys_test_args+'"')
+            write_file.write(line)
 
 def write_all_txt(write_file,file_txt):
     read_file_path = launch_dir + file_txt
@@ -88,6 +92,15 @@ def write_all_txt(write_file,file_txt):
         for line in lines:
             write_file.write(line)
 
+def find_contactile_port():
+    """Returns the comport path for the contactile sensor hub."""
+    comport_info = get_com_info()
+    for port in comport_info:
+        if port['serial_number'] == '10129740':
+            return port['device']
+    print("\nContactile sensor hub port info not found.\n")
+    raise LookupError
+
 def get_com_info():
     comport_info = []
     comports = serial.tools.list_ports.comports()
@@ -95,14 +108,25 @@ def get_com_info():
         comport_info.append(comport.__dict__)
     return comport_info
 
+def find_sys_test_args():
+    args = ""
+    if stepper:
+        args = args + "-stepper "
+    if IMU:
+        args = args + "-IMU "
+    if camera:
+        args = args + "-camera "
+    if args == "":
+        args = "-none"
+    return args
+
+
 def main():
     generate_file()
     launch()
     # For some reason, the data recorder node must be started outside of the launch file.
     launch_data_recorder()
     logging.info("Launch complete.")
-    # Call the file.
-    # Launch the data recorder node seperate, after.
 
 if __name__ == "__main__":
     main()

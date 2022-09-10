@@ -73,6 +73,12 @@ class LinearAnalytical:
         orientation = (self.poses[0].orientation + self.poses[1].orientation) / 2
         return Pose(position,orientation)
 
+
+class CameraGroundTruth:
+    def __init__(self):
+        pass
+    #TODO
+
 def main():
     pass
 

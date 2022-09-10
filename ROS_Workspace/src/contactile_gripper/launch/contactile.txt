@@ -25,8 +25,8 @@
 			<!-- Flushing flag: flush hardware input buffer when it contains too many bytes -->
 			<param name="is_flush" type="bool" value="true"/>
 
-		<!-- Sample Rate -->
+		<!-- Sample Rate -->s
 
 			<!-- Rate (Hz): 100, 250, 500 or 1000 -->
-			<param name="sampling_rate" type="int" value="250"/>
+			<param name="sampling_rate" type="int" value="500"/>
     </node>
