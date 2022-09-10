@@ -105,9 +105,7 @@ class GripperNode(object):
             self.gripper.motor.write_goal_cur(self.cmd_val)
 
     def shutdown_function(self):
-        #TODO: remove
-        srv_clients.data_recorder_client(['/Gripper_Pos','/Gripper_Mode'], file_prefix='experiment1', stop=True)
-        # pass
+        self.gripper.shutdown_function()
 
 def main():
     _ = GripperNode()
