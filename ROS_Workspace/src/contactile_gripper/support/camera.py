@@ -6,7 +6,7 @@ import cv2
 from cv2 import aruco
 import numpy as np
 import glob
-import time
+import math
 import os
 import atexit
 
@@ -16,19 +16,20 @@ class Camera:
     def __init__(self,path_to_cal_images):
         atexit.register(self.shutdown)
         self.path_to_cal_photos = path_to_cal_images
-        self.cap = cv2.VideoCapture(self._find_dev_path())
+        self.cap = cv2.VideoCapture(self.__find_dev_path())
         self.aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
         self.aruco_params = aruco.DetectorParameters_create()
         self.pose_model = pose_models.CameraGroundTruth()
-        self.calibrate()
-        # self.find_ground_truth()
+        self.__calibrate_cam()
+        self.pix_to_mm = self.__calibrate_dist()
 
-    def find_ground_truth(self):
+    def find_ground_truth(self,show=False):
         ret, self.frame = self.cap.read()
-        # Undistort
         self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
         self.__find_aruco()
-        self.__find_cable_marks()
+        if self.aruco_present:
+            self.__aruco_transform()
+            self.__find_cable()
         # Find camera coordinates of cable markers. Make sure to handle when there aren't any cables.
         # Transform to world coordinates.
         # TODO need to have a pixel to cm translation. Need to find experimentally. Print a couple circles with a known
@@ -36,34 +37,67 @@ class Camera:
         #  different poses. This will give us a rough estimate of how accurate things are.
         # Return offset and angle in a list.
         # return self.pose_model(self.cable_coords_world). Use this because of the named tuple in pose_models.py
-        self.__show()
+        if show:
+            self.__show_ground_truth()
+        return self.cable_pos,self.cable_ang
 
     def __find_aruco(self):
-        """Uses self.frame to find the aruco marker. Sets where the center is, and the equation for the line that serves
-        as the datum. To visualize, look at the desmos graph below. The red and green lines are the aruco coordinate
-        system. The blue line is the pose line from the cable. The angle between the blue and red is the angle. The
-        offset (position) is the length of the green line between the blue and red.
-        https://www.desmos.com/calculator/kvem8zyzve"""
+        """Finds the aruco marker in self.frame, and sets some parameters."""
         gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
-        corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, self.aruco_dict, parameters=self.aruco_params)
-        x = (corners[0][0][0][0] + corners[0][0][1][0] + corners[0][0][2][0] + corners[0][0][3][0]) *0.25
-        y = (corners[0][0][0][1] + corners[0][0][1][1] + corners[0][0][2][1] + corners[0][0][3][1]) *0.25
-        self.aruco_pixel_center = (x,y)
-        # Instead of using tvec, we assume the aruco marker is orthogonal to the camera, simplifying things into 2d.
-        # m = (y2 - y1) / (x2 - x1)
-        #TODO need to verify which corners to use.
-        # Should never be divide by zero, unless something seriously broke. 
-        self.aruco_pixel_slope = (corners[0][0][1][1] - corners[0][0][0][1]) / (corners[0][0][1][0] - corners[0][0][0][0])
+        self.corners, self.ids, rejectedImgPoints = aruco.detectMarkers(gray, self.aruco_dict, parameters=self.aruco_params)
+        if not self.corners:
+            self.aruco_present = False
+            return
+        self.aruco_present = True
+        self.aruco_center = np.average(np.array(self.corners[0][0]), axis=0)
+        self.aruc_bot_left_pt,self.aruco_bot_right_pt = self.corners[0][0][0],self.corners[0][0][1]
 
+    def __aruco_transform(self):
+        """Rotate the image to align with aruco and cable coordinates. This greatly simplifies things."""
+        # Should never be divide by zero, unless something seriously broke.
+        slope = self.__find_slope(self.aruc_bot_left_pt,self.aruco_bot_right_pt)
+        aruco_ang = math.degrees(math.atan(slope))
+        rot_mat = cv2.getRotationMatrix2D(tuple(self.aruco_center), aruco_ang, 1.0)
+        self.frame = cv2.warpAffine(self.frame, rot_mat, self.frame.shape[1::-1], flags=cv2.INTER_LINEAR)
 
-    def __show(self):
+    def __find_cable(self):
+        """Finds the cable (with color points) in self.frame."""
+        self.cable_left_pt = None
+        self.cable_right_pt = None
+        self.cable_slope = self.__find_slope(self.cable_left_pt,self.cable_right_pt)
+        self.cable_present = True
+        if self.cable_present:
+            self.cable_ang = self.__find_cable_ang()
+            self.cable_pos = self.__find_cable_pos()
+        else:
+            self.cable_ang = None
+            self.cable_pos = None
+
+    def __find_cable_ang(self):
+        """Returns the angle of the cable in degrees in the sensor coordinate system."""
+        slope = self.__find_slope(self.cable_left_pt, self.cable_right_pt)
+        return math.degrees(math.atan(slope))
+
+    def __find_cable_pos(self):
+        """Returns the position of the cable in mm in the sensor coordinate system."""
+        cable_b = self.__find_y_intercept(self.cable_slope, self.cable_left_pt)
+        y = self.cable_slope * self.aruco_center[0] + cable_b
+        pix_pos = y - self.aruco_center[1]
+        return pix_pos * self.pix_to_mm
+
+    def __show_ground_truth(self):
         """Show the captured image with the aruco marker coordinates and cable coordiates, if present."""
         # Add on to the image aruco center and coordinates.
         # Add on to the image cable mark points.
         cv2.imshow('Live', self.frame)
 
+    def __calibrate_dist(self):
+        """Returns a ratio of pixels to distance for the cable."""
+        #TODO need to look for distance calibration photos. These should be real photos of the cable in grasp.
+        # The distance between points is known, so we can find a ratio between pixels and distance.
+        pass
 
-    def calibrate(self,test=False,see_corners=False):
+    def __calibrate_cam(self,test=False,see_corners=False):
         """Use checkerboard images to set the calibration constants. Adopted from:
         https://www.geeksforgeeks.org/camera-calibration-with-python-opencv/
         https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html"""
@@ -112,11 +146,14 @@ class Camera:
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
+    ####################################################################################################################
+    # UTILITIES
+    ####################################################################################################################
     def shutdown(self):
         self.cap.release()
         cv2.destroyAllWindows()
 
-    def _find_dev_path(self):
+    def __find_dev_path(self):
         """On linux systems the camera device communication happens via memory mapped io through a video file in the
         /dev directory. If you plug in a camera to Ubuntu it should add two more video device files, "/dev/video3" for
         example. The second to highest enumerated file should be the correct file for cv2.VideoCapture().
@@ -133,6 +170,18 @@ class Camera:
         del vid_device_num[0]
         return '/dev/video' + str(vid_device_num[0])
 
+    def __find_y_intercept(self, slope, pt):
+        return pt[1] - (slope * pt[0])
+
+    def __find_slope(self, pt1, pt2):
+        if pt1[0] == pt2[0]:
+            return None  # Infinite slope
+        return (pt2[1] - pt1[1]) / (pt2[0] - pt1[0])
+
+    ####################################################################################################################
+    # TESTS
+    ####################################################################################################################
+
     def test_camera(self):
         while True:
             ret, frame = self.cap.read()
@@ -144,18 +193,21 @@ class Camera:
     def test_aruco(self):
         """https://mecaruco2.readthedocs.io/en/latest/notebooks_rst/Aruco/aruco_basics.html"""
         while True:
-            ret, frame = self.cap.read()
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, self.aruco_dict, parameters=self.aruco_params)
-            frame_markers = aruco.drawDetectedMarkers(frame.copy(), corners, ids)
-            cv2.imshow("Press q to exit.", frame_markers)
+            ret, self.frame = self.cap.read()
+            # TODO undistort the frame
+            self.__find_aruco()
+            if self.aruco_present:
+                self.__aruco_transform()
+                self.__find_aruco()
+                self.frame = aruco.drawDetectedMarkers(self.frame, self.corners, self.ids)
+            cv2.imshow("Press q to exit.", self.frame)
             if (cv2.waitKey(1) & 0xFF == ord('q')):
                 break
         cv2.destroyAllWindows()
 
     def test(self):
         # self.test_camera()
-        # self.calibrate(test=True)
+        # self.__calibrate_cam(test=True)
         # self.test_ground_truth()
         # These will be for development.
         self.test_aruco()
