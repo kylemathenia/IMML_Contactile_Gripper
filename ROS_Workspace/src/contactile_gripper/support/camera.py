@@ -17,14 +17,18 @@ class Camera:
         atexit.register(self.shutdown)
         self.path_to_cal_photos = path_to_cal_images
         self.cap = cv2.VideoCapture(self._find_dev_path())
+        self.aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
+        self.aruco_params = aruco.DetectorParameters_create()
         self.pose_model = pose_models.CameraGroundTruth()
         self.calibrate()
         # self.find_ground_truth()
 
     def find_ground_truth(self):
         ret, self.frame = self.cap.read()
-        # Get rid of all the distortions with a transformation matrix found from checkerboard calibration.
-        # frame = cv2.undistort(frame,..)
+        # Undistort
+        self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
+        self.__find_aruco()
+        self.__find_cable_marks()
         # Find camera coordinates of cable markers. Make sure to handle when there aren't any cables.
         # Transform to world coordinates.
         # TODO need to have a pixel to cm translation. Need to find experimentally. Print a couple circles with a known
@@ -32,9 +36,27 @@ class Camera:
         #  different poses. This will give us a rough estimate of how accurate things are.
         # Return offset and angle in a list.
         # return self.pose_model(self.cable_coords_world). Use this because of the named tuple in pose_models.py
-        self.show()
+        self.__show()
 
-    def show(self):
+    def __find_aruco(self):
+        """Uses self.frame to find the aruco marker. Sets where the center is, and the equation for the line that serves
+        as the datum. To visualize, look at the desmos graph below. The red and green lines are the aruco coordinate
+        system. The blue line is the pose line from the cable. The angle between the blue and red is the angle. The
+        offset (position) is the length of the green line between the blue and red.
+        https://www.desmos.com/calculator/kvem8zyzve"""
+        gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
+        corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, self.aruco_dict, parameters=self.aruco_params)
+        x = (corners[0][0][0][0] + corners[0][0][1][0] + corners[0][0][2][0] + corners[0][0][3][0]) *0.25
+        y = (corners[0][0][0][1] + corners[0][0][1][1] + corners[0][0][2][1] + corners[0][0][3][1]) *0.25
+        self.aruco_pixel_center = (x,y)
+        # Instead of using tvec, we assume the aruco marker is orthogonal to the camera, simplifying things into 2d.
+        # m = (y2 - y1) / (x2 - x1)
+        #TODO need to verify which corners to use.
+        # Should never be divide by zero, unless something seriously broke. 
+        self.aruco_pixel_slope = (corners[0][0][1][1] - corners[0][0][0][1]) / (corners[0][0][1][0] - corners[0][0][0][0])
+
+
+    def __show(self):
         """Show the captured image with the aruco marker coordinates and cable coordiates, if present."""
         # Add on to the image aruco center and coordinates.
         # Add on to the image cable mark points.
@@ -75,7 +97,7 @@ class Camera:
         # Perform camera calibration by passing the value of above found out 3D points (threedpoints)
         # and its corresponding pixel coordinates of the detected corners (twodpoints)
         ret, self.mtx, self.dist, r_vecs, t_vecs = cv2.calibrateCamera(threedpoints, twodpoints, grayColor.shape[::-1],None, None)
-        # Get the new camera matrix.
+        # Get the new camera matrix. Only have to do this once with one image.
         img = cv2.imread(good_images[0])
         h, w = img.shape[:2]
         self.newcameramtx, self.roi = cv2.getOptimalNewCameraMatrix(self.mtx, self.dist, (w, h), 1, (w, h))
@@ -124,9 +146,7 @@ class Camera:
         while True:
             ret, frame = self.cap.read()
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
-            parameters = aruco.DetectorParameters_create()
-            corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
+            corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, self.aruco_dict, parameters=self.aruco_params)
             frame_markers = aruco.drawDetectedMarkers(frame.copy(), corners, ids)
             cv2.imshow("Press q to exit.", frame_markers)
             if (cv2.waitKey(1) & 0xFF == ord('q')):
