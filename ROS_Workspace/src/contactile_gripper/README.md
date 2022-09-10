@@ -1,1 +1,6 @@
-
+- /bag: where .bag data files go when captured. 
+- /launch: used to launch the system. The launch.py script at the top level should always be used. The .txt files are used to generate a ROS launch file. 
+- /msg: ros messages.
+- /src: ros nodes.
+- /srv: ros services.
+- /support: hardware api scripts, pose model scripts, calibration images, and more. 

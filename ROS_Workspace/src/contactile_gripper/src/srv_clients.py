@@ -1,3 +1,6 @@
+#TODO see if this can easily be moved to the support directory.
+# Also, see if the venv at the top level can be deleted.
+# Also, see if the /include directory can be deleted. 
 
 import rospy
 from contactile_gripper.srv import *
