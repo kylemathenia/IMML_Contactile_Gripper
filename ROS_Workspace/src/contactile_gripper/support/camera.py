@@ -280,6 +280,12 @@ class Camera:
                 break
         cv2.destroyAllWindows()
 
+    def test_segmentation(self):
+        while True:
+            ret, self.frame = self.cap.read()
+            self.__get_color_contours2()
+        cv2.destroyAllWindows()
+
     def test_find_cable(self,show_contours=True):
         while True:
             self.cable_present = False
@@ -307,8 +313,8 @@ class Camera:
         # self.test_camera()
         # self.__calibrate_cam(test=True)
         # self.test_aruco()
-        # self.test_segmentation()
-        self.test_find_cable()
+        self.test_segmentation()
+        # self.test_find_cable()
         # self.test_ground_truth()
 
 def main():
