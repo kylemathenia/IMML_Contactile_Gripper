@@ -18,7 +18,7 @@ import math
 import os
 import atexit
 
-import pose_models
+from pose_models import Pose
 
 class Camera:
     def __init__(self,path_to_cal_images):
@@ -27,7 +27,6 @@ class Camera:
         self.cap = cv2.VideoCapture(self.__find_dev_path())
         self.aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
         self.aruco_params = aruco.DetectorParameters_create()
-        self.pose_model = pose_models.CameraGroundTruth()
         self.__calibrate_cam()
         self.__calibrate_cable()
 
@@ -43,7 +42,10 @@ class Camera:
             self.__find_cable()
         if illustrations:
             self.__show_ground_truth()
-        return self.cable_pos,self.cable_ang
+        if self.aruco_present and self.cable_present:
+            return True,Pose(self.cable_pos, self.cable_ang)
+        else:
+            return False,Pose(0,0)
 
     def __find_aruco(self):
         """Finds the aruco marker in self.frame, and sets some parameters."""
