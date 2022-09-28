@@ -54,10 +54,13 @@ class Camera:
         if not self.corners:
             self.aruco_present = False
             return
+        self.aruc_bot_left_pt,self.aruco_bot_right_pt = self.corners[0][0][0],self.corners[0][0][3]
+        if self.aruc_bot_left_pt[0] == self.aruco_bot_right_pt[0]:
+            self.aruco_present = False
+            return
         self.aruco_present = True
         center = np.average(np.array(self.corners[0][0]), axis=0)
         self.aruco_center = [round(center[0]),round(center[1])]
-        self.aruc_bot_left_pt,self.aruco_bot_right_pt = self.corners[0][0][0],self.corners[0][0][1]
 
     def __aruco_transform(self):
         """Rotate the image to align with aruco and cable coordinates. This greatly simplifies things.
@@ -134,7 +137,10 @@ class Camera:
     def __find_cable_ang(self):
         """Returns the angle of the cable in degrees in the sensor coordinate system."""
         self.cable_slope = self.__find_slope(self.color_centers[0], self.color_centers[1])
-        return math.degrees(math.atan(self.cable_slope))
+        if self.cable_slope is None:
+            return 8000
+        else:
+            return math.degrees(math.atan(self.cable_slope))
 
     def __find_cable_pos(self):
         """Returns the position of the cable in mm in the sensor coordinate system."""
@@ -315,9 +321,9 @@ class Camera:
         # self.test_camera()
         # self.__calibrate_cam(test=True)
         # self.test_aruco()
-        self.test_segmentation()
+        # self.test_segmentation()
         # self.test_find_cable()
-        # self.test_ground_truth()
+        self.test_ground_truth()
 
 def main():
     path_to_cal_images = r"/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/support/cal_images/"
