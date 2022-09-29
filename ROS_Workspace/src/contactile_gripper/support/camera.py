@@ -90,9 +90,25 @@ class Camera:
         # cv2 uses ranges: H: 0-179, S: 0-255, V: 0-255
         # Note that most color picker have different ranges. You likely need to convert.
         # Yellow mask
-        lower = np.array([18, 127, 127], dtype="uint8")
-        upper = np.array([42, 255, 255], dtype="uint8")
-        mask = cv2.inRange(frame_copy, lower, upper)
+        # lower = np.array([18, 127, 127], dtype="uint8")
+        # upper = np.array([42, 255, 255], dtype="uint8")
+        # lower = np.array([15, 100, 100], dtype="uint8")
+        # upper = np.array([45, 255, 255], dtype="uint8")
+        # mask = cv2.inRange(frame_copy, lower, upper)
+        # Red mask
+        # lower mask (0-10)
+        lower_red = np.array([0, 90, 10])
+        upper_red = np.array([25, 255, 255])
+        mask0 = cv2.inRange(frame_copy, lower_red, upper_red)
+
+        # upper mask (170-180)
+        lower_red = np.array([155, 90, 10])
+        upper_red = np.array([180, 255, 255])
+        mask1 = cv2.inRange(frame_copy, lower_red, upper_red)
+
+        # join my masks
+        mask = mask0 + mask1
+
         # Remove noise
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=1)
