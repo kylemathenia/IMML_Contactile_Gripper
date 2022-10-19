@@ -1,8 +1,5 @@
 #!/usr/bin/env python2
-"""
-This is an example of the structure of a node that has multiple publishers publishing at different rates and a
-subscriber. This examples does not function.
-"""
+
 
 import time
 import rospy
