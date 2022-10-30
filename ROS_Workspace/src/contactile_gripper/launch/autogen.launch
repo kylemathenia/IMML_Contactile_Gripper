@@ -36,14 +36,12 @@
 
 <node pkg="contactile_gripper" name="gripper" type="gripper_node.py" launch-prefix="gnome-terminal --" output="screen"/>
 
-<node pkg="contactile_gripper" name="imu" type="IMU_node.py"/>
-
 <node pkg="contactile_gripper" name="pose" type="pose_node.py"/>
 
 <node pkg="contactile_gripper" name="control" type="control_node.py" launch-prefix="gnome-terminal --" output="screen"/>
 
 <node pkg="contactile_gripper" name="UI" type="ui_node.py" launch-prefix="gnome-terminal --" output="screen"/>
 
-<node pkg="contactile_gripper" name="sys_test" type="sys_test_node.py" output="screen" args="-IMU -camera "/>
+<node pkg="contactile_gripper" name="camera" type="camera_node.py"/>
 
 </launch>

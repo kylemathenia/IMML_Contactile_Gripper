@@ -29,6 +29,7 @@ class Camera:
         self.aruco_params = aruco.DetectorParameters_create()
         self.__calibrate_cam()
         self.__calibrate_cable()
+        self.prev_positions = []
 
     def find_ground_truth(self,undistort=True,illustrations=False):
         self.cable_pos, self.cable_ang = None,None
@@ -43,9 +44,9 @@ class Camera:
         if illustrations:
             self.__show_ground_truth()
         if self.aruco_present and self.cable_present:
-            return True,Pose(self.cable_pos, self.cable_ang)
+            return True,Pose(self.cable_pos, -self.cable_ang)
         else:
-            return False,Pose(0,0)
+            return False,Pose(999,999)
 
     def __find_aruco(self):
         """Finds the aruco marker in self.frame, and sets some parameters."""
@@ -60,7 +61,7 @@ class Camera:
             return
         self.aruco_present = True
         center = np.average(np.array(self.corners[0][0]), axis=0)
-        self.aruco_center = [round(center[0]),round(center[1])]
+        self.aruco_center = [int(round(center[0])),int(round(center[1]))]
 
     def __aruco_transform(self):
         """Rotate the image to align with aruco and cable coordinates. This greatly simplifies things.
@@ -83,6 +84,46 @@ class Camera:
     def __get_color_contours(self):
         frame_copy = self.frame.copy()
         frame_copy = cv2.cvtColor(frame_copy, cv2.COLOR_BGR2HSV)
+        mask = self.__get_color_mask(frame_copy)
+        # Remove noise
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=1)
+        # Find contours
+        cnts = cv2.findContours(opening, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        self.cnts = cnts[0] if len(cnts) == 2 else cnts[1]
+        self.color_centers = []
+        for c in self.cnts:
+            if cv2.contourArea(c) > self.area_threshold:
+                center = np.average(c, axis=0)
+                self.color_centers.append([int(round(center[0][0])),int(round(center[0][1]))])
+            if len(self.color_centers) == 2:
+                self.cable_present = True
+                break
+
+    def __get_color_contours2(self):
+        """Currently used for development."""
+        frame_copy = self.frame.copy()
+        frame_copy = cv2.cvtColor(frame_copy, cv2.COLOR_BGR2HSV)
+        mask = self.__get_color_mask(frame_copy)
+        detected = cv2.bitwise_and(self.frame, self.frame, mask=mask)
+        # Remove noise
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=1)
+        # Find contours and find total area
+        cnts = cv2.findContours(opening, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cnts = cnts[0] if len(cnts) == 2 else cnts[1]
+        area = 0
+        for c in cnts:
+            area += cv2.contourArea(c)
+            cv2.drawContours(self.frame, [c], 0, (0, 0, 0), 2)
+
+        cv2.imshow('mask', mask)
+        cv2.imshow('original', self.frame)
+        cv2.imshow('opening', opening)
+        cv2.imshow('detected', detected)
+        cv2.waitKey(1)
+
+    def __get_color_mask(self,frame_copy):
         # Choosing good HSV color values is difficult.
         # https://en.wikipedia.org/wiki/HSL_and_HSV#/media/File:Hsl-hsv_models.svg
         # https://alloyui.com/examples/color-picker/hsv.html
@@ -105,50 +146,8 @@ class Camera:
         lower_red = np.array([155, 90, 10])
         upper_red = np.array([180, 255, 255])
         mask1 = cv2.inRange(frame_copy, lower_red, upper_red)
-
         # join my masks
-        mask = mask0 + mask1
-
-        # Remove noise
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=1)
-        # Find contours
-        cnts = cv2.findContours(opening, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        self.cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-        self.color_centers = []
-        for c in self.cnts:
-            if cv2.contourArea(c) > self.area_threshold:
-                center = np.average(c, axis=0)
-                self.color_centers.append([round(center[0][0]),round(center[0][1])])
-            if len(self.color_centers) == 2:
-                self.cable_present = True
-                break
-
-    def __get_color_contours2(self):
-        """Currently used for development."""
-        frame_copy = self.frame.copy()
-        frame_copy = cv2.cvtColor(frame_copy, cv2.COLOR_BGR2HSV)
-        # Yellow
-        lower = np.array([18, 127, 127], dtype="uint8")
-        upper = np.array([42, 255, 255], dtype="uint8")
-        mask = cv2.inRange(frame_copy, lower, upper)
-        detected = cv2.bitwise_and(self.frame, self.frame, mask=mask)
-        # Remove noise
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=1)
-        # Find contours and find total area
-        cnts = cv2.findContours(opening, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-        area = 0
-        for c in cnts:
-            area += cv2.contourArea(c)
-            cv2.drawContours(self.frame, [c], 0, (0, 0, 0), 2)
-
-        cv2.imshow('mask', mask)
-        cv2.imshow('original', self.frame)
-        cv2.imshow('opening', opening)
-        cv2.imshow('detected', detected)
-        cv2.waitKey(1)
+        return mask0 + mask1
 
     def __find_cable_ang(self):
         """Returns the angle of the cable in degrees in the sensor coordinate system."""
@@ -162,8 +161,14 @@ class Camera:
         """Returns the position of the cable in mm in the sensor coordinate system."""
         cable_b = self.__find_y_intercept(self.cable_slope, self.color_centers[0])
         y = self.cable_slope * self.aruco_center[0] + cable_b
-        pix_pos = y - self.aruco_center[1]
-        return pix_pos * self.pix_to_mm
+        # The aruco maker center is about 0.7mm off of the absolute center, so adjust.
+        adjustment = 0.7 / self.pix_to_mm
+        pix_pos = y - self.aruco_center[1] + adjustment
+        self.prev_positions.append(-pix_pos * self.pix_to_mm)
+        # Use a simple moving average low pass filter to smooth out the data.
+        if len(self.prev_positions) > 5:
+            del self.prev_positions[0]
+        return np.average(self.prev_positions)
 
     def __show_ground_truth(self):
         """Show the captured image with the aruco marker coordinates and cable coordiates, if present."""
@@ -179,7 +184,7 @@ class Camera:
         """Returns a ratio of pixels to distance for the cable."""
         #TODO need to look for distance calibration photos. These should be real photos of the cable in grasp.
         # The distance between points is known, so we can find a ratio between pixels and distance.
-        self.pix_to_mm = 1
+        self.pix_to_mm = float(7)/float(50)
         self.area_threshold = 400
 
     def __calibrate_cam(self,test=False,see_corners=False):
@@ -276,7 +281,7 @@ class Camera:
     def __find_slope(self, pt1, pt2):
         if pt1[0] == pt2[0]:
             return None  # Infinite slope
-        return (pt2[1] - pt1[1]) / (pt2[0] - pt1[0])
+        return float((pt2[1] - pt1[1])) / (float(pt2[0] - pt1[0]))
 
     ####################################################################################################################
     # TESTS
@@ -327,7 +332,7 @@ class Camera:
 
     def test_ground_truth(self):
         while True:
-            self.find_ground_truth(undistort=False,illustrations=True)
+            print(self.find_ground_truth(undistort=False,illustrations=True))
             cv2.imshow("Press q to exit.", self.frame)
             if (cv2.waitKey(1) & 0xFF == ord('q')):
                 break
