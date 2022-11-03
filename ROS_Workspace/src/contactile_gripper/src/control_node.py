@@ -191,16 +191,15 @@ class ControlNode(object):
         self.check_stage()
         if self.routine_stage == 0:  # Setup
             srv_success = srv_clients.bias_request_srv_client()
-            file_prefix_ans = raw_input("Enter the filename for data:\n")
             topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1', '/Ground_Truth_Pose']
-            self.record_data(topic_list, file_prefix=file_prefix_ans, record=True)
+            self.record_data(topic_list, record=True)
             self.stage_complete = True
 
         elif self.routine_stage == 1:  # Go to starting position.
             self.open()
-            if self.stage_timeout(timeout=0.5):
+            if self.stage_timeout(timeout=3):
                 self.stage_complete = True
-                self.gripper_start_pos = self.gripper_pos + 1300
+                self.gripper_start_pos = self.gripper_pos + 500
                 self.gripper_goal_cur = random.randrange(goal_cur_low,goal_cur_high)
 
         elif self.routine_stage == 2:  # Go to starting position.
