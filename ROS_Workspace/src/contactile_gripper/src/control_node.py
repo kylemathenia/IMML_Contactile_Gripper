@@ -190,6 +190,7 @@ class ControlNode(object):
         goal_cur_high = 37
         self.check_stage()
         if self.routine_stage == 0:  # Setup
+            file_prefix_ans = raw_input("Enter the filename for data:\n")
             srv_success = srv_clients.bias_request_srv_client()
             topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
             self.record_data(topic_list, record=True)
