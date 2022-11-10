@@ -42,11 +42,25 @@ class Camera:
             self.__aruco_transform()
             self.__find_cable()
         if illustrations:
-            self.__show_ground_truth()
+            self.__show_cable_and_aruco()
         if self.aruco_present and self.cable_present:
             return True,Pose(self.cable_pos, -self.cable_ang)
         else:
             return False,Pose(999,999)
+
+    def show_predictions(self,pred_pose,undistort=True):
+        if pred_pose[0] == 999 or pred_pose[1] == 999: self.cable_present = True
+        else: self.cable_present = True
+        self.aruco_present = False
+        self.cable_pos, self.cable_ang = pred_pose[0], pred_pose[1]
+        self.aruco_present = False
+        ret, self.frame = self.cap.read()
+        if undistort:
+            self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
+        self.__find_aruco()
+        if self.aruco_present:
+            self.__aruco_transform()
+            self.__show_cable_and_aruco()
 
     def __find_aruco(self):
         """Finds the aruco marker in self.frame, and sets some parameters."""
@@ -170,7 +184,7 @@ class Camera:
             del self.prev_positions[0]
         return np.average(self.prev_positions)
 
-    def __show_ground_truth(self):
+    def __show_cable_and_aruco(self):
         """Show the captured image with the aruco marker coordinates and cable coordiates, if present."""
         if self.aruco_present:
             self.__add_aruco_illustration()
