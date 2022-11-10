@@ -1,11 +1,10 @@
-"""Models to make pose predictions"""
+"""Models to make pose estimations."""
 
 import numpy as np
 import math
 from collections import namedtuple
 
 Pose = namedtuple("Pose", "position orientation")
-
 
 class LinearAnalytical:
     """Produces linear regression from the contact/no contact points."""
@@ -72,12 +71,6 @@ class LinearAnalytical:
         position = (self.poses[0].position + self.poses[1].position) / 2
         orientation = (self.poses[0].orientation + self.poses[1].orientation) / 2
         return Pose(position,orientation)
-
-
-class CameraGroundTruth:
-    def __init__(self):
-        pass
-    #TODO
 
 def main():
     pass

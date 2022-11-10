@@ -29,7 +29,7 @@ class UiNode(object):
         rospy.init_node('ui_node', anonymous=False, log_level=rospy.INFO)
 
         # Publishers
-        self.gripper_cmd_pub = rospy.Publisher('Gripper_Cmd',String, queue_size=5)
+        self.gripper_cmd_pub = rospy.Publisher('Gripper_Cmd',String, queue_size=5,latch=True)
 
         # Subscribers
         self.routine_running_sub = rospy.Subscriber('Routine_Running', Bool, self.routine_running_callback, queue_size=100)
@@ -46,6 +46,9 @@ class UiNode(object):
 
         self.current_menu = self.menu_main
         self.new_menu_update(self.menu_main)
+
+        # The control node waits until the ui node is ready. Publish to signal ready.
+        self.gripper_dir_control_handle('d')
 
         self.main_loop_rate = 50  # Hz
         self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)

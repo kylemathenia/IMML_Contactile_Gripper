@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 """Launches the gripper. Generates a ROS launch file based on com port findings and config options, and call roslaunch
 with that newly generated file.
 
@@ -19,7 +19,7 @@ logging.basicConfig(level = logging.INFO)
 # Config options
 stepper = False
 IMU = False
-camera = False
+camera = True
 
 # File info
 launch_dir =  "./ROS_Workspace/src/contactile_gripper/launch/"
@@ -29,11 +29,16 @@ contactile_node_txt = "contactile.txt"
 gripper_node_txt = "gripper.txt"
 stepper_node_txt = "stepper.txt"
 imu_node_txt = "imu.txt"
+camera_node_txt = "camera.txt"
 control_node_txt = "control.txt"
 pose_node_txt = "pose.txt"
 UI_node_txt = "UI.txt"
 sys_test_txt = "sys_test.txt"
-data_recorder_path = "./ROS_Workspace/src/contactile_gripper/src/data_recorder_node.py"
+
+# The data recorder has to dump the bag files from where the node was launched from. Switch to bag dir and then launch.
+bag_folder_path = "./ROS_Workspace/src/contactile_gripper/bag"
+# Relative to bag dir
+data_recorder_path = "../src/data_recorder_node.py"
 
 def generate_file():
     """The order matters. Some nodes need to be started before others."""
@@ -48,6 +53,8 @@ def generate_file():
         write_all_txt(genFile,pose_node_txt)
         write_all_txt(genFile, control_node_txt)
         write_all_txt(genFile, UI_node_txt)
+        if camera:
+            write_all_txt(genFile, camera_node_txt)
         # write_sys_test(genFile)
         genFile.write("\n\n</launch>")
         logging.info("Launch file generated.")
@@ -60,6 +67,7 @@ def launch():
 def launch_data_recorder():
     """For some reason, the data recorder node must be started outside of the launch file."""
     time.sleep(5)
+    os.chdir(bag_folder_path)
     os.system("gnome-terminal -- " + data_recorder_path)
 
 def write_contactile(write_file):
