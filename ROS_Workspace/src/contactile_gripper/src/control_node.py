@@ -186,14 +186,14 @@ class ControlNode(object):
 
 
     def grasp_and_release_routine(self):
-        goal_cur_low = 4
+        goal_cur_low = 15
         goal_cur_high = 37
         self.check_stage()
         if self.routine_stage == 0:  # Setup
             file_prefix_ans = raw_input("Enter the filename for data:\n")
             srv_success = srv_clients.bias_request_srv_client()
             topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
-            self.record_data(topic_list, record=True)
+            self.record_data(topic_list, file_prefix=file_prefix_ans, record=True)
             self.stage_complete = True
 
         elif self.routine_stage == 1:  # Go to starting position.
@@ -206,7 +206,7 @@ class ControlNode(object):
             self.go_to_start()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
-                self.gripper_goal_cur = 7
+                self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
 
         elif self.routine_stage == 3:  # Wait for data to start recording.
             if self.stage_timeout(timeout=0.25):
@@ -214,21 +214,15 @@ class ControlNode(object):
 
         elif self.routine_stage == 4:  # Maintain grasp for some time.
             self.grasp()
-            if self.stage_timeout(timeout=2):
-                self.stage_complete = True
-                self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
-
-        elif self.routine_stage == 5:  # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=6):
+            if self.stage_timeout(timeout=8):
                 self.stage_complete = True
 
-        elif self.routine_stage == 6:  # Release grasp.
+        elif self.routine_stage == 5:  # Release grasp.
             self.open()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
 
-        elif self.routine_stage == 7:  # Finish
+        elif self.routine_stage == 6:  # Finish
             """Need to let the UI node that the routine is complete. """
             self.record_data(record=False)
             self.routine_running_pub.publish(False)
