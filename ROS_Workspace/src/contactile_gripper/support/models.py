@@ -1,5 +1,6 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 """Models to make pose predictions"""
-
 
 import shutil
 import time
@@ -34,7 +35,6 @@ class DataOptions(Enum):
     ALL = 39
     Z_ONLY = 10
     CONTACT_ONLY = 9
-
 
 class LinearAnalytical:
     """Produces linear regression prediction from the contact/no contact points. The most simple baseline to compare
@@ -81,7 +81,9 @@ class LinearAnalytical:
             pos = np.average(y_points)
         else:
             m = (y_points[1]-y_points[0]) / (x_points[1]-x_points[0])
-            if x_points[0] == 0:
+            if m == 0:
+                b = y_points[0]
+            elif x_points[0] == 0:
                 b = y_points[0]
             elif x_points[1] == 0:
                 b = y_points[1]
@@ -126,7 +128,8 @@ class PoseModel:
                 f.write(perf_info)
 
     def load_model(self, filepath):
-        if self.model_type == ModelType.LinearAnalytical: return
+        if self.model_type == ModelType.LinearAnalytical: return LinearAnalytical()
+        print(self.model_type)
         self.saved_model_filepath = filepath
         model = joblib.load(filepath)
         assert self.model_type.name in str(type(model))

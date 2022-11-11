@@ -6,10 +6,24 @@ import rospy
 import time
 import numpy as np
 from contactile_gripper.msg import Float32List
-from models import ModelType, DataOptions, PoseModel
+from models import PoseModel
 from papillarray_ros_v2.msg import SensorState
 from collections import namedtuple
+from enum import Enum
 
+
+from models import ModelType, DataOptions
+# class ModelType(Enum):
+#     MLPRegressor = 1
+#     KNeighborsRegressor = 2
+#     LinearRegression = 3
+#     LinearAnalytical = 4
+#
+# class DataOptions(Enum):
+#     """The numbers are the number of input features for the data option."""
+#     ALL = 39
+#     Z_ONLY = 10
+#     CONTACT_ONLY = 9
 
 # How to pass in arguments with launch file:
 # https://campus-rover.gitbook.io/lab-notebook/faq/using-args-params-roslaunch
@@ -22,8 +36,10 @@ class PoseNode(object):
     def __init__(self):
         rospy.init_node('pose_node', anonymous=False, log_level=rospy.INFO)
         # TODO make sure it finds the right folder.
-        model_type, data_type, model_fn = self.sys.argv[0], sys.argv[1], sys.argv[2]
-        # model_fn = "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/support/model_files/MLPRegressor_ALL.sav"
+        # model_type, data_type, model_fn = sys.argv[0], sys.argv[1], sys.argv[2]
+        model_type, data_type = ModelType.MLPRegressor.name, DataOptions.ALL.name
+        fn = "MLPRegressor_ALL.sav"
+        model_fn = "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/support/model_files/" + fn
         self.pose_model = self.get_pose_model(model_type, data_type, model_fn)
         # Publishers
         self.pose_pub = rospy.Publisher('Pose', Float32List, queue_size=1)
@@ -43,12 +59,12 @@ class PoseNode(object):
     ######################## Subscriber and service callbacks ########################
     def tact_0_callback(self, msg):
         self.tact_sensor0 = msg
-        self.in_contact_0 = msg.in_contact
+        self.in_contact_0 = msg.is_contact
         self.sensor0_pred_data = self.prep_sensor_data(msg)
 
     def tact_1_callback(self, msg):
         self.tact_sensor1 = msg
-        self.in_contact_1 = msg.in_contact
+        self.in_contact_1 = msg.is_contact
         self.sensor1_pred_data = self.prep_sensor_data(msg)
 
     ######################## Main loop ########################
@@ -64,24 +80,29 @@ class PoseNode(object):
         if not self.in_contact_0 and not self.in_contact_0: return Pose(999, 999)
         pred0 = self.pose_model.model.predict(self.sensor0_pred_data)
         pred1 = self.pose_model.model.predict(self.sensor1_pred_data)
+        # Flip sensor 1's angle prediction because on the gripper it is mirrored.
+        pred1[0][1] = -pred1[0][1]
         pose = np.average([pred0[0],pred1[0]],axis=0)
         return Pose(pose[0], pose[1])
+        # return Pose(pred1[0][0],pred1[0][1])
+
 
     def prep_sensor_data(self, d):
         """Get the data in the form the model expects for prediction."""
         prepped_data = []
         if self.pose_model.data_type == DataOptions.ALL:
             prepped_data += [d.gfX,d.gfY,d.gfZ]
+            # print("gfX: {}, gfY: {}, gfZ: {}".format(d.gfX,d.gfY,d.gfZ))
         elif  self.pose_model.data_type == DataOptions.Z_ONLY:
             prepped_data += [d.gfZ]
         for pillar in d.pillars:
             if self.pose_model.data_type == DataOptions.ALL:
+                # print("fX: {}, fY: {}, fZ: {}, contact: {}".format(pillar.fX,pillar.fY,pillar.fZ,int(pillar.in_contact)))
                 prepped_data += [pillar.fX,pillar.fY,pillar.fZ,int(pillar.in_contact)]
             elif self.pose_model.data_type == DataOptions.Z_ONLY:
                 prepped_data += [pillar.fZ]
             elif self.pose_model.data_type == DataOptions.CONTACT_ONLY:
                 prepped_data += [int(pillar.in_contact)]
-        print(prepped_data)
         return np.array([prepped_data])
 
     def get_pose_model(self, mt, dt, model_fn):
@@ -90,7 +111,7 @@ class PoseNode(object):
         elif mt == ModelType.LinearAnalytical.name: model_type = ModelType.LinearAnalytical
         elif mt == ModelType.LinearRegression.name:model_type = ModelType.LinearRegression
         else: raise KeyError
-        if dt == DataOptions.ALL.name: data_type = DataOptions.All
+        if dt == DataOptions.ALL.name: data_type = DataOptions.ALL
         elif dt == DataOptions.Z_ONLY.name: data_type = DataOptions.Z_ONLY
         elif dt == DataOptions.CONTACT_ONLY.name:data_type = DataOptions.CONTACT_ONLY
         else: raise KeyError

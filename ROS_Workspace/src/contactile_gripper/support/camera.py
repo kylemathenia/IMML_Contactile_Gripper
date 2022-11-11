@@ -17,8 +17,9 @@ import glob
 import math
 import os
 import atexit
+from collections import namedtuple
 
-from pose_models import Pose
+Pose = namedtuple("Pose", "pos ang")
 
 class Camera:
     def __init__(self,path_to_cal_images):
@@ -49,11 +50,10 @@ class Camera:
             return False,Pose(999,999)
 
     def show_predictions(self,pred_pose,undistort=True):
-        if pred_pose[0] == 999 or pred_pose[1] == 999: self.cable_present = True
+        if pred_pose[0] == 999 or pred_pose[1] == 999: self.cable_present = False
         else: self.cable_present = True
         self.aruco_present = False
         self.cable_pos, self.cable_ang = pred_pose[0], pred_pose[1]
-        self.aruco_present = False
         ret, self.frame = self.cap.read()
         if undistort:
             self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
@@ -61,6 +61,7 @@ class Camera:
         if self.aruco_present:
             self.__aruco_transform()
             self.__show_cable_and_aruco()
+        return ret
 
     def __find_aruco(self):
         """Finds the aruco marker in self.frame, and sets some parameters."""
@@ -261,12 +262,23 @@ class Camera:
         cv2.line(self.frame, (c[0] + offset, c[1]), (c[0] - offset, c[1]), color=(0, 0, 255), thickness=1)
 
     def __add_cable_illustration(self):
-        # Show line between color points.
-        tuple(self.color_centers[0])
-        cv2.line(self.frame, tuple(self.color_centers[0]), tuple(self.color_centers[1]), color= (0, 0, 255), thickness=1)
-        for i, center in enumerate(self.color_centers):
-            self.frame = cv2.circle(self.frame, tuple(center), radius=4, color=(0, 0, 255), thickness=-1)
-        # Show a dot for where this falls on the y axis.
+        # # # Show line between color points.
+        # tuple(self.color_centers[0])
+        # cv2.line(self.frame, tuple(self.color_centers[0]), tuple(self.color_centers[1]), color= (0, 0, 255), thickness=1)
+        # for i, center in enumerate(self.color_centers):
+        #     self.frame = cv2.circle(self.frame, tuple(center), radius=4, color=(0, 0, 255), thickness=-1)
+        # # Show a dot for where this falls on the y axis.
+
+        m = math.tan(math.radians(self.cable_ang))
+        b = self.cable_pos / self.pix_to_mm
+        xs = [-200,200]
+        ys = [m*xs[0]-b,m*xs[1]-b]
+        xs = [w + self.aruco_center[0] for w in xs]
+        ys = [w + self.aruco_center[1] for w in ys]
+        to_pt, from_pt = [int(xs[0]),int(ys[0])], [int(xs[1]),int(ys[1])]
+
+        cv2.line(self.frame, tuple(to_pt), tuple(from_pt), color=(0, 0, 255), thickness=1)
+
 
     def shutdown(self):
         self.cap.release()
