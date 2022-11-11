@@ -284,7 +284,7 @@ class Camera:
         xs = [w + self.aruco_center[0] for w in xs]
         ys = [w + self.aruco_center[1] for w in ys]
         to_pt, from_pt = [int(xs[0]),int(ys[0])], [int(xs[1]),int(ys[1])]
-        cv2.line(self.frame, tuple(to_pt), tuple(from_pt), color=color, thickness=1)
+        cv2.line(self.frame, tuple(to_pt), tuple(from_pt), color=color, thickness=2)
 
 
     def shutdown(self):

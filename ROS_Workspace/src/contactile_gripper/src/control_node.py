@@ -174,96 +174,15 @@ class ControlNode(object):
             self.stage_complete = True
             
     def grasp_routine(self):
-        goal_cur_low = 4
-        goal_cur_high = 37
-        self.check_stage()
-        if self.routine_stage == 0:  # Setup
-            srv_success = srv_clients.bias_request_srv_client()
-            topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1', '/Ground_Truth_Pose']
-            self.record_data(topic_list, record=True)
-            self.stage_complete = True
-
-        elif self.routine_stage == 12:  # Finish
-            """Need to let the UI node that the routine is complete. """
-            self.record_data(record=False)
-            self.routine_running_pub.publish(False)
-            self.stage_complete = True
+        self.gripper_goal_cur = 18
+        self.grasp()
+        self.routine_running_pub.publish(False)
+        self.stage_complete = True
 
     def open_routine(self):
-        goal_cur_low = 4
-        goal_cur_high = 37
-        self.check_stage()
-        if self.routine_stage == 0:  # Setup
-            srv_success = srv_clients.bias_request_srv_client()
-            topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1', '/Ground_Truth_Pose']
-            self.record_data(topic_list, record=True)
-            self.stage_complete = True
-
-        elif self.routine_stage == 1:  # Go to starting position.
-            self.open()
-            if self.stage_timeout(timeout=3):
-                self.stage_complete = True
-                self.gripper_start_pos = self.gripper_pos + 500
-                self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
-
-        elif self.routine_stage == 2:  # Go to starting position.
-            self.go_to_start()
-            if self.stage_timeout(timeout=0.5):
-                self.stage_complete = True
-                self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
-
-        elif self.routine_stage == 3:  # Wait for data to start recording.
-            if self.stage_timeout(timeout=0.25):
-                self.stage_complete = True
-
-        elif self.routine_stage == 4:  # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=2):
-                self.stage_complete = True
-
-        elif self.routine_stage == 5:  # Go to starting position.
-            self.go_to_start()
-            if self.stage_timeout(timeout=0.5):
-                self.stage_complete = True
-                self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
-
-        elif self.routine_stage == 6:  # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=2):
-                self.stage_complete = True
-
-        elif self.routine_stage == 7:  # Go to starting position.
-            self.go_to_start()
-            if self.stage_timeout(timeout=0.5):
-                self.stage_complete = True
-                self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
-
-        elif self.routine_stage == 8:  # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=2):
-                self.stage_complete = True
-
-        elif self.routine_stage == 9:  # Go to starting position.
-            self.go_to_start()
-            if self.stage_timeout(timeout=0.5):
-                self.stage_complete = True
-                self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
-
-        elif self.routine_stage == 10:  # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=2):
-                self.stage_complete = True
-
-        elif self.routine_stage == 11:  # Release grasp.
-            self.open()
-            if self.stage_timeout(timeout=0.5):
-                self.stage_complete = True
-
-        elif self.routine_stage == 12:  # Finish
-            """Need to let the UI node that the routine is complete. """
-            self.record_data(record=False)
-            self.routine_running_pub.publish(False)
-            self.stage_complete = True
+        self.open()
+        self.routine_running_pub.publish(False)
+        self.stage_complete = True
 
 
     ######################## Routine Support ########################
