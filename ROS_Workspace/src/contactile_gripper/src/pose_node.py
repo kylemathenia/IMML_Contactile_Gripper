@@ -37,8 +37,8 @@ class PoseNode(object):
         rospy.init_node('pose_node', anonymous=False, log_level=rospy.INFO)
         # TODO make sure it finds the right folder.
         # model_type, data_type, model_fn = sys.argv[0], sys.argv[1], sys.argv[2]
-        model_type, data_type = ModelType.MLPRegressor.name, DataOptions.ALL.name
-        fn = "MLPRegressor_ALL.sav"
+        model_type, data_type = ModelType.KNeighborsRegressor.name, DataOptions.ALL.name
+        fn = "KNeighborsRegressor_ALL.sav"
         model_fn = "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/support/model_files/" + fn
         self.pose_model = self.get_pose_model(model_type, data_type, model_fn)
         # Publishers
@@ -81,7 +81,7 @@ class PoseNode(object):
         pred0 = self.pose_model.model.predict(self.sensor0_pred_data)
         pred1 = self.pose_model.model.predict(self.sensor1_pred_data)
         # Flip sensor 1's angle prediction because on the gripper it is mirrored.
-        pred1[0][1] = -pred1[0][1]
+        pred0[0][1] = -pred0[0][1]
         pose = np.average([pred0[0],pred1[0]],axis=0)
         return Pose(pose[0], pose[1])
         # return Pose(pred1[0][0],pred1[0][1])
