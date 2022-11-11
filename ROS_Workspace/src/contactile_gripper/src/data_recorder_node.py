@@ -32,7 +32,7 @@ class DataRecorderNode(object):
             self.active_process = None
 
     def start(self,file_prefix,topic_list):
-        rospy.loginfo("\nStart recording\n")
+        rospy.loginfo("\nStart recording: {}\n{}".format(file_prefix,topic_list))
         # self.stop() # Stop if already recording.
         msg = "rosbag record -o {} ".format(file_prefix) + ' '.join(topic_list)
         args = shlex.split(msg)

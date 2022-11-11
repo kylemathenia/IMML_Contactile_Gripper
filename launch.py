@@ -19,7 +19,7 @@ logging.basicConfig(level = logging.INFO)
 # Config options
 stepper = False
 IMU = False
-camera = False
+camera = True
 
 # File info
 launch_dir =  "./ROS_Workspace/src/contactile_gripper/launch/"

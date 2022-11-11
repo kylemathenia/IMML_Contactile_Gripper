@@ -165,14 +165,24 @@ class Camera:
         # cv2 uses ranges: H: 0-179, S: 0-255, V: 0-255
         # Note that most color picker have different ranges. You likely need to convert.
         # Red mask. This is kind of a bad choice because this is at the boundary of the color wheel, but here we are.
+        # # Lower mask
+        # lower_red = np.array([0, 90, 10])
+        # upper_red = np.array([25, 255, 255])
+        # mask0 = cv2.inRange(frame_copy, lower_red, upper_red)
+        #
+        # # Upper mask
+        # lower_red = np.array([155, 90, 10])
+        # upper_red = np.array([180, 255, 255])
+
         # Lower mask
         lower_red = np.array([0, 90, 10])
-        upper_red = np.array([25, 255, 255])
+        upper_red = np.array([10, 255, 255])
         mask0 = cv2.inRange(frame_copy, lower_red, upper_red)
 
         # Upper mask
-        lower_red = np.array([155, 90, 10])
+        lower_red = np.array([170, 90, 10])
         upper_red = np.array([180, 255, 255])
+
         mask1 = cv2.inRange(frame_copy, lower_red, upper_red)
         # join my masks
         return mask0 + mask1
@@ -180,10 +190,7 @@ class Camera:
     def __find_cable_ang(self):
         """Returns the angle of the cable in degrees in the sensor coordinate system."""
         self.cable_slope = self.__find_slope(self.color_centers[0], self.color_centers[1])
-        if self.cable_slope is None:
-            return 8000
-        else:
-            return math.degrees(math.atan(self.cable_slope))
+        return math.degrees(math.atan(self.cable_slope))
 
     def __find_cable_pos(self):
         """Returns the position of the cable in mm in the sensor coordinate system."""
@@ -313,7 +320,7 @@ class Camera:
 
     def __find_slope(self, pt1, pt2):
         if pt1[0] == pt2[0]:
-            return None  # Infinite slope
+            return 9999  # Infinite slope
         return float((pt2[1] - pt1[1])) / (float(pt2[0] - pt1[0]))
 
     ####################################################################################################################
@@ -352,7 +359,8 @@ class Camera:
         while True:
             self.cable_present = False
             ret, self.frame = self.cap.read()
-            self.__get_color_contours()
+            self.__find_cable()
+            # self.__get_color_contours()
             if self.cable_present:
                 self.__add_cable_illustration(self.cable_pos,self.cable_ang,self.colors.green)
             if show_contours:
@@ -376,7 +384,6 @@ class Camera:
         # self.__calibrate_cam(test=True)
         # self.test_aruco()
         # self.test_segmentation()
-        # self.test_find_cable()
         self.test_ground_truth()
 
 def main():
