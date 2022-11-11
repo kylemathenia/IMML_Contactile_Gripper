@@ -61,20 +61,16 @@ class UiNode(object):
 
     def routine_running_callback(self, msg):
         rospy.logdebug('[routine_running_callback]')
-        rospy.loginfo('Routine running: {}'.format(msg.data))
+        rospy.loginfo('\nRoutine running: {}\n'.format(msg.data))
         self.routine_running = msg.data
-        if not self.routine_running: self.new_menu_update(self.menu_routines)
-
 
     ######################## Main loop ########################
     def main_loop(self):
         """Continuously get the key inputs from the user and pass the key to the current menu function."""
         while not rospy.is_shutdown():
             key = getKey()
-            if key == '': pass # No entry.
-            else:
-                self.current_menu(key)
-                rospy.logdebug('current_menu: {} key: {}'.format(self.current_menu.__name__,key))
+            self.current_menu(key)
+            rospy.logdebug('current_menu: {} key: {}'.format(self.current_menu.__name__,key))
             self.main_loop_rate_obj.sleep()
 
 
@@ -92,6 +88,7 @@ class UiNode(object):
 
     def menu_main(self,key):
         rospy.logdebug('[menu_main] key: {}'.format(key))
+        if key == '': return  # No entry.
         if key == '1':
             self.new_menu_update(self.menu_sys_direct_control)
         elif key == '2':
@@ -107,6 +104,7 @@ class UiNode(object):
 
     def menu_sys_direct_control(self,key):
         rospy.logdebug('[menu_sys_direct_control] key: {}'.format(key))
+        if key == '': return  # No entry.
         if key in key_map['EMO_bindings']: # EMERGENCY OFF. Space, enter, backspace, or esc.
             self.change_to_passive(self.menu_main)
         elif key == key_map['prompt']:
@@ -125,6 +123,7 @@ class UiNode(object):
 
     def menu_routines(self,key):
         rospy.logdebug('[menu_routines] key: {}'.format(key))
+        if key == '': return  # No entry.
         if key == '1':
             self.new_menu_update(self.menu_routines_experiment)
         elif key == '2':
@@ -191,7 +190,9 @@ class UiNode(object):
                          "Failure to include may cause the routine to never run because routine_running flag"
                          "never gets set to True.")
         if key in key_map['EMO_bindings'] or not self.routine_running:  # EMERGENCY OFF. Space, enter, backspace, or esc.
-            self.change_to_passive(self.menu_routines)
+            # if not self.routine_running:
+            self.new_menu_update(self.menu_routines)
+            # self.change_to_passive(self.menu_routines)
 
     def shutdown_entire_system(self):
         msg = "rosnode kill -a"

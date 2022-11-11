@@ -104,7 +104,7 @@ class ControlNode(object):
         if self.routine_stage == 0:  # Setup
             srv_success = srv_clients.bias_request_srv_client()
             topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1', '/Ground_Truth_Pose']
-            self.record_data(topic_list, record=True)
+            self.record_data(topic_list = topic_list, record=True)
             self.stage_complete = True
 
         elif self.routine_stage == 1:  # Go to starting position.
@@ -271,7 +271,6 @@ class ControlNode(object):
         self.routine_running = False
         self.routine_stage = 0
         self.grasping = False
-        self.record_data(record=False)
 
     def check_stage(self):
         if self.stage_complete:
@@ -288,7 +287,7 @@ class ControlNode(object):
     ######################## Other ########################
     def record_data(self,topic_list=None,file_prefix="experiment1",record=True):
         if record:
-            srv_clients.data_recorder_srv_client(topic_list, file_prefix=file_prefix, stop=False)
+            srv_clients.data_recorder_srv_client(topic_list=topic_list, file_prefix=file_prefix, stop=False)
             self.recording_data = True
         elif not record:
             srv_clients.data_recorder_srv_client([], file_prefix=" ", stop=True)
