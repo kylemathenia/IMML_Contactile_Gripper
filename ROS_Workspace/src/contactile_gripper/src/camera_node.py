@@ -22,15 +22,22 @@ class CameraNode(object):
         if self.mode == "ground_truth":
             self.cam_pub = rospy.Publisher('Ground_Truth_Pose', Float32List, queue_size=1)
         if self.mode == "predict":
-            self.pose_pred_sub = rospy.Subscriber('/Pose', Float32List, self.pose_pred_callback, queue_size=1)
-            self.pred_pose = None
+            self.pose_pred_sub1 = rospy.Subscriber('/Pose', Float32List, self.pose_pred_callback1, queue_size=1)
+            self.pose_pred_sub2 = rospy.Subscriber('/Pose2', Float32List, self.pose_pred_callback2, queue_size=1)
+            self.reset_poses()
         rospy.on_shutdown(self.shutdown_function)
         self.main_loop_rate = 60
         self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
         self.main_loop()
 
-    def pose_pred_callback(self,msg):
-        self.pred_pose = msg.list
+    def reset_poses(self):
+        self.pred_poses = []
+        self.pred_pose1 = None
+        self.pred_pose2 = None
+
+    def pose_pred_callback1(self,msg): self.pred_pose1 = Pose(msg.list[0],msg.list[1])
+
+    def pose_pred_callback2(self,msg): self.pred_pose2 = Pose(msg.list[0],msg.list[1])
 
     def main_loop(self):
         """This is the main loop for the node which executes at self.main_loop_rate."""
@@ -39,12 +46,14 @@ class CameraNode(object):
                 success, ground_truth = self.cam.find_ground_truth(undistort=False, illustrations=True)
                 cv2.imshow("Press q to exit.", self.cam.frame)
                 self.cam_pub.publish([float(ground_truth.pos), float(ground_truth.ang)])
-                # print(ground_truth)
-            if self.mode == "predict" and self.pred_pose is not None:
-                success = self.cam.show_predictions(self.pred_pose, undistort=False)
+                print(ground_truth)
+            if self.mode == "predict":
+                if self.pred_pose1 is not None: self.pred_poses.append(self.pred_pose1)
+                if self.pred_pose2 is not None: self.pred_poses.append(self.pred_pose2)
+                if len(self.pred_poses) > 0:
+                    success = self.cam.show_predictions(self.pred_poses, undistort=False)
                 cv2.imshow("Press q to exit.", self.cam.frame)
-                # print(success)
-                # if success: cv2.imshow("Press q to exit.", self.cam.frame)
+                self.reset_poses()
             if (cv2.waitKey(1) & 0xFF == ord('q')):
                 break
             self.main_loop_rate_obj.sleep()
