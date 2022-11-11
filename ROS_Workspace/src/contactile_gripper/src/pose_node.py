@@ -37,7 +37,7 @@ class PoseNode(object):
         rospy.init_node('pose_node', anonymous=False, log_level=rospy.INFO)
         # TODO make sure it finds the right folder.
         # model_type, data_type, model_fn = sys.argv[0], sys.argv[1], sys.argv[2]
-        model_type, data_type = ModelType.KNeighborsRegressor.name, DataOptions.ALL.name
+        model_type, data_type = ModelType.LinearAnalytical.name, DataOptions.CONTACT_ONLY.name
         fn = "KNeighborsRegressor_ALL.sav"
         model_fn = "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/support/model_files/" + fn
         self.pose_model = self.get_pose_model(model_type, data_type, model_fn)

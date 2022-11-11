@@ -16,6 +16,7 @@ key_map = {'grip_open':'d',
             'grip_close':'f',
             'grip_increment_inc':'e',
             'grip_increment_dec':'r',
+            'bias_tactile_sensors':'b',
             'complete': 'c',
             'clear_limits': 'a',
             'prompt': 'p',
@@ -116,10 +117,11 @@ class UiNode(object):
         \n\nDIRECT CONTROL MODE\n
         {}/{}: Gripper open/close
         {}/{}: Gripper increase/decrease increment
+        {}: Bias tactile sensors
         {}: Show prompt again
         {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
         """.format(key_map['grip_open'], key_map['grip_close'],key_map['grip_increment_inc'],
-                   key_map['grip_increment_dec'],key_map['prompt'],key_map['EMO'])
+                   key_map['grip_increment_dec'],key_map['bias_tactile_sensors'],key_map['prompt'],key_map['EMO'])
 
     def menu_routines(self,key):
         rospy.logdebug('[menu_routines] key: {}'.format(key))
@@ -175,6 +177,9 @@ class UiNode(object):
         elif key == key_map['grip_increment_dec']:
             self.gripper_pos_increment -= 1
             rospy.loginfo('Gripper increment: {}'.format(self.gripper_pos_increment))
+        elif key == key_map['bias_tactile_sensors']:
+            srv_clients.bias_request_srv_client()
+            rospy.loginfo('Biased tactile sensors'.format(self.gripper_pos_increment))
 
     def routine_handle(self,key):
         """All routines are handled the same. If self.routine_running was set back to false because the routine
