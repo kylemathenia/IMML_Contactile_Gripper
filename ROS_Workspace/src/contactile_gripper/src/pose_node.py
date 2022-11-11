@@ -71,10 +71,10 @@ class PoseNode(object):
     def main_loop(self):
         """This is the main loop for the node which executes at self.main_loop_rate."""
         while not rospy.is_shutdown():
-            if not self.in_contact_0 or not self.in_contact_1:
-                self.pose_pub.publish([float(999), float(999)])
+            # if not self.in_contact_0 or not self.in_contact_1:
+            #     self.pose_pub.publish([float(999), float(999)])
             pose = self.determine_pose()
-            if not self.in_contact_0 or not self.in_contact_1:
+            if self.in_contact_0 and self.in_contact_1:
                 self.pose_pub.publish([float(pose.pos), float(pose.ang)])
             self.main_loop_rate_obj.sleep()
 

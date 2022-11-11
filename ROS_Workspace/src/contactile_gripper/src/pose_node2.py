@@ -34,7 +34,7 @@ Pose = namedtuple("Pose", "pos ang")
 class PoseNode(object):
     """Takes 3 arguments: model type, data type, saved model path. If not in contact, publish 999"""
     def __init__(self):
-        rospy.init_node('pose_node', anonymous=False, log_level=rospy.INFO)
+        rospy.init_node('pose_node2', anonymous=False, log_level=rospy.INFO)
         # TODO make sure it finds the right folder.
         # model_type, data_type, model_fn = sys.argv[0], sys.argv[1], sys.argv[2]
         model_type, data_type = ModelType.KNeighborsRegressor.name, DataOptions.Z_ONLY.name
@@ -71,10 +71,10 @@ class PoseNode(object):
     def main_loop(self):
         """This is the main loop for the node which executes at self.main_loop_rate."""
         while not rospy.is_shutdown():
-            if not self.in_contact_0 or not self.in_contact_1:
-                self.pose_pub.publish([float(999), float(999)])
+            # if not self.in_contact_0 or not self.in_contact_1:
+            #     self.pose_pub.publish([float(999), float(999)])
             pose = self.determine_pose()
-            if not self.in_contact_0 or not self.in_contact_1:
+            if self.in_contact_0 and self.in_contact_1:
                 self.pose_pub.publish([float(pose.pos), float(pose.ang)])
             self.main_loop_rate_obj.sleep()
 

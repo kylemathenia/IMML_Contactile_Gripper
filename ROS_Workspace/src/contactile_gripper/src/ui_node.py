@@ -39,9 +39,9 @@ class UiNode(object):
         self.gripper_goal_pos = None
 
         #Setup
-        self.routine_menu_funcs = (self.menu_routines_grasp_and_release,
-                                   self.menu_routines_grasp_forever,
-                                   self.menu_routines_cable_pull_experiment)
+        self.routine_menu_funcs = (self.menu_routines_experiment,
+                                   self.menu_routines_grasp,
+                                   self.menu_routines_open)
         self.gripper_pos_increment = 30
 
         self.current_menu = self.menu_main
@@ -56,12 +56,13 @@ class UiNode(object):
 
 
     ######################## Subscriber and service callbacks ########################
-    def gripper_pos_callback(self,msg):
-        self.gripper_pos = msg.data
+    def gripper_pos_callback(self,msg): self.gripper_pos = msg.data
+
     def routine_running_callback(self, msg):
         rospy.logdebug('[routine_running_callback]')
         rospy.loginfo('Routine running: {}'.format(msg.data))
         self.routine_running = msg.data
+        if not self.routine_running: self.new_menu_update(self.menu_routines)
 
 
     ######################## Main loop ########################
@@ -80,7 +81,7 @@ class UiNode(object):
     """All menu functions accept a key as an argument. When a key is pressed, the key is passed to whatever function
     is set as self.current_menu."""
     def new_menu_update(self,new_menu_func):
-        """Changes the current menu function. The new menu function is passed as an argument."""
+        """This is how you change menus. The new menu (function) is passed as an argument."""
         rospy.logdebug('[new_menu_update]')
         if new_menu_func in self.routine_menu_funcs:
             self.routine_running = True
@@ -123,18 +124,18 @@ class UiNode(object):
     def menu_routines(self,key):
         rospy.logdebug('[menu_routines] key: {}'.format(key))
         if key == '1':
-            self.new_menu_update(self.menu_routines_grasp_and_release)
+            self.new_menu_update(self.menu_routines_experiment)
         elif key == '2':
-            self.new_menu_update(self.menu_routines_grasp_forever)
+            self.new_menu_update(self.menu_routines_grasp)
         elif key == '3':
-            self.new_menu_update(self.menu_routines_cable_pull_experiment)
+            self.new_menu_update(self.menu_routines_open)
         elif key in key_map['EMO_bindings']:
             self.new_menu_update(self.menu_main)
     menu_routines.prompt = """  
         \n\nROUTINES MENU\n
-        1: Grasp & Release
-        2: Grasp Forever
-        3: Cable Pull Experiment
+        1: Experiment Routine
+        2: Grasp
+        3: Open
         {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
         """.format(key_map['EMO'])
 
@@ -142,15 +143,15 @@ class UiNode(object):
         \n\nROUTINE RUNNING\n
         {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
         """.format(key_map['EMO'])
-    def menu_routines_grasp_and_release(self,key):
+    def menu_routines_experiment(self, key):
         self.routine_handle(key)
-    menu_routines_grasp_and_release.prompt = routine_running_prompt
-    def menu_routines_grasp_forever(self, key):
+    menu_routines_experiment.prompt = routine_running_prompt
+    def menu_routines_grasp(self, key):
         self.routine_handle(key)
-    menu_routines_grasp_forever.prompt = routine_running_prompt
-    def menu_routines_cable_pull_experiment(self, key):
+    menu_routines_grasp.prompt = routine_running_prompt
+    def menu_routines_open(self, key):
         self.routine_handle(key)
-    menu_routines_cable_pull_experiment.prompt = routine_running_prompt
+    menu_routines_open.prompt = routine_running_prompt
 
 
     ######################## Supporting methods ########################

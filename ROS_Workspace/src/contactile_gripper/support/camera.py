@@ -37,7 +37,7 @@ class Colors():
         if self.cycle_i >= len(self.colors): self.cycle_i = 0
         return rgb
 
-    def reset(self): cycle_i = 0
+    def reset(self): self.cycle_i = 0
 
 
 class Camera:
@@ -55,7 +55,7 @@ class Camera:
     def find_ground_truth(self,undistort=True,illustrations=False):
         self.cable_pos, self.cable_ang = None,None
         self.aruco_present,self.cable_present = False,False
-        ret, self.frame = self.cap.read()
+        ret = self.cap_frame()
         if undistort:
             self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
         self.__find_aruco()
@@ -69,16 +69,18 @@ class Camera:
         else:
             return False,Pose(999,999)
 
+    def cap_frame(self):
+        ret, self.frame = self.cap.read()
+        return ret
+
     def show_predictions(self,pred_poses,undistort=True):
         self.aruco_present,self.cable_present = False, True
-        ret, self.frame = self.cap.read()
         if undistort:
             self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
         self.__find_aruco()
         if self.aruco_present:
             self.__aruco_transform()
             self.__show_cable_and_aruco(pred_poses)
-        return ret
 
     def __find_aruco(self):
         """Finds the aruco marker in self.frame, and sets some parameters."""
