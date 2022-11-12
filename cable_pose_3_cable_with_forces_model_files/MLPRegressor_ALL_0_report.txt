@@ -1,0 +1,10 @@
+
+Model Type: MLPRegressor
+Data Used: ALL
+
+RMSE: 5.286219298085095
+Ave err: 2.928812368672828
+Std err: 4.4007013732536215
+Max err: 39.921039678036735
+R²: 0.8374926205715264
+Data scaled: False

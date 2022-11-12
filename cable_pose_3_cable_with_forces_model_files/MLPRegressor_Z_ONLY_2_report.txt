@@ -1,0 +1,10 @@
+
+Model Type: MLPRegressor
+Data Used: Z_ONLY
+
+RMSE: 7.800183960959607
+Ave err: 4.619431916850532
+Std err: 6.285198373193495
+Max err: 55.525575321294674
+R²: 0.5689324551869729
+Data scaled: False

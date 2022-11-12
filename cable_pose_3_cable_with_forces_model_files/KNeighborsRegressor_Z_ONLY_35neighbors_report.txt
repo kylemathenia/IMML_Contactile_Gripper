@@ -1,0 +1,10 @@
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+
+RMSE: 8.85556071244539
+Ave err: 4.891944809540557
+Std err: 7.381722801095656
+Max err: 51.035259699821474
+R²: 0.07992837910500916
+Data scaled: False
