@@ -190,9 +190,8 @@ class UiNode(object):
                          "Failure to include may cause the routine to never run because routine_running flag"
                          "never gets set to True.")
         if key in key_map['EMO_bindings'] or not self.routine_running:  # EMERGENCY OFF. Space, enter, backspace, or esc.
-            # if not self.routine_running:
-            self.new_menu_update(self.menu_routines)
-            # self.change_to_passive(self.menu_routines)
+            # self.new_menu_update(self.menu_routines)
+            self.change_to_passive(self.menu_routines)
 
     def shutdown_entire_system(self):
         msg = "rosnode kill -a"

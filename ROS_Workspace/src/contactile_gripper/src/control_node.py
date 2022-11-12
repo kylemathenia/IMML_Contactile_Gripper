@@ -98,8 +98,8 @@ class ControlNode(object):
         pass
 
     def experiment_routine(self):
-        goal_cur_low = 4
-        goal_cur_high = 37
+        goal_cur_low = 15
+        goal_cur_high = 50
         self.check_stage()
         if self.routine_stage == 0:  # Setup
             srv_success = srv_clients.bias_request_srv_client()
@@ -170,19 +170,14 @@ class ControlNode(object):
         elif self.routine_stage == 12:  # Finish
             """Need to let the UI node that the routine is complete. """
             self.record_data(record=False)
-            self.routine_running_pub.publish(False)
             self.stage_complete = True
             
     def grasp_routine(self):
         self.gripper_goal_cur = 18
         self.grasp()
-        self.routine_running_pub.publish(False)
-        self.stage_complete = True
 
     def open_routine(self):
         self.open()
-        self.routine_running_pub.publish(False)
-        self.stage_complete = True
 
 
     ######################## Routine Support ########################
@@ -248,6 +243,7 @@ class ControlNode(object):
     ######################## State Change Support #########################
     def check_if_leave_or_enter_routine(self,next_menu):
         """Special action taken if entering or leaving a routine."""
+        self.routine_stage = 0
         routine_control_functions = self.routine_bindings.values()
         if self.control_function not in routine_control_functions and next_menu not in self.routine_menus: # No routine involved.
             return
@@ -271,6 +267,7 @@ class ControlNode(object):
         self.routine_running = False
         self.routine_stage = 0
         self.grasping = False
+        self.record_data(record=False)
 
     def check_stage(self):
         if self.stage_complete:
