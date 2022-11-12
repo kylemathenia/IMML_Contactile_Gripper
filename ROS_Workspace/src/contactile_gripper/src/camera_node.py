@@ -19,8 +19,8 @@ class CameraNode(object):
         self.cam = camera.Camera(self.path_to_cal_images)
         possible_modes = {'ground_truth',"predict","normal"}
         # self.mode = sys.argv[0]
-        # self.mode = "predict"
-        self.mode = 'ground_truth'
+        self.mode = "predict"
+        # self.mode = 'ground_truth'
         assert self.mode in possible_modes
         if self.mode == "ground_truth":
             self.cam_pub = rospy.Publisher('Ground_Truth_Pose', Float32List, queue_size=1)

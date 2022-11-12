@@ -173,7 +173,7 @@ class ControlNode(object):
             self.stage_complete = True
             
     def grasp_routine(self):
-        self.gripper_goal_cur = 18
+        self.gripper_goal_cur = 35
         self.grasp()
 
     def open_routine(self):
