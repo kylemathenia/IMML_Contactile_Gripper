@@ -1,0 +1,333 @@
+
+
+
+################ LinearAnalytical ################
+
+Model Type: LinearAnalytical
+Data Used: CONTACT_ONLY
+ 
+RMSE: 8.878990114525314
+Ave err: 5.825842292426498
+Std err: 6.700449763830266
+Max err: 37.825675964355476
+R²: 0.5715958705992512
+Data scaled: False
+
+
+################ LinearRegression ################
+
+Model Type: LinearRegression
+Data Used: Z_ONLY
+ 
+RMSE: 10.090222008420698
+Ave err: 5.879455535563408
+Std err: 8.200279433321167
+Max err: 57.5245553251381
+R²: -0.10445256642942685
+Data scaled: False
+
+Model Type: LinearRegression
+Data Used: ALL
+ 
+RMSE: 8.611174830045037
+Ave err: 5.2035461834833665
+Std err: 6.861154354039619
+Max err: 50.902693543455946
+R²: 0.46683911658077654
+Data scaled: False
+
+
+################ KNeighborsRegressor ################
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+Neighbors: 3
+RMSE: 7.816551737914851
+Ave err: 4.052093457227336
+Std err: 6.684236656896214
+Max err: 51.861576199531555
+R²: 0.6380966547647196
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+Neighbors: 4
+RMSE: 7.8089079788949665
+Ave err: 4.077463530944818
+Std err: 6.659829951032118
+Max err: 49.26685932278633
+R²: 0.6163527129262429
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+Neighbors: 5
+RMSE: 7.795506804484417
+Ave err: 4.115526655987497
+Std err: 6.620601685845418
+Max err: 50.41498205661774
+R²: 0.5976187122731067
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+Neighbors: 6
+RMSE: 7.840883317682138
+Ave err: 4.149322650771066
+Std err: 6.653012305813374
+Max err: 49.63634778062502
+R²: 0.5736130321231887
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+Neighbors: 8
+RMSE: 8.058081666318078
+Ave err: 4.2738103583845755
+Std err: 6.831341388162083
+Max err: 49.341733530163765
+R²: 0.5094914647399951
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+Neighbors: 12
+RMSE: 8.122428420356337
+Ave err: 4.3604100797731595
+Std err: 6.852785373847989
+Max err: 50.73518972595533
+R²: 0.4455485745940628
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+Neighbors: 20
+RMSE: 8.457949246463778
+Ave err: 4.591451765893187
+Std err: 7.103201822927003
+Max err: 52.21131499409675
+R²: 0.2995625706555749
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: Z_ONLY
+Neighbors: 35
+RMSE: 8.85556071244539
+Ave err: 4.891944809540557
+Std err: 7.381722801095656
+Max err: 51.035259699821474
+R²: 0.07992837910500916
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: ALL
+Neighbors: 3
+RMSE: 5.234535599397006
+Ave err: 2.637622062336962
+Std err: 4.5214281811865495
+Max err: 53.170511881510414
+R²: 0.8488774578805037
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: ALL
+Neighbors: 4
+RMSE: 5.136216108624559
+Ave err: 2.6261306748347892
+Std err: 4.4140858162462315
+Max err: 43.78135442733765
+R²: 0.8495074898479749
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: ALL
+Neighbors: 5
+RMSE: 5.2106953137510725
+Ave err: 2.6683759884765275
+Std err: 4.475613392247962
+Max err: 49.64268569946289
+R²: 0.8419109366762956
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: ALL
+Neighbors: 6
+RMSE: 5.309448890491883
+Ave err: 2.7293442535465435
+Std err: 4.554220840756183
+Max err: 44.24027665456136
+R²: 0.8349774789140825
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: ALL
+Neighbors: 8
+RMSE: 5.513758788890621
+Ave err: 2.8390999120766685
+Std err: 4.72663174695415
+Max err: 44.25455442070961
+R²: 0.8143030727387968
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: ALL
+Neighbors: 12
+RMSE: 5.854684061610671
+Ave err: 3.0154924643785157
+Std err: 5.018379286039909
+Max err: 46.24843802054723
+R²: 0.7744891838753019
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: ALL
+Neighbors: 20
+RMSE: 6.37558438314442
+Ave err: 3.3115507685827583
+Std err: 5.448092118686495
+Max err: 44.001345694065094
+R²: 0.7028596535103497
+Data scaled: False
+
+Model Type: KNeighborsRegressor
+Data Used: ALL
+Neighbors: 35
+RMSE: 7.003794351706371
+Ave err: 3.6550670442809707
+Std err: 5.974413797420229
+Max err: 46.190139123797415
+R²: 0.589247072684493
+Data scaled: False
+
+
+################ MLPRegressor ################
+
+Model Type: MLPRegressor
+Data Used: Z_ONLY
+Default Sklearn MLPRegressor params. 
+Model num: 0
+Random initializations: 5
+Criteria: RMSE
+RMSE: 7.767663283144684
+Ave err: 4.61981385420876
+Std err: 6.244510615955009
+Max err: 47.242393056701445
+R²: 0.5749830520408752
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: Z_ONLY
+Default Sklearn MLPRegressor params. 
+Model num: 1
+Random initializations: 5
+Criteria: RMSE
+RMSE: 7.776369971458012
+Ave err: 4.614265312481852
+Std err: 6.259431728122021
+Max err: 51.93957157368898
+R²: 0.5760391479411918
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: Z_ONLY
+Default Sklearn MLPRegressor params. 
+Model num: 2
+Random initializations: 5
+Criteria: RMSE
+RMSE: 7.799870903402985
+Ave err: 4.646063740954665
+Std err: 6.265147869343454
+Max err: 49.21181104836149
+R²: 0.5700094769641322
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: Z_ONLY
+Default Sklearn MLPRegressor params. 
+Model num: 3
+Random initializations: 5
+Criteria: RMSE
+RMSE: 7.787407109784629
+Ave err: 4.607327730519185
+Std err: 6.278235474806053
+Max err: 49.093990393832215
+R²: 0.572818416232638
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: Z_ONLY
+Default Sklearn MLPRegressor params. 
+Model num: 4
+Random initializations: 5
+Criteria: RMSE
+RMSE: 7.788796642710943
+Ave err: 4.621896345884137
+Std err: 6.269244556516209
+Max err: 50.95507864380787
+R²: 0.5707550306870721
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: ALL
+Default Sklearn MLPRegressor params. 
+Model num: 0
+Random initializations: 5
+Criteria: RMSE
+RMSE: 5.3008276597266475
+Ave err: 2.974544658083868
+Std err: 4.38757996567445
+Max err: 42.88840302536937
+R²: 0.8344619413850205
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: ALL
+Default Sklearn MLPRegressor params. 
+Model num: 1
+Random initializations: 5
+Criteria: RMSE
+RMSE: 5.365904494445041
+Ave err: 3.009045941965651
+Std err: 4.442811448018648
+Max err: 42.91871107268985
+R²: 0.8333940455057844
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: ALL
+Default Sklearn MLPRegressor params. 
+Model num: 2
+Random initializations: 5
+Criteria: RMSE
+RMSE: 5.270517845410991
+Ave err: 2.958687190081134
+Std err: 4.361711644531936
+Max err: 39.24863886250901
+R²: 0.8395561591695573
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: ALL
+Default Sklearn MLPRegressor params. 
+Model num: 3
+Random initializations: 5
+Criteria: RMSE
+RMSE: 5.290019913687252
+Ave err: 2.9758911746351817
+Std err: 4.373600622363242
+Max err: 41.52112051843749
+R²: 0.8319199492032627
+Data scaled: False
+
+Model Type: MLPRegressor
+Data Used: ALL
+Default Sklearn MLPRegressor params. 
+Model num: 4
+Random initializations: 5
+Criteria: RMSE
+RMSE: 5.352505733337499
+Ave err: 2.975435579802357
+Std err: 4.449280923459096
+Max err: 39.77764177869152
+R²: 0.8340630150475442
+Data scaled: False
