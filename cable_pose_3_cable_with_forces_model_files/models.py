@@ -147,17 +147,24 @@ class PoseModel:
         if self.model_type == ModelType.LinearAnalytical: assert self.data_type == DataOptions.CONTACT_ONLY
         if self.data_type == DataOptions.CONTACT_ONLY and X_tr is not None:
             X_train, y_train = self.__drop_data(X_tr),y_tr.to_numpy()
-            X_test, y_test = self.__drop_data(X_te),y_te.to_numpy()
+            if X_te is not None:
+                X_test, y_test = self.__drop_data(X_te),y_te.to_numpy()
+            else: X_test, y_test = None, None
         elif self.data_type == DataOptions.Z_ONLY and X_tr is not None:
             X_train, y_train = self.__drop_data(X_tr), y_tr.to_numpy()
-            X_test, y_test = self.__drop_data(X_te), y_te.to_numpy()
+            if X_te is not None:
+                X_test, y_test = self.__drop_data(X_te), y_te.to_numpy()
+            else: X_test, y_test = None, None
             input_scaler = StandardScaler()
             X_train = input_scaler.fit_transform(X_train)
-            X_test = input_scaler.transform(X_test)
+            if X_te is not None:
+                X_test = input_scaler.transform(X_test)
         elif self.data_type == DataOptions.ALL and X_tr is not None:
             input_scaler = StandardScaler()
             X_train, y_train = input_scaler.fit_transform(X_tr), y_tr.to_numpy()
-            X_test, y_test = input_scaler.transform(X_te), y_te.to_numpy()
+            if X_te is not None:
+                X_test, y_test = input_scaler.transform(X_te), y_te.to_numpy()
+            else: X_test, y_test = None, None
         else: X_train, y_train, X_test, y_test = None,None,None,None
         if y_train is not None:
             self.output_scaler = StandardScaler()
@@ -235,9 +242,7 @@ class PoseModel:
         r2 = r2_score(y_pred, y_test)
         return rmse, mse, r2, ave_err, standard_dev, max_err,scaled
 
-
-
-def main():
+def evaluate_all():
     data_dir_name = "cable_pose_3_cable_with_forces"
     dataset_path = os.getcwd() + '\\' + 'processed_data' + '\\' + data_dir_name + '\\'
     X_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_train_30-70.csv')
@@ -246,89 +251,94 @@ def main():
     y_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_test_30-70.csv')
 
     full_report = ""
-    data_options = [DataOptions.Z_ONLY,DataOptions.ALL]
-
+    data_options = [DataOptions.Z_ONLY, DataOptions.ALL]
 
     full_report += "\n\n\n################ LinearAnalytical ################"
-    model = PoseModel(ModelType.LinearAnalytical, DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,
+    model = PoseModel(ModelType.LinearAnalytical, DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train,
+                      X_test=X_test,
                       y_test=y_test)
-    model.train(save=True, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
+    model.train(save=False, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
     report = model.report(save=False, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
     full_report += report
-
 
     full_report += "\n\n\n################ LinearRegression ################"
     for data_option in data_options:
         model = PoseModel(ModelType.LinearRegression, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
                           y_test=y_test)
-        model.train(save=True, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
-        report = model.report(save=False, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
+        model.train(save=False, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
+        report = model.report(save=False,
+                              report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
         full_report += report
 
-
-    neighbors = [3,4,5,6,8,12,20,35]
+    neighbors = [3, 4, 5, 6, 8, 12, 20, 35]
     full_report += "\n\n\n################ KNeighborsRegressor ################"
     for data_option in data_options:
         for n in neighbors:
-            model = PoseModel(ModelType.KNeighborsRegressor, data_option, X_train=X_train, y_train=y_train,X_test=X_test, y_test=y_test)
-            model.train(neighbors = n, save=True, save_fn="{}_{}_{}neighbors.sav".format(model.model_type.name, model.data_type.name,n))
-            report_fn = "{}_{}_{}neighbors_report.txt".format(model.model_type.name, model.data_type.name,n)
+            model = PoseModel(ModelType.KNeighborsRegressor, data_option, X_train=X_train, y_train=y_train,
+                              X_test=X_test, y_test=y_test)
+            model.train(neighbors=n, save=False,
+                        save_fn="{}_{}_{}neighbors.sav".format(model.model_type.name, model.data_type.name, n))
+            report_fn = "{}_{}_{}neighbors_report.txt".format(model.model_type.name, model.data_type.name, n)
             extra_header = "Neighbors: {}".format(n)
-            report = model.report(save=False,report_fn=report_fn,extra_header=extra_header)
+            report = model.report(save=False, report_fn=report_fn, extra_header=extra_header)
             full_report += report
-
 
     num_models = 5
     rand_inits = 5
     full_report += "\n\n\n################ MLPRegressor ################"
     for data_option in data_options:
         for n in range(num_models):
-            model = PoseModel(ModelType.MLPRegressor, data_option, X_train=X_train, y_train=y_train,X_test=X_test, y_test=y_test)
-            model.train(random_inits=rand_inits,save=True, save_fn="{}_{}_{}.sav".format(model.model_type.name, model.data_type.name,n))
-            report_fn = "{}_{}_{}_report.txt".format(model.model_type.name,model.data_type.name,n)
-            extra_header = "Default Sklearn MLPRegressor params. \nModel num: {}\nRandom initializations: {}\nCriteria: RMSE".format(n,rand_inits)
-            report = model.report(save=False,report_fn=report_fn,extra_header=extra_header)
+            model = PoseModel(ModelType.MLPRegressor, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                              y_test=y_test)
+            model.train(random_inits=rand_inits, save=False,
+                        save_fn="{}_{}_{}.sav".format(model.model_type.name, model.data_type.name, n))
+            report_fn = "{}_{}_{}_report.txt".format(model.model_type.name, model.data_type.name, n)
+            extra_header = "Default Sklearn MLPRegressor params. \nModel num: {}\nRandom initializations: {}\nCriteria: RMSE".format(
+                n, rand_inits)
+            report = model.report(save=False, report_fn=report_fn, extra_header=extra_header)
             full_report += report
-
 
     with open("full_report.txt", 'w') as f:
         f.write(full_report)
 
 
-    #
-    # # # Contact-only data
-    # models = []
-    # models.append(PoseModel(ModelType.LinearAnalytical,DataOptions.CONTACT_ONLY,X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test))
-    # models.append(PoseModel(ModelType.LinearRegression,DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test))
-    # models.append(PoseModel(ModelType.KNeighborsRegressor, DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    # models.append(PoseModel(ModelType.MLPRegressor, DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    # for model in models:
-    #     model.train(epochs=epochs, lr_range=lr_range, hidden_range=hidden_range, random_inits=random_inits, save=True,
-    #                 save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
-    #     model.report(save=True, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
-    #
-    # # Z-only data
-    # models = []
-    # models.append(PoseModel(ModelType.LinearRegression,DataOptions.Z_ONLY, X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test))
-    # models.append(PoseModel(ModelType.KNeighborsRegressor, DataOptions.Z_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    # models.append(PoseModel(ModelType.MLPRegressor, DataOptions.Z_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    # for model in models:
-    #     model.train(epochs=epochs, lr_range=lr_range, hidden_range=hidden_range, random_inits=random_inits, save=True,
-    #                 save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
-    #     model.report(save=True, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
-    #
-    # # # All data
-    # models = []
-    # models.append(PoseModel(ModelType.LinearRegression,DataOptions.ALL, X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test))
-    # models.append(PoseModel(ModelType.KNeighborsRegressor, DataOptions.ALL, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    # models.append(PoseModel(ModelType.MLPRegressor, DataOptions.ALL, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    # for model in models:
-    #     model.train(epochs=epochs, lr_range=lr_range, hidden_range=hidden_range, random_inits=random_inits, save=True,
-    #                 save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
-    #     model.report(save=True, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
+def train_with_all_data():
+    data_dir_name = "cable_pose_3_cable_with_forces"
+    dataset_path = os.getcwd() + '\\' + 'processed_data' + '\\' + data_dir_name + '\\'
+    X_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_train_10-90.csv')
+    y_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_train_10-90.csv')
+    X_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_test_10-90.csv')
+    y_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_test_10-90.csv')
 
-    # # Example of loading an existing model and report.
-    # model = PoseModel(ModelType.MLPRegressor,data_type = DataOptions.CONTACT_ONLY ,model_fn = 'MLPRegressor_CONTACT_ONLY.sav')
+    data_options = [DataOptions.Z_ONLY, DataOptions.ALL]
+
+    for data_option in data_options:
+        model = PoseModel(ModelType.LinearRegression, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                              y_test=y_test)
+        model.train(save=True, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
+
+    neighbors = [3, 4, 5, 6, 8, 12, 20, 35]
+    for data_option in data_options:
+        for n in neighbors:
+            model = PoseModel(ModelType.KNeighborsRegressor, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                              y_test=y_test)
+            model.train(neighbors=n, save=True,
+                        save_fn="{}_{}_{}neighbors.sav".format(model.model_type.name, model.data_type.name, n))
+
+    num_models = 5
+    rand_inits = 5
+    for data_option in data_options:
+        for n in range(num_models):
+            model = PoseModel(ModelType.MLPRegressor, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                              y_test=y_test)
+            model.train(random_inits=rand_inits, save=True,
+                        save_fn="{}_{}_{}.sav".format(model.model_type.name, model.data_type.name, n))
+
+
+
+def main():
+    # evaluate_all()
+    train_with_all_data()
 
 if __name__ == '__main__':
     main()
