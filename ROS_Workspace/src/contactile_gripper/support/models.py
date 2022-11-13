@@ -240,10 +240,10 @@ class PoseModel:
 def main():
     data_dir_name = "cable_pose_3_cable_with_forces"
     dataset_path = os.getcwd() + '\\' + 'processed_data' + '\\' + data_dir_name + '\\'
-    X_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_train_30-70.csv')
-    y_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_train_30-70.csv')
-    X_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_test_30-70.csv')
-    y_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_test_30-70.csv')
+    X_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_train_10-90.csv')
+    y_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_train_10-90.csv')
+    X_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_test_10-90.csv')
+    y_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_test_10-90.csv')
 
     full_report = ""
     data_options = [DataOptions.Z_ONLY,DataOptions.ALL]
