@@ -16,6 +16,7 @@ key_map = {'grip_open':'d',
             'grip_close':'f',
             'grip_increment_inc':'e',
             'grip_increment_dec':'r',
+            'bias_tactile_sensors':'b',
             'complete': 'c',
             'clear_limits': 'a',
             'prompt': 'p',
@@ -39,9 +40,9 @@ class UiNode(object):
         self.gripper_goal_pos = None
 
         #Setup
-        self.routine_menu_funcs = (self.menu_routines_grasp_and_release,
-                                   self.menu_routines_grasp_forever,
-                                   self.menu_routines_cable_pull_experiment)
+        self.routine_menu_funcs = (self.menu_routines_experiment,
+                                   self.menu_routines_grasp,
+                                   self.menu_routines_open)
         self.gripper_pos_increment = 30
 
         self.current_menu = self.menu_main
@@ -56,23 +57,20 @@ class UiNode(object):
 
 
     ######################## Subscriber and service callbacks ########################
-    def gripper_pos_callback(self,msg):
-        self.gripper_pos = msg.data
+    def gripper_pos_callback(self,msg): self.gripper_pos = msg.data
+
     def routine_running_callback(self, msg):
         rospy.logdebug('[routine_running_callback]')
-        rospy.loginfo('Routine running: {}'.format(msg.data))
+        rospy.loginfo('\nRoutine running: {}\n'.format(msg.data))
         self.routine_running = msg.data
-
 
     ######################## Main loop ########################
     def main_loop(self):
         """Continuously get the key inputs from the user and pass the key to the current menu function."""
         while not rospy.is_shutdown():
             key = getKey()
-            if key == '': pass # No entry.
-            else:
-                self.current_menu(key)
-                rospy.logdebug('current_menu: {} key: {}'.format(self.current_menu.__name__,key))
+            self.current_menu(key)
+            rospy.logdebug('current_menu: {} key: {}'.format(self.current_menu.__name__,key))
             self.main_loop_rate_obj.sleep()
 
 
@@ -80,7 +78,7 @@ class UiNode(object):
     """All menu functions accept a key as an argument. When a key is pressed, the key is passed to whatever function
     is set as self.current_menu."""
     def new_menu_update(self,new_menu_func):
-        """Changes the current menu function. The new menu function is passed as an argument."""
+        """This is how you change menus. The new menu (function) is passed as an argument."""
         rospy.logdebug('[new_menu_update]')
         if new_menu_func in self.routine_menu_funcs:
             self.routine_running = True
@@ -90,6 +88,7 @@ class UiNode(object):
 
     def menu_main(self,key):
         rospy.logdebug('[menu_main] key: {}'.format(key))
+        if key == '': return  # No entry.
         if key == '1':
             self.new_menu_update(self.menu_sys_direct_control)
         elif key == '2':
@@ -105,6 +104,7 @@ class UiNode(object):
 
     def menu_sys_direct_control(self,key):
         rospy.logdebug('[menu_sys_direct_control] key: {}'.format(key))
+        if key == '': return  # No entry.
         if key in key_map['EMO_bindings']: # EMERGENCY OFF. Space, enter, backspace, or esc.
             self.change_to_passive(self.menu_main)
         elif key == key_map['prompt']:
@@ -115,26 +115,28 @@ class UiNode(object):
         \n\nDIRECT CONTROL MODE\n
         {}/{}: Gripper open/close
         {}/{}: Gripper increase/decrease increment
+        {}: Bias tactile sensors
         {}: Show prompt again
         {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
         """.format(key_map['grip_open'], key_map['grip_close'],key_map['grip_increment_inc'],
-                   key_map['grip_increment_dec'],key_map['prompt'],key_map['EMO'])
+                   key_map['grip_increment_dec'],key_map['bias_tactile_sensors'],key_map['prompt'],key_map['EMO'])
 
     def menu_routines(self,key):
         rospy.logdebug('[menu_routines] key: {}'.format(key))
+        if key == '': return  # No entry.
         if key == '1':
-            self.new_menu_update(self.menu_routines_grasp_and_release)
+            self.new_menu_update(self.menu_routines_experiment)
         elif key == '2':
-            self.new_menu_update(self.menu_routines_grasp_forever)
+            self.new_menu_update(self.menu_routines_grasp)
         elif key == '3':
-            self.new_menu_update(self.menu_routines_cable_pull_experiment)
+            self.new_menu_update(self.menu_routines_open)
         elif key in key_map['EMO_bindings']:
             self.new_menu_update(self.menu_main)
     menu_routines.prompt = """  
         \n\nROUTINES MENU\n
-        1: Grasp & Release
-        2: Grasp Forever
-        3: Cable Pull Experiment
+        1: Experiment Routine
+        2: Grasp
+        3: Open
         {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
         """.format(key_map['EMO'])
 
@@ -142,15 +144,15 @@ class UiNode(object):
         \n\nROUTINE RUNNING\n
         {}: EMERGENCY OFF/PASSIVE MODE/BACK\n
         """.format(key_map['EMO'])
-    def menu_routines_grasp_and_release(self,key):
+    def menu_routines_experiment(self, key):
         self.routine_handle(key)
-    menu_routines_grasp_and_release.prompt = routine_running_prompt
-    def menu_routines_grasp_forever(self, key):
+    menu_routines_experiment.prompt = routine_running_prompt
+    def menu_routines_grasp(self, key):
         self.routine_handle(key)
-    menu_routines_grasp_forever.prompt = routine_running_prompt
-    def menu_routines_cable_pull_experiment(self, key):
+    menu_routines_grasp.prompt = routine_running_prompt
+    def menu_routines_open(self, key):
         self.routine_handle(key)
-    menu_routines_cable_pull_experiment.prompt = routine_running_prompt
+    menu_routines_open.prompt = routine_running_prompt
 
 
     ######################## Supporting methods ########################
@@ -174,6 +176,9 @@ class UiNode(object):
         elif key == key_map['grip_increment_dec']:
             self.gripper_pos_increment -= 1
             rospy.loginfo('Gripper increment: {}'.format(self.gripper_pos_increment))
+        elif key == key_map['bias_tactile_sensors']:
+            srv_clients.bias_request_srv_client()
+            rospy.loginfo('Biased tactile sensors'.format(self.gripper_pos_increment))
 
     def routine_handle(self,key):
         """All routines are handled the same. If self.routine_running was set back to false because the routine
@@ -185,6 +190,7 @@ class UiNode(object):
                          "Failure to include may cause the routine to never run because routine_running flag"
                          "never gets set to True.")
         if key in key_map['EMO_bindings'] or not self.routine_running:  # EMERGENCY OFF. Space, enter, backspace, or esc.
+            # self.new_menu_update(self.menu_routines)
             self.change_to_passive(self.menu_routines)
 
     def shutdown_entire_system(self):

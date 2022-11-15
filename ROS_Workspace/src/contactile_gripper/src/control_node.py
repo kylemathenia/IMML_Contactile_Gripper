@@ -1,8 +1,5 @@
 #!/usr/bin/env python2
-"""
-This is an example of the structure of a node that has multiple publishers publishing at different rates and a
-subscriber. This examples does not function.
-"""
+
 
 import time
 import rospy
@@ -37,9 +34,9 @@ class ControlNode(object):
         self.control_function = self.no_routine
 
         # Setup
-        self.routine_bindings = {'menu_routines_grasp_and_release': self.grasp_and_release_routine,
-                                 'menu_routines_grasp_forever': self.grasp_forever_routine,
-                                 'menu_routines_cable_pull_experiment': self.cable_pull_experiment_routine}
+        self.routine_bindings = {'menu_routines_experiment': self.experiment_routine,
+                                 'menu_routines_grasp': self.grasp_routine,
+                                 'menu_routines_open': self.open_routine}
         self.routine_menus = set(self.routine_bindings.keys())
         self.routine_running = False
         self.routine_stage = 0
@@ -100,36 +97,28 @@ class ControlNode(object):
         """Don't publish commands if the UI is not in a menu for running a routine."""
         pass
 
-    def grasp_forever_routine(self):
-        self.check_stage()
-        if self.routine_stage == 0:  # Grasp
-            srv_success = srv_clients.bias_request_srv_client()
-            self.stage_complete = True
-        if self.routine_stage == 1:  # Grasp
-            self.grasp()
-
-    #
-    # def grasp_and_release_routine(self):
+    # def experiment_routine(self):
+    #     goal_cur_low = 15
+    #     goal_cur_high = 50
     #     self.check_stage()
     #     if self.routine_stage == 0:  # Setup
     #         srv_success = srv_clients.bias_request_srv_client()
-    #         file_prefix_ans = raw_input("Enter the filename for data:\n")
-    #         topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
-    #         self.record_data(topic_list, file_prefix=file_prefix_ans, record=True)
+    #         topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1', '/Ground_Truth_Pose']
+    #         self.record_data(topic_list = topic_list, record=True)
     #         self.stage_complete = True
     #
     #     elif self.routine_stage == 1:  # Go to starting position.
     #         self.open()
-    #         if self.stage_timeout(timeout=0.5):
+    #         if self.stage_timeout(timeout=3):
     #             self.stage_complete = True
-    #             self.gripper_start_pos = self.gripper_pos + 1300
-    #             self.gripper_goal_cur = 4
+    #             self.gripper_start_pos = self.gripper_pos + 500
+    #             self.gripper_goal_cur = random.randrange(goal_cur_low,goal_cur_high)
     #
     #     elif self.routine_stage == 2:  # Go to starting position.
     #         self.go_to_start()
     #         if self.stage_timeout(timeout=0.5):
     #             self.stage_complete = True
-    #             self.gripper_goal_cur = 4
+    #             self.gripper_goal_cur = random.randrange(goal_cur_low,goal_cur_high)
     #
     #     elif self.routine_stage == 3:  # Wait for data to start recording.
     #         if self.stage_timeout(timeout=0.25):
@@ -144,7 +133,7 @@ class ControlNode(object):
     #         self.go_to_start()
     #         if self.stage_timeout(timeout=0.5):
     #             self.stage_complete = True
-    #             self.gripper_goal_cur = 12
+    #             self.gripper_goal_cur = random.randrange(goal_cur_low,goal_cur_high)
     #
     #     elif self.routine_stage == 6:  # Maintain grasp for some time.
     #         self.grasp()
@@ -155,7 +144,7 @@ class ControlNode(object):
     #         self.go_to_start()
     #         if self.stage_timeout(timeout=0.5):
     #             self.stage_complete = True
-    #             self.gripper_goal_cur = 24
+    #             self.gripper_goal_cur = random.randrange(goal_cur_low,goal_cur_high)
     #
     #     elif self.routine_stage == 8:  # Maintain grasp for some time.
     #         self.grasp()
@@ -166,7 +155,7 @@ class ControlNode(object):
     #         self.go_to_start()
     #         if self.stage_timeout(timeout=0.5):
     #             self.stage_complete = True
-    #             self.gripper_goal_cur = 36
+    #             self.gripper_goal_cur = random.randrange(goal_cur_low,goal_cur_high)
     #
     #     elif self.routine_stage == 10:  # Maintain grasp for some time.
     #         self.grasp()
@@ -181,19 +170,16 @@ class ControlNode(object):
     #     elif self.routine_stage == 12:  # Finish
     #         """Need to let the UI node that the routine is complete. """
     #         self.record_data(record=False)
-    #         self.routine_running_pub.publish(False)
     #         self.stage_complete = True
 
 
-    def grasp_and_release_routine(self):
-        goal_cur_low = 15
-        goal_cur_high = 37
+    def experiment_routine(self):
+        self.gripper_goal_cur = 35
         self.check_stage()
         if self.routine_stage == 0:  # Setup
-            file_prefix_ans = raw_input("Enter the filename for data:\n")
             srv_success = srv_clients.bias_request_srv_client()
-            topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
-            self.record_data(topic_list, file_prefix=file_prefix_ans, record=True)
+            topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1', '/Ground_Truth_Pose']
+            self.record_data(topic_list = topic_list, record=True)
             self.stage_complete = True
 
         elif self.routine_stage == 1:  # Go to starting position.
@@ -206,7 +192,6 @@ class ControlNode(object):
             self.go_to_start()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
-                self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
 
         elif self.routine_stage == 3:  # Wait for data to start recording.
             if self.stage_timeout(timeout=0.25):
@@ -214,81 +199,57 @@ class ControlNode(object):
 
         elif self.routine_stage == 4:  # Maintain grasp for some time.
             self.grasp()
-            if self.stage_timeout(timeout=8):
+            if self.stage_timeout(timeout=2):
                 self.stage_complete = True
 
-        elif self.routine_stage == 5:  # Release grasp.
+        elif self.routine_stage == 5:  # Go to starting position.
+            self.go_to_start()
+            if self.stage_timeout(timeout=0.5):
+                self.stage_complete = True
+
+        elif self.routine_stage == 6:  # Maintain grasp for some time.
+            self.grasp()
+            if self.stage_timeout(timeout=2):
+                self.stage_complete = True
+
+        elif self.routine_stage == 7:  # Go to starting position.
+            self.go_to_start()
+            if self.stage_timeout(timeout=0.5):
+                self.stage_complete = True
+
+        elif self.routine_stage == 8:  # Maintain grasp for some time.
+            self.grasp()
+            if self.stage_timeout(timeout=2):
+                self.stage_complete = True
+
+        elif self.routine_stage == 9:  # Go to starting position.
+            self.go_to_start()
+            if self.stage_timeout(timeout=0.5):
+                self.stage_complete = True
+
+        elif self.routine_stage == 10:  # Maintain grasp for some time.
+            self.grasp()
+            if self.stage_timeout(timeout=12):
+                self.stage_complete = True
+
+        elif self.routine_stage == 11:  # Release grasp.
             self.open()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
 
-        elif self.routine_stage == 6:  # Finish
+        elif self.routine_stage == 12:  # Finish
             """Need to let the UI node that the routine is complete. """
             self.record_data(record=False)
-            self.routine_running_pub.publish(False)
             self.stage_complete = True
 
 
+            
+    def grasp_routine(self):
+        self.gripper_goal_cur = 35
+        self.grasp()
 
-    def grasp_and_release_routine2(self):
-        self.check_stage()
-        if self.routine_stage==0: # Setup
-            srv_success = srv_clients.bias_request_srv_client()
-            # topic_list = ['/Gripper_Pos', '/hub_0/sensor_0', '/hub_0/sensor_1']
-            file_prefix_ans = raw_input("Enter the filename for data:\n")
-            topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
-            self.record_data(topic_list, file_prefix=file_prefix_ans, record=True)
-            self.stage_complete = True
-
-        elif self.routine_stage==1: # Wait for data to start recording.
-            if self.stage_timeout(timeout=0.5):
-                self.stage_complete = True
-                self.gripper_goal_cur = 4
-
-        elif self.routine_stage==2: # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=3):
-                self.stage_complete = True
-                self.gripper_goal_cur = 20
-
-        elif self.routine_stage==3: # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=3):
-                self.stage_complete = True
-                self.gripper_goal_cur = 30
-
-        elif self.routine_stage==4: # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=3):
-                self.stage_complete = True
-                self.gripper_goal_cur = 45
-
-        elif self.routine_stage==5: # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=3):
-                self.stage_complete = True
-                self.gripper_goal_cur = 65
-
-        elif self.routine_stage==6: # Maintain grasp for some time.
-            self.grasp()
-            if self.stage_timeout(timeout=3):
-                self.stage_complete = True
-
-        elif self.routine_stage==7: # Release grasp.
-            self.open()
-            if self.stage_timeout(timeout=0.5):
-                self.stage_complete = True
-
-        elif self.routine_stage==8: # Finish
-            """Need to let the UI node that the routine is complete. """
-            self.record_data(record=False)
-            self.routine_running_pub.publish(False)
-            self.stage_complete = True
-
-
-
-    def cable_pull_experiment_routine(self):
-        pass
+    def open_routine(self):
+        self.open()
 
 
     ######################## Routine Support ########################
@@ -354,6 +315,7 @@ class ControlNode(object):
     ######################## State Change Support #########################
     def check_if_leave_or_enter_routine(self,next_menu):
         """Special action taken if entering or leaving a routine."""
+        self.routine_stage = 0
         routine_control_functions = self.routine_bindings.values()
         if self.control_function not in routine_control_functions and next_menu not in self.routine_menus: # No routine involved.
             return
@@ -394,7 +356,7 @@ class ControlNode(object):
     ######################## Other ########################
     def record_data(self,topic_list=None,file_prefix="experiment1",record=True):
         if record:
-            srv_clients.data_recorder_srv_client(topic_list, file_prefix=file_prefix, stop=False)
+            srv_clients.data_recorder_srv_client(topic_list=topic_list, file_prefix=file_prefix, stop=False)
             self.recording_data = True
         elif not record:
             srv_clients.data_recorder_srv_client([], file_prefix=" ", stop=True)

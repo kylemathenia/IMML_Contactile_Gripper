@@ -17,8 +17,28 @@ import glob
 import math
 import os
 import atexit
+from collections import namedtuple
+from enum import Enum
 
-from pose_models import Pose
+Pose = namedtuple("Pose", "pos ang")
+
+class Colors():
+    """The numbers are the number of input features for the data option."""
+    def __init__(self):
+        self.green = (0, 255, 0)
+        self.blue = (255, 0, 0)
+        self.red = (0, 0, 255)
+        self.colors = [self.green,self.blue,self.red]
+        self.cycle_i = 0
+
+    def get_diff_rgb(self):
+        rgb = self.colors[self.cycle_i]
+        self.cycle_i +=1
+        if self.cycle_i >= len(self.colors): self.cycle_i = 0
+        return rgb
+
+    def reset(self): self.cycle_i = 0
+
 
 class Camera:
     def __init__(self,path_to_cal_images):
@@ -30,11 +50,12 @@ class Camera:
         self.__calibrate_cam()
         self.__calibrate_cable()
         self.prev_positions = []
+        self.colors = Colors()
 
     def find_ground_truth(self,undistort=True,illustrations=False):
         self.cable_pos, self.cable_ang = None,None
         self.aruco_present,self.cable_present = False,False
-        ret, self.frame = self.cap.read()
+        ret = self.cap_frame()
         if undistort:
             self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
         self.__find_aruco()
@@ -42,11 +63,24 @@ class Camera:
             self.__aruco_transform()
             self.__find_cable()
         if illustrations:
-            self.__show_ground_truth()
+            self.__show_cable_and_aruco([Pose(self.cable_pos,self.cable_ang)])
         if self.aruco_present and self.cable_present:
             return True,Pose(self.cable_pos, -self.cable_ang)
         else:
             return False,Pose(999,999)
+
+    def cap_frame(self):
+        ret, self.frame = self.cap.read()
+        return ret
+
+    def show_predictions(self,pred_poses,undistort=True):
+        self.aruco_present,self.cable_present = False, True
+        if undistort:
+            self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
+        self.__find_aruco()
+        if self.aruco_present:
+            self.__aruco_transform()
+            self.__show_cable_and_aruco(pred_poses)
 
     def __find_aruco(self):
         """Finds the aruco marker in self.frame, and sets some parameters."""
@@ -130,21 +164,25 @@ class Camera:
         # http://color.lukas-stratmann.com/color-systems/hsv.html
         # cv2 uses ranges: H: 0-179, S: 0-255, V: 0-255
         # Note that most color picker have different ranges. You likely need to convert.
-        # Yellow mask
-        # lower = np.array([18, 127, 127], dtype="uint8")
-        # upper = np.array([42, 255, 255], dtype="uint8")
-        # lower = np.array([15, 100, 100], dtype="uint8")
-        # upper = np.array([45, 255, 255], dtype="uint8")
-        # mask = cv2.inRange(frame_copy, lower, upper)
-        # Red mask
-        # lower mask (0-10)
+        # Red mask. This is kind of a bad choice because this is at the boundary of the color wheel, but here we are.
+        # # Lower mask
+        # lower_red = np.array([0, 90, 10])
+        # upper_red = np.array([25, 255, 255])
+        # mask0 = cv2.inRange(frame_copy, lower_red, upper_red)
+        #
+        # # Upper mask
+        # lower_red = np.array([155, 90, 10])
+        # upper_red = np.array([180, 255, 255])
+
+        # Lower mask
         lower_red = np.array([0, 90, 10])
-        upper_red = np.array([25, 255, 255])
+        upper_red = np.array([10, 255, 255])
         mask0 = cv2.inRange(frame_copy, lower_red, upper_red)
 
-        # upper mask (170-180)
-        lower_red = np.array([155, 90, 10])
+        # Upper mask
+        lower_red = np.array([170, 90, 10])
         upper_red = np.array([180, 255, 255])
+
         mask1 = cv2.inRange(frame_copy, lower_red, upper_red)
         # join my masks
         return mask0 + mask1
@@ -152,10 +190,7 @@ class Camera:
     def __find_cable_ang(self):
         """Returns the angle of the cable in degrees in the sensor coordinate system."""
         self.cable_slope = self.__find_slope(self.color_centers[0], self.color_centers[1])
-        if self.cable_slope is None:
-            return 8000
-        else:
-            return math.degrees(math.atan(self.cable_slope))
+        return math.degrees(math.atan(self.cable_slope))
 
     def __find_cable_pos(self):
         """Returns the position of the cable in mm in the sensor coordinate system."""
@@ -170,12 +205,14 @@ class Camera:
             del self.prev_positions[0]
         return np.average(self.prev_positions)
 
-    def __show_ground_truth(self):
-        """Show the captured image with the aruco marker coordinates and cable coordiates, if present."""
+    def __show_cable_and_aruco(self,poses):
+        """Show the aruco marker and cables if present. Accepts a list of Pose named tuples. """
         if self.aruco_present:
             self.__add_aruco_illustration()
         if self.cable_present:
-            self.__add_cable_illustration()
+            for pose in poses:
+                self.__add_cable_illustration(pose.pos,pose.ang,self.colors.get_diff_rgb())
+        self.colors.reset()
 
     ####################################################################################################################
     # CALIBRATION
@@ -243,16 +280,19 @@ class Camera:
         # Show axes lines
         offset = 50
         c = self.aruco_center
-        cv2.line(self.frame, (c[0], c[1] + offset), (c[0], c[1] - offset), color=(0, 0, 255), thickness=1)
-        cv2.line(self.frame, (c[0] + offset, c[1]), (c[0] - offset, c[1]), color=(0, 0, 255), thickness=1)
+        cv2.line(self.frame, (c[0], c[1] + offset), (c[0], c[1] - offset), color=self.colors.red, thickness=1)
+        cv2.line(self.frame, (c[0] + offset, c[1]), (c[0] - offset, c[1]), color=self.colors.red, thickness=1)
 
-    def __add_cable_illustration(self):
-        # Show line between color points.
-        tuple(self.color_centers[0])
-        cv2.line(self.frame, tuple(self.color_centers[0]), tuple(self.color_centers[1]), color= (0, 0, 255), thickness=1)
-        for i, center in enumerate(self.color_centers):
-            self.frame = cv2.circle(self.frame, tuple(center), radius=4, color=(0, 0, 255), thickness=-1)
-        # Show a dot for where this falls on the y axis.
+    def __add_cable_illustration(self,pos,ang,color):
+        m = math.tan(math.radians(ang))
+        b = pos / self.pix_to_mm
+        xs = [-200,200]
+        ys = [m*xs[0]-b,m*xs[1]-b]
+        xs = [w + self.aruco_center[0] for w in xs]
+        ys = [w + self.aruco_center[1] for w in ys]
+        to_pt, from_pt = [int(xs[0]),int(ys[0])], [int(xs[1]),int(ys[1])]
+        cv2.line(self.frame, tuple(to_pt), tuple(from_pt), color=color, thickness=2)
+
 
     def shutdown(self):
         self.cap.release()
@@ -280,7 +320,7 @@ class Camera:
 
     def __find_slope(self, pt1, pt2):
         if pt1[0] == pt2[0]:
-            return None  # Infinite slope
+            return 9999  # Infinite slope
         return float((pt2[1] - pt1[1])) / (float(pt2[0] - pt1[0]))
 
     ####################################################################################################################
@@ -319,9 +359,10 @@ class Camera:
         while True:
             self.cable_present = False
             ret, self.frame = self.cap.read()
-            self.__get_color_contours()
+            self.__find_cable()
+            # self.__get_color_contours()
             if self.cable_present:
-                self.__add_cable_illustration()
+                self.__add_cable_illustration(self.cable_pos,self.cable_ang,self.colors.green)
             if show_contours:
                 for c in self.cnts:
                     cv2.drawContours(self.frame, [c], 0, (0, 0, 0), 2)
@@ -343,7 +384,6 @@ class Camera:
         # self.__calibrate_cam(test=True)
         # self.test_aruco()
         # self.test_segmentation()
-        # self.test_find_cable()
         self.test_ground_truth()
 
 def main():
