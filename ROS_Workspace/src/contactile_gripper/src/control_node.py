@@ -185,7 +185,7 @@ class ControlNode(object):
     def grasp(self):
         """Close the gripper until the global z force is at a certain level."""
         global_z_force = (self.tact_sensor0.gfZ + self.tact_sensor1.gfZ) / 2
-        rospy.loginfo("z force: {}".format(global_z_force))
+        # rospy.loginfo("z force: {}".format(global_z_force))
         self.check_if_grasping()
         if not self.grasping: # Not in contact.
             self.no_contact_close()
@@ -220,7 +220,7 @@ class ControlNode(object):
         min_tension = 0.2 # kg
         tension_target = random.uniform(min_tension,max_tension)
         scale_target = max_tension - tension_target
-        rospy.loginfo("\n\nScale Target: {}".format(scale_target))
+        rospy.loginfo("\n\nScale Target: {}\n".format(scale_target))
 
     def grasp_feedback(self):
         """Close the gripper unitl the global z force is at a certain level."""
@@ -249,9 +249,9 @@ class ControlNode(object):
 
     def show_stage_time_elapsed(self):
         stage_time = self.get_stage_time()
-        if int(stage_time) > self.time_left_int:
+        if int(stage_time) > self.stage_sec_count:
             self.stage_sec_count = int(stage_time)
-            rospy.loginfo("\nStage time elapsed: {}".format(self.stage_sec_count))
+            rospy.loginfo("Stage time elapsed: {}".format(self.stage_sec_count))
 
 
     ######################## State Change Support #########################
