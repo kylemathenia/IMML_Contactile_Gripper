@@ -51,6 +51,7 @@ class ControlNode(object):
         self.i_gain = .1
         self.total_error = 0
         self.previous_error = 0
+        self.filename_tracker = {}
 
         self.wait_for_sensors()
         self.gripper_goal_pos = self.gripper_pos
@@ -98,14 +99,16 @@ class ControlNode(object):
         pass
 
     def experiment_routine(self):
-        goal_cur_low = 25
-        goal_cur_high = 50
+        goal_cur_low = 35
+        goal_cur_high = 65
         self.check_stage()
         if self.routine_stage == 0:  # Setup
-            file_prefix_ans = raw_input("Enter the filename for data:\n")
+            self.file_prefix_ans = raw_input("Enter the filename for data:\n")
+            if self.file_prefix_ans not in self.filename_tracker.keys(): self.filename_tracker[self.file_prefix_ans] = 1
+            else: self.filename_tracker[self.file_prefix_ans] += 1
             srv_success = srv_clients.bias_request_srv_client()
             topic_list = ['/hub_0/sensor_0', '/hub_0/sensor_1']
-            self.record_data(topic_list, file_prefix=file_prefix_ans, record=True)
+            self.record_data(topic_list, file_prefix=self.file_prefix_ans, record=True)
             self.stage_complete = True
             self.stage_sec_count = 0
             self.gripper_goal_cur = random.randrange(goal_cur_low, goal_cur_high)
@@ -113,7 +116,7 @@ class ControlNode(object):
 
         elif self.routine_stage == 1:  # Wait for a moment.
             self.open()
-            if self.stage_timeout(timeout=3):
+            if self.stage_timeout(timeout=1.5):
                 self.stage_complete = True
                 self.gripper_start_pos = self.gripper_pos + 500
 
@@ -121,12 +124,11 @@ class ControlNode(object):
             self.go_to_start()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
-                self.show_new_scale_target()
 
         elif self.routine_stage == 3:  # Maintain grasp for some time.
             self.grasp()
             self.show_stage_time_elapsed()
-            if self.stage_timeout(timeout=self.time_out_period):
+            if self.stage_timeout(timeout=5):
                 self.stage_complete = True
                 self.stage_sec_count = 0
                 self.show_new_scale_target()
@@ -163,12 +165,21 @@ class ControlNode(object):
                 self.stage_sec_count = 0
                 self.show_new_scale_target()
 
-        elif self.routine_stage == 8:  # Release grasp.
+        elif self.routine_stage == 8:  # Maintain grasp for some time.
+            self.grasp()
+            self.show_stage_time_elapsed()
+            if self.stage_timeout(timeout=self.time_out_period):
+                self.stage_complete = True
+                self.stage_sec_count = 0
+                self.show_new_scale_target()
+
+        elif self.routine_stage == 9:  # Release grasp.
             self.open()
             if self.stage_timeout(timeout=0.5):
                 self.stage_complete = True
+                print("Filename count: {}\n".format(self.filename_tracker[self.file_prefix_ans]))
 
-        elif self.routine_stage == 9:  # Finish
+        elif self.routine_stage == 10:  # Finish
             """Need to let the UI node that the routine is complete. """
             self.record_data(record=False)
             self.stage_complete = True
@@ -251,7 +262,7 @@ class ControlNode(object):
         stage_time = self.get_stage_time()
         if int(stage_time) > self.stage_sec_count:
             self.stage_sec_count = int(stage_time)
-            rospy.loginfo("Stage time elapsed: {}".format(self.stage_sec_count))
+            rospy.loginfo("Stage: {}\tTime elapsed: {}".format(self.routine_stage,self.stage_sec_count))
 
 
     ######################## State Change Support #########################
