@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+"""This second pose node can be used to pose a predicted pose with a different model."""
 
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(sys.path[0]), 'support'))

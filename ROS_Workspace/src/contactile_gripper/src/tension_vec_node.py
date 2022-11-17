@@ -7,33 +7,16 @@ import time
 import numpy as np
 from contactile_gripper.msg import Float32List
 from models import PoseModel
-from std_msgs.msg import Bool
 from papillarray_ros_v2.msg import SensorState
 from collections import namedtuple
 from enum import Enum
 
+from models import ModelType
 
-from models import ModelType, DataOptions
-# class ModelType(Enum):
-#     MLPRegressor = 1
-#     KNeighborsRegressor = 2
-#     LinearRegression = 3
-#     LinearAnalytical = 4
-#
-# class DataOptions(Enum):
-#     """The numbers are the number of input features for the data option."""
-#     ALL = 39
-#     Z_ONLY = 10
-#     CONTACT_ONLY = 9
+TensionVec = namedtuple("TensionVec", "roll pitch")
 
-# How to pass in arguments with launch file:
-# https://campus-rover.gitbook.io/lab-notebook/faq/using-args-params-roslaunch
-# https://www.folkstalk.com/2022/09/ros-launch-file-with-args-with-code-examples.html
-
-Pose = namedtuple("Pose", "pos ang")
-
-class PoseNode(object):
-    """Takes 3 arguments: model type, data type, saved model path. If not in contact, publish 999"""
+class TensionVecNode(object):
+    """Takes 3 arguments: model type, saved model path. If pose is not good, does not publish tension vec prediction."""
     def __init__(self):
         rospy.init_node('pose_node', anonymous=False, log_level=rospy.INFO)
         # TODO make sure it finds the right folder.
@@ -46,7 +29,6 @@ class PoseNode(object):
         self.pose_model = self.get_pose_model(model_type, data_type, model_fn)
         # Publishers
         self.pose_pub = rospy.Publisher('Pose', Float32List, queue_size=1)
-        self.good_grasp_pub = rospy.Publisher('good_grasp', Bool, queue_size=1)
         # Subscribers
         self.tact_pillar_sub = rospy.Subscriber('/hub_0/sensor_0', SensorState, self.tact_0_callback, queue_size=1)
         self.tact_sensor0 = None
@@ -54,9 +36,6 @@ class PoseNode(object):
         self.tact_pillar_sub = rospy.Subscriber('/hub_0/sensor_1', SensorState, self.tact_1_callback, queue_size=1)
         self.tact_sensor1 = None
         self.in_contact_1 = False
-
-        self.good_pos_range = [2,5]
-        self.good_ang_range = [-8,8]
 
         self.main_loop_rate = 100  # Hz.
         self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
@@ -74,24 +53,15 @@ class PoseNode(object):
         self.in_contact_1 = msg.is_contact
         self.sensor1_pred_data = self.prep_sensor_data(msg)
 
-    def find_if_good_pose(self,pose):
-        good_grasp = True
-        if self.in_contact_0 and self.in_contact_1:
-            if pose.pos < self.good_pos_range[0] or pose.pos > self.good_pos_range[1]: good_grasp = False
-            if pose.ang < self.good_ang_range[0] or pose.ang > self.good_ang_range[1]: good_grasp = False
-        elif not self.in_contact_0 or not self.in_contact_1: good_grasp = False
-        return good_grasp
-
-
     ######################## Main loop ########################
     def main_loop(self):
         """This is the main loop for the node which executes at self.main_loop_rate."""
         while not rospy.is_shutdown():
+            # if not self.in_contact_0 or not self.in_contact_1:
+            #     self.pose_pub.publish([float(999), float(999)])
             pose = self.determine_pose()
             if self.in_contact_0 and self.in_contact_1:
                 self.pose_pub.publish([float(pose.pos), float(pose.ang)])
-            good_pose = self.find_if_good_pose(pose)
-            self.good_grasp_pub.publish(good_pose)
             self.main_loop_rate_obj.sleep()
 
     ######################## Other ########################
@@ -145,7 +115,7 @@ class PoseNode(object):
 
 
 def main():
-    _ = PoseNode()
+    _ = TensionVecNode()
 
 
 if __name__ == '__main__':

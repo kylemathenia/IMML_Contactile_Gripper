@@ -1,0 +1,123 @@
+
+
+
+################ LinearRegression ################
+
+Model Type: LinearRegression
+ 
+MSE: 75.28161658528455
+MSE Std: 618.4368665610717
+Max err^2: 13234.579260672212
+R²: 0.8857051114297605
+
+
+################ KNeighborsRegressor ################
+
+Model Type: KNeighborsRegressor
+Neighbors: 3
+MSE: 24.356182795698924
+MSE Std: 166.71268249352363
+Max err^2: 3211.1111111111118
+R²: 0.9583483945492481
+
+Model Type: KNeighborsRegressor
+Neighbors: 4
+MSE: 29.153855846774192
+MSE Std: 139.5312097923357
+Max err^2: 2025.0
+R²: 0.9470101777624853
+
+Model Type: KNeighborsRegressor
+Neighbors: 5
+MSE: 36.778225806451616
+MSE Std: 152.97081171112973
+Max err^2: 1600.0
+R²: 0.9297329384768285
+
+Model Type: KNeighborsRegressor
+Neighbors: 6
+MSE: 41.4771505376344
+MSE Std: 170.3057433624217
+Max err^2: 2025.0
+R²: 0.9183128267897693
+
+Model Type: KNeighborsRegressor
+Neighbors: 8
+MSE: 52.73828125
+MSE Std: 217.10424660277855
+Max err^2: 2500.0
+R²: 0.893649704962072
+
+Model Type: KNeighborsRegressor
+Neighbors: 12
+MSE: 70.69329637096774
+MSE Std: 282.61319314162404
+Max err^2: 3117.3611111111104
+R²: 0.8483616657221329
+
+Model Type: KNeighborsRegressor
+Neighbors: 20
+MSE: 86.50412802419355
+MSE Std: 354.54546900413794
+Max err^2: 3136.0
+R²: 0.7987184897522566
+
+Model Type: KNeighborsRegressor
+Neighbors: 35
+MSE: 106.48602040816327
+MSE Std: 453.97423893433034
+Max err^2: 4059.5102040816328
+R²: 0.733608895876025
+
+
+################ MLPRegressor ################
+
+Model Type: MLPRegressor
+Default Sklearn MLPRegressor params. 
+Model num: 0
+Random initializations: 5
+Criteria: RMSE
+MSE: 29.50372085869587
+MSE Std: 134.4911212646511
+Max err^2: 1832.5721885182445
+R²: 0.9469089110452911
+
+Model Type: MLPRegressor
+Default Sklearn MLPRegressor params. 
+Model num: 1
+Random initializations: 5
+Criteria: RMSE
+MSE: 32.04271364431458
+MSE Std: 145.9274294727359
+Max err^2: 1424.2078429669964
+R²: 0.9419646183670491
+
+Model Type: MLPRegressor
+Default Sklearn MLPRegressor params. 
+Model num: 2
+Random initializations: 5
+Criteria: RMSE
+MSE: 30.706787670668877
+MSE Std: 139.82722020066782
+Max err^2: 1649.36220583589
+R²: 0.9443141616233153
+
+Model Type: MLPRegressor
+Default Sklearn MLPRegressor params. 
+Model num: 3
+Random initializations: 5
+Criteria: RMSE
+MSE: 30.099480481482676
+MSE Std: 144.5597671631984
+Max err^2: 1717.6091225703624
+R²: 0.9461062774035297
+
+Model Type: MLPRegressor
+Default Sklearn MLPRegressor params. 
+Model num: 4
+Random initializations: 5
+Criteria: RMSE
+MSE: 29.872074591960963
+MSE Std: 142.25223610081986
+Max err^2: 1761.565322579076
+R²: 0.9457513084039908
