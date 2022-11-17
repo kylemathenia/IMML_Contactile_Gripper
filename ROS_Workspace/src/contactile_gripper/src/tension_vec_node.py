@@ -7,6 +7,7 @@ import time
 import numpy as np
 from contactile_gripper.msg import Float32List
 from models import PoseModel
+from std_msgs.msg import Bool
 from papillarray_ros_v2.msg import SensorState
 from collections import namedtuple
 from enum import Enum
@@ -18,17 +19,17 @@ TensionVec = namedtuple("TensionVec", "roll pitch")
 class TensionVecNode(object):
     """Takes 3 arguments: model type, saved model path. If pose is not good, does not publish tension vec prediction."""
     def __init__(self):
-        rospy.init_node('pose_node', anonymous=False, log_level=rospy.INFO)
+        rospy.init_node('tension_vec_node', anonymous=False, log_level=rospy.INFO)
         # TODO make sure it finds the right folder.
         # model_type, data_type, model_fn = sys.argv[0], sys.argv[1], sys.argv[2]
-        model_type, data_type = ModelType.KNeighborsRegressor.name, DataOptions.ALL.name
-        fn = "/cable_pose_3_cable_with_forces_model_files/KNeighborsRegressor_ALL_5neighbors.sav"
-        # model_type, data_type = ModelType.MLPRegressor.name, DataOptions.ALL.name
-        # fn = "/cable_pose_3_cable_with_forces_model_files/MLPRegressor_ALL_0.sav"
+        model_type = ModelType.KNeighborsRegressor.name
+        fn = "/cable_tension_vec_model_files/KNeighborsRegressor_5neighbors.sav"
+        # model_type= ModelType.MLPRegressor.name
+        # fn = "/cable_tension_vec_model_files/MLPRegressor_0.sav"
         model_fn = "/home/ted/Documents/GitHub/IMML_Contactile_Gripper/ROS_Workspace/src/contactile_gripper/support/model_files/" + fn
-        self.pose_model = self.get_pose_model(model_type, data_type, model_fn)
+        self.ten_vec_model = self.get_ten_vec_model(model_type, model_fn)
         # Publishers
-        self.pose_pub = rospy.Publisher('Pose', Float32List, queue_size=1)
+        self.tension_vec_pub = rospy.Publisher('tension_vec', Float32List, queue_size=1)
         # Subscribers
         self.tact_pillar_sub = rospy.Subscriber('/hub_0/sensor_0', SensorState, self.tact_0_callback, queue_size=1)
         self.tact_sensor0 = None
@@ -36,6 +37,8 @@ class TensionVecNode(object):
         self.tact_pillar_sub = rospy.Subscriber('/hub_0/sensor_1', SensorState, self.tact_1_callback, queue_size=1)
         self.tact_sensor1 = None
         self.in_contact_1 = False
+        self.good_grasp_sub = rospy.Subscriber('/good_grasp', Bool, self.good_grasp_callback, queue_size=1)
+        self.good_grasp = False
 
         self.main_loop_rate = 100  # Hz.
         self.main_loop_rate_obj = rospy.Rate(self.main_loop_rate)
@@ -53,58 +56,38 @@ class TensionVecNode(object):
         self.in_contact_1 = msg.is_contact
         self.sensor1_pred_data = self.prep_sensor_data(msg)
 
+    def good_grasp_callback(self,msg):
+        self.good_grasp = msg.data
+
     ######################## Main loop ########################
     def main_loop(self):
         """This is the main loop for the node which executes at self.main_loop_rate."""
         while not rospy.is_shutdown():
-            # if not self.in_contact_0 or not self.in_contact_1:
-            #     self.pose_pub.publish([float(999), float(999)])
-            pose = self.determine_pose()
-            if self.in_contact_0 and self.in_contact_1:
-                self.pose_pub.publish([float(pose.pos), float(pose.ang)])
+            tension_vec = self.determine_tension_vec()
+            self.pose_pub.publish([float(tension_vec.roll), float(tension_vec.pitch)])
             self.main_loop_rate_obj.sleep()
 
     ######################## Other ########################
-    def determine_pose(self):
-        if not self.in_contact_0 and not self.in_contact_0: return Pose(999, 999)
-        pred0 = self.pose_model.model.predict(self.sensor0_pred_data)
-        pred1 = self.pose_model.model.predict(self.sensor1_pred_data)
-        # Flip sensor 1's angle prediction because on the gripper it is mirrored.
-        pred0[0][1] = -pred0[0][1]
-        pose = np.average([pred0[0],pred1[0]],axis=0)
-        return Pose(pose[0], pose[1])
-        # return Pose(pred1[0][0],pred1[0][1])
-
+    def determine_tension_vec(self):
+        if not self.good_grasp: return TensionVec(999, 999)
+        pred = self.pose_model.model.predict(self.sensor_pred_data)
+        return TensionVec(pred[0], pred[1])
 
     def prep_sensor_data(self, d):
         """Get the data in the form the model expects for prediction."""
         prepped_data = []
-        if self.pose_model.data_type == DataOptions.ALL:
-            prepped_data += [d.gfX,d.gfY,d.gfZ]
-            # print("gfX: {}, gfY: {}, gfZ: {}".format(d.gfX,d.gfY,d.gfZ))
-        elif  self.pose_model.data_type == DataOptions.Z_ONLY:
-            prepped_data += [d.gfZ]
+        prepped_data += [d.gfX,d.gfY,d.gfZ]
         for pillar in d.pillars:
-            if self.pose_model.data_type == DataOptions.ALL:
-                # print("fX: {}, fY: {}, fZ: {}, contact: {}".format(pillar.fX,pillar.fY,pillar.fZ,int(pillar.in_contact)))
-                prepped_data += [pillar.fX,pillar.fY,pillar.fZ,int(pillar.in_contact)]
-            elif self.pose_model.data_type == DataOptions.Z_ONLY:
-                prepped_data += [pillar.fZ]
-            elif self.pose_model.data_type == DataOptions.CONTACT_ONLY:
-                prepped_data += [int(pillar.in_contact)]
+            prepped_data += [pillar.fX,pillar.fY,pillar.fZ,pillar.dX,pillar.dY,pillar.dZ,int(pillar.in_contact)]
         return np.array([prepped_data])
 
-    def get_pose_model(self, mt, dt, model_fn):
+    def get_ten_vec_model(self, mt, model_fn):
         if mt == ModelType.MLPRegressor.name: model_type = ModelType.MLPRegressor
         elif mt == ModelType.KNeighborsRegressor.name: model_type = ModelType.KNeighborsRegressor
-        elif mt == ModelType.LinearAnalytical.name: model_type = ModelType.LinearAnalytical
         elif mt == ModelType.LinearRegression.name:model_type = ModelType.LinearRegression
         else: raise KeyError
-        if dt == DataOptions.ALL.name: data_type = DataOptions.ALL
-        elif dt == DataOptions.Z_ONLY.name: data_type = DataOptions.Z_ONLY
-        elif dt == DataOptions.CONTACT_ONLY.name:data_type = DataOptions.CONTACT_ONLY
-        else: raise KeyError
-        return PoseModel(model_type, data_type=data_type, model_fn=model_fn)
+        # TODO need to get the new model file.
+        return PoseModel(model_type, model_fn=model_fn)
 
     def wait_for_data(self):
         while True:
