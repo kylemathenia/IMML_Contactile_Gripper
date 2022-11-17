@@ -28,12 +28,15 @@ class ModelType(Enum):
     KNeighborsRegressor = 2
     LinearRegression = 3
     LinearAnalytical = 4
+    DecisionTreeRegressor = 5
 
 class DataOptions(Enum):
     """The numbers are the number of input features for the data option."""
     ALL = 39
     Z_ONLY = 10
     CONTACT_ONLY = 9
+    ALL_BOTH = 132
+
 
 
 class LinearAnalytical:
@@ -72,7 +75,7 @@ class LinearAnalytical:
                     intercept = p.c[1]
                 ang = math.degrees(math.atan(slope))
                 pos = intercept * self.pos_scale
-            predictions.append([pos,ang])
+            predictions.append([pos,-ang])
         return np.array(predictions)
 
     def __find_2pt_pose(self,x_points,y_points):
@@ -81,7 +84,9 @@ class LinearAnalytical:
             pos = np.average(y_points)
         else:
             m = (y_points[1]-y_points[0]) / (x_points[1]-x_points[0])
-            if x_points[0] == 0:
+            if m == 0:
+                b = y_points[0]
+            elif x_points[0] == 0:
                 b = y_points[0]
             elif x_points[1] == 0:
                 b = y_points[1]
@@ -91,39 +96,44 @@ class LinearAnalytical:
             pos = b * self.pos_scale
         return pos,ang
 
-
 class PoseModel:
-    def __init__(self,model_type, data_type = DataOptions.ALL, X_train=None, y_train=None, X_test=None, y_test=None, model_fn = None):
+    def __init__(self,model_type, data_type = DataOptions.ALL, X_train=None, y_train=None, X_test=None, y_test=None,
+                 model_fn = None,scaled=True):
         self.model_options = {'MLPRegressor','KNeighborsRegressor','LinearRegression','LinearAnalytical'}
         self.model_type = model_type
         self.data_type = data_type
+        self.scaled = scaled
         self.model = None if model_fn is None else self.load_model(model_fn)
         self.X_train, self.y_train,self.X_test, self.y_test = self.__prep_data(X_train,y_train,X_test,y_test)
 
-    def train(self,epochs = [100,500,2000], lr_range = [0.005,0.001,0.0005],hidden_range = [25,500],random_inits = 50,
-              save = False, save_fn = "model.sav", show_progress = False):
+    def train(self,epochs = [100,500,2000], lr_range = [0.005,0.001,0.0005],hidden_range = [25,500],random_inits = 5,
+              neighbors = 5, save = False, save_fn = "model.sav", show_progress = False):
         assert self.X_train is not None and self.y_train is not None
         if self.model_type == ModelType.MLPRegressor:
-            self.model = self.__find_best_model(random_inits,epochs,lr_range,hidden_range,show_progress)
+            self.model = self.__find_best_model(random_inits,show_progress)
+            # self.model = self.__find_best_model2(random_inits, epochs, lr_range, hidden_range, show_progress)
         elif self.model_type == ModelType.LinearRegression:
             self.model = LinearRegression().fit(self.X_train, self.y_train)
         elif self.model_type == ModelType.KNeighborsRegressor:
-            self.model = KNeighborsRegressor(5, weights='uniform').fit(self.X_train, self.y_train)
+            self.model = KNeighborsRegressor(neighbors, weights='uniform').fit(self.X_train, self.y_train)
         elif self.model_type == ModelType.LinearAnalytical:
             self.model = LinearAnalytical()
+        elif self.model_type == ModelType.DecisionTreeRegressor:
+            self.model = DecisionTreeRegressor().fit(self.X_train, self.y_train)
         else: raise KeyError
         if save: self.save_model(save_fn)
 
-    def report(self,save=False,report_fn = "report.txt"):
+    def report(self,save=False,report_fn = "report.txt",extra_header = " "):
         y_pred = self.model.predict(self.X_test)
-        rmse, mse, r2, standard_dev, max_err = self.__get_perf_data(y_pred, scaled=True)
-        header = "\nModel Type: {}\nData Used: {}\n".format(self.model_type.name, self.data_type.name)
-        perf_info = '\nRMSE: {}\nStd: {}\nMax err: {}\nR²: {}\n'.format(rmse,standard_dev,max_err,r2)
+        mse,mse_std,mse_max,rmse,r2,scaled= self.__get_perf_data(y_pred)
+        header = "\n\nModel Type: {}\nData Used: {}\n{}".format(self.model_type.name, self.data_type.name, extra_header)
+        perf_info = '\nMSE: {}\nMSE Std: {}\nMax err^2: {}\nR²: {}\nData scaled: {}'.format(mse,mse_std,mse_max,r2,self.scaled)
         print(header,perf_info)
         if save:
             with open(report_fn, 'w') as f:
                 f.write(header)
                 f.write(perf_info)
+        return header+perf_info
 
     def load_model(self, filepath):
         if self.model_type == ModelType.LinearAnalytical: return
@@ -142,17 +152,24 @@ class PoseModel:
         if self.model_type == ModelType.LinearAnalytical: assert self.data_type == DataOptions.CONTACT_ONLY
         if self.data_type == DataOptions.CONTACT_ONLY and X_tr is not None:
             X_train, y_train = self.__drop_data(X_tr),y_tr.to_numpy()
-            X_test, y_test = self.__drop_data(X_te),y_te.to_numpy()
+            if X_te is not None:
+                X_test, y_test = self.__drop_data(X_te),y_te.to_numpy()
+            else: X_test, y_test = None, None
         elif self.data_type == DataOptions.Z_ONLY and X_tr is not None:
             X_train, y_train = self.__drop_data(X_tr), y_tr.to_numpy()
-            X_test, y_test = self.__drop_data(X_te), y_te.to_numpy()
+            if X_te is not None:
+                X_test, y_test = self.__drop_data(X_te), y_te.to_numpy()
+            else: X_test, y_test = None, None
             input_scaler = StandardScaler()
             X_train = input_scaler.fit_transform(X_train)
-            X_test = input_scaler.transform(X_test)
+            if X_te is not None:
+                X_test = input_scaler.transform(X_test)
         elif self.data_type == DataOptions.ALL and X_tr is not None:
             input_scaler = StandardScaler()
             X_train, y_train = input_scaler.fit_transform(X_tr), y_tr.to_numpy()
-            X_test, y_test = input_scaler.transform(X_te), y_te.to_numpy()
+            if X_te is not None:
+                X_test, y_test = input_scaler.transform(X_te), y_te.to_numpy()
+            else: X_test, y_test = None, None
         else: X_train, y_train, X_test, y_test = None,None,None,None
         if y_train is not None:
             self.output_scaler = StandardScaler()
@@ -173,9 +190,29 @@ class PoseModel:
             if "z" not in header and self.data_type == DataOptions.Z_ONLY: indexes.append(i)
         return indexes
 
-    def __find_best_model(self,num_rands,epochs,lrs,hidden_range,show_progress):
+    def __find_best_model(self,num_rands,show_progress):
+        """The default parameters are good enough to get something good."""
         rand_ints = np.random.randint(0,9999,num_rands)
-        best_rmse, best_lr, best_epoch, best_hidden = None, None, None, None
+        best_mse,best_model = None,None
+        seed_intervals = []
+        for i, seed in enumerate(rand_ints):
+            seed_start_time = time.time()
+            m = MLPRegressor(random_state=seed).fit(self.X_train, self.y_train)
+            y_pred = m.predict(self.X_test)
+            mse,mse_std,mse_max,mse,r2,scaled = self.__get_perf_data(y_pred)
+            if best_mse is None or mse < best_mse:
+                best_mse,best_model = mse,m
+                if show_progress:
+                    print('MSE: {}\nStd: {}\nMax err^2: {}\nR²: {}\n'.format(mse, mse_std, mse_max, r2))
+            seed_intervals.append(time.time()-seed_start_time)
+            ave_seed_time = np.average(seed_intervals)
+            rounds_left = num_rands-1-i
+            print("MLP training - Estimated remaining time: {} min".format(ave_seed_time*rounds_left/60))
+        return best_model
+
+    def __find_best_model2(self,num_rands,epochs,lrs,hidden_range,show_progress):
+        rand_ints = np.random.randint(0,9999,num_rands)
+        best_mse, best_lr, best_epoch, best_hidden = None, None, None, None
         best_model = None
         seed_intervals = []
         for i, seed in enumerate(rand_ints):
@@ -186,82 +223,290 @@ class PoseModel:
                         m = MLPRegressor(hidden_layer_sizes=[num_hiddens], max_iter=epoch, learning_rate_init=lr, \
                                              random_state=seed).fit(self.X_train, self.y_train)
                         y_pred = m.predict(self.X_test)
-                        rmse, mse, r2, standard_dev, max_err = self.__get_perf_data(y_pred, scaled=True)
-                        if best_rmse is None or rmse < best_rmse:
-                            best_rmse,best_lr,best_epoch,best_hidden,best_model = rmse,lr,epoch,num_hiddens,m
+                        mse,mse_std,mse_max,rmse,r2,scaled = self.__get_perf_data(y_pred)
+                        if best_mse is None or mse < best_mse:
+                            best_mse,best_lr,best_epoch,best_hidden,best_model = mse,lr,epoch,num_hiddens,m
                             if show_progress:
-                                print("\n\nNew best: \nRMSE: {}\nLR: {}\nEpoch: {}\nHiddens: {}\n\n".format(rmse,lr,epoch,num_hiddens))
-                                print('RMSE: {}\nStd: {}\nMax err: {}\nR²: {}\n'.format(rmse, standard_dev, max_err, r2))
+                                print("\n\nNew best: \nMSE: {}\nLR: {}\nEpoch: {}\nHiddens: {}\n\n".format(mse,lr,epoch,num_hiddens))
+                                print('MSE: {}\nStd: {}\nMax err^2: {}\nR²: {}\n'.format(mse, mse_std, mse_max, r2))
             seed_intervals.append(time.time()-seed_start_time)
             ave_seed_time = np.average(seed_intervals)
             rounds_left = num_rands-1-i
             print("MLP training - Estimated remaining time: {} min".format(ave_seed_time*rounds_left/60))
         return best_model
 
-    def __get_perf_data(self,y_pred,scaled=True):
-        if scaled: y_pred, y_test = self.output_scaler.transform(y_pred), self.output_scaler.transform(self.y_test)
+    def set_perf_data(self):
+        y_pred = self.model.predict(self.X_test)
+        mse,mse_std,mse_max,rmse,r2,scaled = self.__get_perf_data(y_pred)
+
+    def __get_perf_data(self,y_pred):
+        if self.scaled: y_pred, y_test = self.output_scaler.transform(y_pred), self.output_scaler.transform(self.y_test)
         else: y_test = self.y_test
-        error = np.abs(y_pred - y_test)
-        error.sum(axis=1)
-        standard_dev, max_err = np.std(error), np.max(error)
-        mse = mean_squared_error(y_pred, y_test)
+        err = np.subtract(y_test, y_pred)
+        abs_err = np.abs(err)
+        ave_abs_err = abs_err.mean()
+        err_std = np.std(abs_err)
+        error_sq = np.square(err)
+        error_sq = error_sq.reshape(len(error_sq) * 2)
+        mse = error_sq.mean()
+        mse_std = np.std(error_sq)
+        mse_max = np.max(error_sq)
         rmse = np.sqrt(mse)
         r2 = r2_score(y_pred, y_test)
-        return rmse, mse, r2, standard_dev, max_err
+        self.mse,self.mse_std,self.mse_max,self.rmse,self.r2,self.ave_abs_err,self.err_std = mse,mse_std,mse_max,rmse,r2,ave_abs_err,err_std
+        return mse,mse_std,mse_max,rmse,r2,self.scaled
+
+def evaluate_all_pose():
+    data_dir_name = "cable_pose_3_cable_with_forces"
+    dataset_path = os.getcwd() + '\\' + 'processed_data' + '\\' + data_dir_name + '\\'
+    X_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_train_30-70.csv')
+    y_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_train_30-70.csv')
+    X_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_test_30-70.csv')
+    y_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_test_30-70.csv')
 
 
+    full_report = ""
+    data_options = [DataOptions.Z_ONLY, DataOptions.ALL]
+
+    full_report += "\n\n\n################ LinearAnalytical ################"
+    model = PoseModel(ModelType.LinearAnalytical, DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train,
+                      X_test=X_test,
+                      y_test=y_test)
+    model.train(save=False, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
+    report = model.report(save=False, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
+    full_report += report
+
+    full_report += "\n\n\n################ LinearRegression ################"
+    for data_option in data_options:
+        model = PoseModel(ModelType.LinearRegression, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                          y_test=y_test)
+        model.train(save=False, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
+        report = model.report(save=False,
+                              report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
+        full_report += report
+
+    neighbors = [3, 4, 5, 6, 8, 12, 20, 35]
+    full_report += "\n\n\n################ KNeighborsRegressor ################"
+    for data_option in data_options:
+        for n in neighbors:
+            model = PoseModel(ModelType.KNeighborsRegressor, data_option, X_train=X_train, y_train=y_train,
+                              X_test=X_test, y_test=y_test)
+            model.train(neighbors=n, save=False,
+                        save_fn="{}_{}_{}neighbors.sav".format(model.model_type.name, model.data_type.name, n))
+            report_fn = "{}_{}_{}neighbors_report.txt".format(model.model_type.name, model.data_type.name, n)
+            extra_header = "Neighbors: {}".format(n)
+            report = model.report(save=False, report_fn=report_fn, extra_header=extra_header)
+            full_report += report
+
+    num_models = 5
+    rand_inits = 5
+    full_report += "\n\n\n################ MLPRegressor ################"
+    for data_option in data_options:
+        for n in range(num_models):
+            model = PoseModel(ModelType.MLPRegressor, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                              y_test=y_test)
+            model.train(random_inits=rand_inits, save=False,
+                        save_fn="{}_{}_{}.sav".format(model.model_type.name, model.data_type.name, n))
+            report_fn = "{}_{}_{}_report.txt".format(model.model_type.name, model.data_type.name, n)
+            extra_header = "Default Sklearn MLPRegressor params. \nModel num: {}\nRandom initializations: {}\nCriteria: RMSE".format(
+                n, rand_inits)
+            report = model.report(save=False, report_fn=report_fn, extra_header=extra_header)
+            full_report += report
+
+    with open("full_report.txt", 'w') as f:
+        f.write(full_report)
+
+def train_with_all_data_pose():
+    data_dir_name = "cable_pose_3_cable_with_forces"
+    dataset_path = os.getcwd() + '\\' + 'processed_data' + '\\' + data_dir_name + '\\'
+    X_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_train_10-90.csv')
+    y_train = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_train_10-90.csv')
+    X_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_X_test_10-90.csv')
+    y_test = pd.read_csv(dataset_path + 'cable_pose_3_cable_with_forces_y_test_10-90.csv')
+
+    data_options = [DataOptions.Z_ONLY, DataOptions.ALL]
+
+    for data_option in data_options:
+        model = PoseModel(ModelType.LinearRegression, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                              y_test=y_test)
+        model.train(save=True, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
+
+    neighbors = [3, 4, 5, 6, 8, 12, 20, 35]
+    for data_option in data_options:
+        for n in neighbors:
+            model = PoseModel(ModelType.KNeighborsRegressor, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                              y_test=y_test)
+            model.train(neighbors=n, save=True,
+                        save_fn="{}_{}_{}neighbors.sav".format(model.model_type.name, model.data_type.name, n))
+
+    num_models = 5
+    rand_inits = 5
+    for data_option in data_options:
+        for n in range(num_models):
+            model = PoseModel(ModelType.MLPRegressor, data_option, X_train=X_train, y_train=y_train, X_test=X_test,
+                              y_test=y_test)
+            model.train(random_inits=rand_inits, save=True,
+                        save_fn="{}_{}_{}.sav".format(model.model_type.name, model.data_type.name, n))
+
+def evaluate_all_ten_vec():
+    data_dir_name = "cable_tension_vec"
+    dataset_path = os.getcwd() + '\\' + 'processed_data' + '\\' + data_dir_name + '\\'
+    X_train = pd.read_csv(dataset_path + 'cable_tension_vec_X_train_30-70.csv')
+    y_train = pd.read_csv(dataset_path + 'cable_tension_vec_y_train_30-70.csv')
+    X_test = pd.read_csv(dataset_path + 'cable_tension_vec_X_test_30-70.csv')
+    y_test = pd.read_csv(dataset_path + 'cable_tension_vec_y_test_30-70.csv')
+
+    full_report = ""
+
+    full_report += "\n\n\n################ LinearRegression ################"
+    model = TensionVecModel(ModelType.LinearRegression, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test)
+    model.train(save=False, save_fn="{}.sav".format(model.model_type.name))
+    report = model.report(save=False,report_fn="{}_report.txt".format(model.model_type.name))
+    full_report += report
+
+    neighbors = [3, 4, 5, 6, 8, 12, 20, 35]
+    full_report += "\n\n\n################ KNeighborsRegressor ################"
+    for n in neighbors:
+        model = TensionVecModel(ModelType.KNeighborsRegressor, X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test)
+        model.train(neighbors=n, save=False,save_fn="{}_{}neighbors.sav".format(model.model_type.name, n))
+        report_fn = "{}_{}neighbors_report.txt".format(model.model_type.name, n)
+        extra_header = "Neighbors: {}".format(n)
+        report = model.report(save=False, report_fn=report_fn, extra_header=extra_header)
+        full_report += report
+
+    num_models = 5
+    rand_inits = 5
+    full_report += "\n\n\n################ MLPRegressor ################"
+    for n in range(num_models):
+        model = TensionVecModel(ModelType.MLPRegressor, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test)
+        model.train(random_inits=rand_inits, save=False,
+                    save_fn="{}_{}.sav".format(model.model_type.name, n))
+        report_fn = "{}_{}_report.txt".format(model.model_type.name, n)
+        extra_header = "Default Sklearn MLPRegressor params. \nModel num: {}\nRandom initializations: {}\nCriteria: RMSE".format(
+            n, rand_inits)
+        report = model.report(save=False, report_fn=report_fn, extra_header=extra_header)
+        full_report += report
+
+    with open("full_report.txt", 'w') as f:
+        f.write(full_report)
+
+def train_with_all_data_ten_vec():
+    data_dir_name = "cable_tension_vec"
+    dataset_path = os.getcwd() + '\\' + 'processed_data' + '\\' + data_dir_name + '\\'
+    X_train = pd.read_csv(dataset_path + 'cable_tension_vec_X_train_10-90.csv')
+    y_train = pd.read_csv(dataset_path + 'cable_tension_vec_y_train_10-90.csv')
+    X_test = pd.read_csv(dataset_path + 'cable_tension_vec_X_test_10-90.csv')
+    y_test = pd.read_csv(dataset_path + 'cable_tension_vec_y_test_10-90.csv')
+
+    model = PoseModel(ModelType.LinearRegression, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test)
+    model.train(save=True, save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
+
+    neighbors = [3, 4, 5, 6, 8, 12, 20, 35]
+    for n in neighbors:
+        model = PoseModel(ModelType.KNeighborsRegressor, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test)
+        model.train(neighbors=n, save=True,save_fn="{}_{}neighbors.sav".format(model.model_type.name, n))
+
+    num_models = 5
+    rand_inits = 5
+    for n in range(num_models):
+        model = PoseModel(ModelType.MLPRegressor, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test)
+        model.train(random_inits=rand_inits, save=True,save_fn="{}_{}.sav".format(model.model_type.name, n))
+
+class TensionVecModel:
+    def __init__(self,model_type, X_train=None, y_train=None, X_test=None, y_test=None,model_fn = None):
+        self.model_options = {'MLPRegressor','KNeighborsRegressor','LinearRegression'}
+        self.model_type = model_type
+        self.model = None if model_fn is None else self.load_model(model_fn)
+        self.X_train, self.y_train,self.X_test, self.y_test = self.__prep_data(X_train,y_train,X_test,y_test)
+
+    def train(self,random_inits = 5,neighbors = 5, save = False, save_fn = "model.sav", show_progress = False):
+        assert self.X_train is not None and self.y_train is not None
+        if self.model_type == ModelType.MLPRegressor:
+            self.model = self.__find_best_model(random_inits,show_progress)
+        elif self.model_type == ModelType.LinearRegression:
+            self.model = LinearRegression().fit(self.X_train, self.y_train)
+        elif self.model_type == ModelType.KNeighborsRegressor:
+            self.model = KNeighborsRegressor(neighbors, weights='uniform').fit(self.X_train, self.y_train)
+        elif self.model_type == ModelType.DecisionTreeRegressor:
+            self.model = DecisionTreeRegressor().fit(self.X_train, self.y_train)
+        else: raise KeyError
+        if save: self.save_model(save_fn)
+
+    def report(self,save=False,report_fn = "report.txt",extra_header = " "):
+        y_pred = self.model.predict(self.X_test)
+        mse,mse_std,mse_max,rmse,r2= self.__get_perf_data(y_pred)
+        header = "\n\nModel Type: {}\n{}".format(self.model_type.name, extra_header)
+        perf_info = '\nMSE: {}\nMSE Std: {}\nMax err^2: {}\nR²: {}'.format(mse,mse_std,mse_max,r2)
+        print(header,perf_info)
+        if save:
+            with open(report_fn, 'w') as f:
+                f.write(header)
+                f.write(perf_info)
+        return header+perf_info
+
+    def load_model(self, filepath):
+        self.saved_model_filepath = filepath
+        model = joblib.load(filepath)
+        assert self.model_type.name in str(type(model))
+        assert model.n_features_in_ == self.data_type.value
+        return joblib.load(filepath)
+
+    def save_model(self, filename):
+        assert self.model is not None
+        if self.model_type == ModelType.LinearAnalytical: return
+        joblib.dump(self.model, filename)
+
+    def __prep_data(self,X_tr,y_tr,X_te,y_te):
+        if X_tr is not None and y_tr is not None and X_te is not None:
+            input_scaler = StandardScaler()
+            X_train, y_train = input_scaler.fit_transform(X_tr), y_tr.to_numpy()
+            X_test, y_test = input_scaler.transform(X_te), y_te.to_numpy()
+        else: X_train, y_train, X_test, y_test = None,None,None,None
+        return X_train, y_train, X_test, y_test
+
+    def __find_best_model(self,num_rands,show_progress):
+        """The default parameters are good enough to get something good."""
+        rand_ints = np.random.randint(0,9999,num_rands)
+        best_mse,best_model = None,None
+        seed_intervals = []
+        for i, seed in enumerate(rand_ints):
+            seed_start_time = time.time()
+            m = MLPRegressor(random_state=seed).fit(self.X_train, self.y_train)
+            y_pred = m.predict(self.X_test)
+            mse,mse_std,mse_max,mse,r2= self.__get_perf_data(y_pred)
+            if best_mse is None or mse < best_mse:
+                best_mse,best_model = mse,m
+                if show_progress:
+                    print('MSE: {}\nStd: {}\nMax err^2: {}\nR²: {}\n'.format(mse, mse_std, mse_max, r2))
+            seed_intervals.append(time.time()-seed_start_time)
+            ave_seed_time = np.average(seed_intervals)
+            rounds_left = num_rands-1-i
+            print("MLP training - Estimated remaining time: {} min".format(ave_seed_time*rounds_left/60))
+        return best_model
+
+    def set_perf_data(self):
+        y_pred = self.model.predict(self.X_test)
+        mse,mse_std,mse_max,rmse,r2,scaled = self.__get_perf_data(y_pred)
+
+    def __get_perf_data(self,y_pred):
+        y_test = self.y_test
+        err = np.subtract(y_test, y_pred)
+        abs_err = np.abs(err)
+        ave_abs_err = abs_err.mean()
+        err_std = np.std(abs_err)
+        error_sq = np.square(err)
+        error_sq = error_sq.reshape(len(error_sq) * 2)
+        mse = error_sq.mean()
+        mse_std = np.std(error_sq)
+        mse_max = np.max(error_sq)
+        rmse = np.sqrt(mse)
+        r2 = r2_score(y_pred, y_test)
+        self.mse,self.mse_std,self.mse_max,self.rmse,self.r2,self.ave_abs_err,self.err_std = mse,mse_std,mse_max,rmse,r2,ave_abs_err,err_std
+        return mse,mse_std,mse_max,rmse,r2
 
 def main():
-    data_dir_name = "cable_pose_with_cam"
-    dataset_path = os.getcwd() + '\\' + 'processed_data' + '\\' + data_dir_name + '\\'
-    X_train = pd.read_csv(dataset_path + 'cam_pose_mirrored_X_train_30-70.csv')
-    y_train = pd.read_csv(dataset_path + 'cam_pose_mirrored_y_train_30-70.csv')
-    X_test = pd.read_csv(dataset_path + 'cam_pose_mirrored_X_test_30-70.csv')
-    y_test = pd.read_csv(dataset_path + 'cam_pose_mirrored_y_test_30-70.csv')
-
-    epochs = [100, 500, 2000]
-    lr_range = [0.005, 0.001, 0.0005]
-    hidden_range = [25, 500]
-    random_inits = 25
-    # epochs = [500]
-    # lr_range = [0.001]
-    # hidden_range = [500]
-    # random_inits = 3
-
-    # # Contact-only data
-    models = []
-    models.append(PoseModel(ModelType.LinearAnalytical,DataOptions.CONTACT_ONLY,X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test))
-    models.append(PoseModel(ModelType.LinearRegression,DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test))
-    models.append(PoseModel(ModelType.KNeighborsRegressor, DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    models.append(PoseModel(ModelType.MLPRegressor, DataOptions.CONTACT_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    for model in models:
-        model.train(epochs=epochs, lr_range=lr_range, hidden_range=hidden_range, random_inits=random_inits, save=True,
-                    save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
-        model.report(save=True, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
-
-    # # Z-only data
-    models = []
-    models.append(PoseModel(ModelType.LinearRegression,DataOptions.Z_ONLY, X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test))
-    models.append(PoseModel(ModelType.KNeighborsRegressor, DataOptions.Z_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    models.append(PoseModel(ModelType.MLPRegressor, DataOptions.Z_ONLY, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    for model in models:
-        model.train(epochs=epochs, lr_range=lr_range, hidden_range=hidden_range, random_inits=random_inits, save=True,
-                    save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
-        model.report(save=True, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
-
-    # # All data
-    models = []
-    models.append(PoseModel(ModelType.LinearRegression,DataOptions.ALL, X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test))
-    models.append(PoseModel(ModelType.KNeighborsRegressor, DataOptions.ALL, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    models.append(PoseModel(ModelType.MLPRegressor, DataOptions.ALL, X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test))
-    for model in models:
-        model.train(epochs=epochs, lr_range=lr_range, hidden_range=hidden_range, random_inits=random_inits, save=True,
-                    save_fn="{}_{}.sav".format(model.model_type.name, model.data_type.name))
-        model.report(save=True, report_fn="{}_{}_report.txt".format(model.model_type.name, model.data_type.name))
-
-    # # Example of loading an existing model and report.
-    model = PoseModel(ModelType.MLPRegressor,data_type = DataOptions.CONTACT_ONLY ,model_fn = 'MLPRegressor_CONTACT_ONLY.sav')
-    model.report()
+    # evaluate_all_ten_vec()
+    train_with_all_data_ten_vec()
 
 if __name__ == '__main__':
     main()
