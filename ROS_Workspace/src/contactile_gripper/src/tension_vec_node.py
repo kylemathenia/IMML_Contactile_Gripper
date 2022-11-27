@@ -6,7 +6,7 @@ import rospy
 import time
 import numpy as np
 from contactile_gripper.msg import Float32List
-from models import PoseModel
+from models import TensionVecModel
 from std_msgs.msg import Bool
 from papillarray_ros_v2.msg import SensorState
 from collections import namedtuple
@@ -64,14 +64,16 @@ class TensionVecNode(object):
         """This is the main loop for the node which executes at self.main_loop_rate."""
         while not rospy.is_shutdown():
             tension_vec = self.determine_tension_vec()
-            self.pose_pub.publish([float(tension_vec.roll), float(tension_vec.pitch)])
+            if self.good_grasp:
+                self.tension_vec_pub.publish([float(tension_vec.roll), float(tension_vec.pitch)])
             self.main_loop_rate_obj.sleep()
 
     ######################## Other ########################
     def determine_tension_vec(self):
         if not self.good_grasp: return TensionVec(999, 999)
-        pred = self.pose_model.model.predict(self.sensor_pred_data)
-        return TensionVec(pred[0], pred[1])
+        self.sensor_pred_data = np.array([np.append(self.sensor0_pred_data, self.sensor1_pred_data)])
+        pred = self.ten_vec_model.model.predict(self.sensor_pred_data)
+        return TensionVec(pred[0][0], pred[0][1])
 
     def prep_sensor_data(self, d):
         """Get the data in the form the model expects for prediction."""
@@ -86,8 +88,7 @@ class TensionVecNode(object):
         elif mt == ModelType.KNeighborsRegressor.name: model_type = ModelType.KNeighborsRegressor
         elif mt == ModelType.LinearRegression.name:model_type = ModelType.LinearRegression
         else: raise KeyError
-        # TODO need to get the new model file.
-        return PoseModel(model_type, model_fn=model_fn)
+        return TensionVecModel(model_type, model_fn=model_fn)
 
     def wait_for_data(self):
         while True:

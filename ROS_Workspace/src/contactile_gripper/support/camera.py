@@ -28,6 +28,7 @@ class Colors():
         self.green = (0, 255, 0)
         self.blue = (255, 0, 0)
         self.red = (0, 0, 255)
+        self.white = (255, 255, 255)
         self.colors = [self.green,self.blue,self.red]
         self.cycle_i = 0
 
@@ -73,14 +74,16 @@ class Camera:
         ret, self.frame = self.cap.read()
         return ret
 
-    def show_predictions(self,pred_poses,undistort=True):
+    def show_predictions(self,pred_poses,ten_vec=None,good_grasp = False,undistort=True):
         self.aruco_present,self.cable_present = False, True
         if undistort:
             self.frame = cv2.undistort(self.frame, self.mtx, self.dist, None, self.newcameramtx)
         self.__find_aruco()
         if self.aruco_present:
             self.__aruco_transform()
-            self.__show_cable_and_aruco(pred_poses)
+            self.__show_cable_and_aruco(pred_poses,good_grasp)
+            if ten_vec is not None:
+                self.__show_tension_vector(ten_vec)
 
     def __find_aruco(self):
         """Finds the aruco marker in self.frame, and sets some parameters."""
@@ -205,14 +208,31 @@ class Camera:
             del self.prev_positions[0]
         return np.average(self.prev_positions)
 
-    def __show_cable_and_aruco(self,poses):
+    def __show_cable_and_aruco(self,poses,good_grasp=False):
         """Show the aruco marker and cables if present. Accepts a list of Pose named tuples. """
         if self.aruco_present:
             self.__add_aruco_illustration()
         if self.cable_present:
-            for pose in poses:
-                self.__add_cable_illustration(pose.pos,pose.ang,self.colors.get_diff_rgb())
+            pose = poses[0]
+            if good_grasp:
+                self.__add_cable_illustration(pose.pos,pose.ang,self.colors.green)
+                cv2.putText(self.frame, "GOOD GRASP",(5,50), cv2.FONT_HERSHEY_SIMPLEX,1,self.colors.green, 2,2)
+            else:
+                self.__add_cable_illustration(pose.pos,pose.ang,self.colors.red)
+                cv2.putText(self.frame, "BAD GRASP", (5,50), cv2.FONT_HERSHEY_SIMPLEX,1, self.colors.red, 2,2)
         self.colors.reset()
+
+    def __show_tension_vector(self,ten_vec):
+        """Only show the pitch portion of the tension vector, which is orthogonal to the camera."""
+        pitch = -ten_vec[1]
+        m = math.tan(math.radians(pitch))
+        b = 0
+        xs = [0,140]
+        ys = [m*xs[0]-b,m*xs[1]-b]
+        xs = [w + self.aruco_center[0]+100 for w in xs]
+        ys = [w + self.aruco_center[1]-25 for w in ys]
+        to_pt, from_pt = [int(xs[0]),int(ys[0])], [int(xs[1]),int(ys[1])]
+        cv2.arrowedLine(self.frame, tuple(to_pt), tuple(from_pt), color=self.colors.white, thickness=3)
 
     ####################################################################################################################
     # CALIBRATION
