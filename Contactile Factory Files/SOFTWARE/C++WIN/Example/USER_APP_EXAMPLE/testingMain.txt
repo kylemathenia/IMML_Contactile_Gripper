@@ -1,0 +1,190 @@
+int _tmain(int argc, _TCHAR* argv[])
+{
+	bool isReadFromFile = false;
+	/* Initialise  PTSDKSensor object for sensor connected to SEN1 port */
+	char calFilename0[] = "C:/HEBA_RESEARCH/TEST_PAPILLARRAY_DLL/TS100001_Fine.bin";
+	PTSDKSensor sensor0 = PTSDKSensor(calFilename0);
+	
+	/* Initialise  PTSDKSensor object for sensor connected to SEN2 port */
+	char calFilename1[] = "C:/HEBA_RESEARCH/TEST_PAPILLARRAY_DLL/TS100002.bin";
+	PTSDKSensor sensor1 = PTSDKSensor(calFilename1);
+	
+	PTSDKReader reader = PTSDKReader();
+	PTSDKListener listener = PTSDKListener();
+	
+	/* Initialise connection parameters */
+	char port[] = "\\\\.\\COM15";
+	int rate = 9600;
+	int parity = 0; // 0 = PARITY_NONE, 1 = PARITY_ODD, 2 = PARITY_EVEN;
+	char byteSize = 8;
+	int err;
+
+	if(isReadFromFile){
+		reader.addSensor(&sensor0);
+		//reader.addSensor(&sensor1);
+		reader.startReading("C:/HEBA_RESEARCH/CONTACTILE/PRODUCTION/Example/USER_APP_EXAMPLE/VIDEO_LOG_CONDENSED_2019_12_21_6_28_00.csv");
+
+		/* Wait for the sensor1 sample buffer to have enough data */
+		while(!sensor0.isBufFull()){
+			Sleep(100);
+		}
+		
+		/* Bias all pillars on sensor1 */
+		sensor1.bias();
+
+		while(!sensor0.isBufFull()){
+			Sleep(100);
+		}
+		uint32_t currentTime_ms;
+
+		uint32_t stimStart[] = {317080, 322980, 327960, 331960};
+		uint32_t stimEnd[] = {320505, 325730, 330150,333360};
+		for(int stimInd = 0; stimInd < 4; stimInd++){
+
+			while(true){
+				sensor0.getPillarTimestamp_ms(0,&currentTime_ms);
+				
+				if(currentTime_ms > stimStart[stimInd]){
+					printf("t_ms: %u\n",currentTime_ms);
+					printf("-------------------------------------------------------\n");
+					printf("------------Starting slip detection--------------------\n");
+					printf("-------------------------------------------------------\n");
+					sensor0.startSlipDetection();
+					break;
+				}
+				Sleep(10);
+			}
+			while(true){
+				sensor0.getPillarTimestamp_ms(0,&currentTime_ms);
+				if(currentTime_ms > stimEnd[stimInd]){
+					printf("t_ms: %u\n",currentTime_ms);
+					printf("-------------------------------------------------------\n");
+					printf("------------Stopping slip detection--------------------\n");
+					printf("-------------------------------------------------------\n");
+					sensor0.stopSlipDetection();
+					break;
+				}
+				Sleep(10);
+			}
+		}
+
+		Sleep(5000);
+
+		printf("Stop Reading!\n");
+		reader.stopReading();
+	}else{
+		/* Initialise the PTSDK Listener object */
+		//listener = PTSDKListener();
+
+		/* Add sensor1 to the listener */
+		listener.addSensor(&sensor0);
+
+		/* Add sensor1 to the listener */
+		listener.addSensor(&sensor1);
+		
+		/* Connect to the serial port and start listening for, processing and logging data */
+		err = listener.connectAndStartListening(port, rate, parity, byteSize);
+		if(err){
+			printf("Could not connect to %s\n",port);
+			return -1;
+		}else{
+			printf("Connected successfully to %s\n",port);
+		}
+
+		/* Wait for the sensor1 sample buffer to have enough data */
+		while(!sensor0.isBufFull()){
+			Sleep(100);
+		}
+		
+		/* Bias all pillars on sensor1 */
+		sensor0.bias();
+
+		/* Wait for the sensor1 sample buffer to have enough data */
+		while(!sensor1.isBufFull()){
+			Sleep(100);
+		}
+		
+		/* Bias all pillars on sensor1 */
+		sensor1.bias();
+		
+		/* Wait for the both sensor sample buffers to have enough data again */
+		while(!sensor0.isBufFull() || !sensor1.isBufFull()){
+			Sleep(100);
+		}
+
+		/* Repeat once every second for ten seconds */
+		for(int i = 0; i < 10; i++){
+			Sleep(1000);
+
+
+		}
+
+		/* Repeat once every second for ten seconds */
+		
+		/* Stop listening for and processing data and disconnect */
+		listener.stopListeningAndDisconnect();
+
+		Sleep(1000);
+
+		/* Start listeneing again */
+		err = listener.connectAndStartListening(port, rate, parity, byteSize);
+		if(err){
+			printf("Could not connect to %s\n",port);
+			return -1;
+		}else{
+			printf("Connected successfully to %s\n",port);
+		}
+
+		Sleep(5000);
+
+		/* Stop listening again */
+		listener.stopListeningAndDisconnect();
+	}
+
+	//
+	///* Retrieve data from a whole sensor */
+	//uint32_t allPhotodiodeVals[NPHOTODIODE][MAX_NPILLAR];
+	//double allDeflections[NDIMENSION][MAX_NPILLAR];
+	//double allForces[NDIMENSION][MAX_NPILLAR];
+	//for(int i = 0; i < 1; i++){ /* Repeat once every second for ten seconds */
+	//	Sleep(1000);
+
+	//	/* Get photodiode values from all pillars of sensor1 */
+	//	sensor0.getAllPillarPhotodiodeVals(allPhotodiodeVals);
+	//	/* Print photodiode values */
+	//	printf("Sensor 1 photodiode values:\n");
+	//	for(int pillarInd = 0; pillarInd < sensor0.getNPillar(); pillarInd++){
+	//		printf("\tPillar %d: ",pillarInd);
+	//		for(int photodiodeInd = 0; photodiodeInd < NPHOTODIODE; photodiodeInd++){
+	//			printf("%u ",allPhotodiodeVals[photodiodeInd][pillarInd]);
+	//		}
+	//		printf("\n");
+	//	}
+
+	//	/* Get displacement values from all pillars of sensor1 */
+
+	//	/* Get force values from pillar 1 of sensor 1 */
+	//	double force[NDIMENSION];
+	//	sensor0.getPillarForce(0,force);
+	//	printf("Sensor 1, Pillar 1, ");
+	//	for(int dimInd = 0; dimInd < NDIMENSION; dimInd++){
+	//		printf("F%d = %.3f ",dimInd,force[dimInd]);
+	//	}
+	//	printf("\n");
+
+	//}
+
+	///* Retrieve data from a single pillar */
+	////int sensorInd;
+	////int pillarInd;
+	////uint32_t photodiodeVals[NPHOTODIODE];
+	////double currentDeflection[NDIMENSION];
+	////for(int i = 0; i < 2; i++){ /* Repeat once every second for ten seconds */
+	////	Sleep(1000);
+	////	
+
+	////}
+
+	return 0;
+}
+

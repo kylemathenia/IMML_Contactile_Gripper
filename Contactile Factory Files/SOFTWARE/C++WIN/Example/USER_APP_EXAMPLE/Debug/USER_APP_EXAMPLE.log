@@ -1,0 +1,8 @@
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  stdafx.cpp
+cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  USER_APP_EXAMPLE.cpp
+stdafx.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  USER_APP_EXAMPLE.vcxproj -> C:\Users\Heba\UbuntuSharedFolder\Contactile_Windows_DevKit2.0\v06112021\Example\USER_APP_EXAMPLE\Debug\USER_APP_EXAMPLE.exe
+  ..\..\DLL\PTSDK_CPP_LIB.dll
+  1 File(s) copied
