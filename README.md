@@ -1,6 +1,8 @@
 # IMML_Contactile_Gripper
 
-![gripper](https://media.giphy.com/media/9kfGCiUqRPZpQja6VG/giphy-downsized-large.gif)
+![gripper](https://media.giphy.com/media/9kfGCiUqRPZpQja6VG/giphy-downsized.gif)
+
+![Cliffs](https://media.giphy.com/media/Eo5J2or6gm8SfoPxqu/giphy-downsized.gif)
 
 - Ubuntu 16.04
 - ROS Melodic
