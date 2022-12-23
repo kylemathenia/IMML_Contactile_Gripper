@@ -1,6 +1,6 @@
 # IMML_Contactile_Gripper
 
-TODO: Record and verify all steps to clone and run. 
+![gripper](https://media.giphy.com/media/9kfGCiUqRPZpQja6VG/giphy-downsized-large.gif)
 
 - Ubuntu 16.04
 - ROS Melodic
