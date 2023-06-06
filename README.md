@@ -2,8 +2,6 @@
 
 ![gripper](https://media.giphy.com/media/9kfGCiUqRPZpQja6VG/giphy-downsized.gif)
 
-![Cliffs](https://media.giphy.com/media/Eo5J2or6gm8SfoPxqu/giphy-downsized.gif)
-
 - Ubuntu 16.04
 - ROS Melodic
 - Launch the system by running "cd ~/insert_path_here/IMML_Contactile_Gripper && ./launch.py"
